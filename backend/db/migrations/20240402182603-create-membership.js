@@ -8,47 +8,23 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Events', {
+    await queryInterface.createTable('Memberships', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      venueId: {
+      userId: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
       groupId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      name: {
-        type: Sequelize.STRING,
         allowNull: false
       },
-      description: {
-        type: Sequelize.TEXT,
-        allowNull: false
-      },
-      type: {
-        type: Sequelize.ENUM('Online', 'In Person'),
-        allowNull: false
-      },
-      capacity: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      price: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      startDate: {
-        type: Sequelize.DATE,
-        allowNull: false
-      },
-      endDate: {
-        type: Sequelize.DATE,
+      status: {
+        type: Sequelize.ENUM("co-host", "member", "pending"),
         allowNull: false
       },
       createdAt: {
@@ -64,7 +40,7 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = "Events";
+    options.tableName = "Memberships"
     await queryInterface.dropTable(options);
   }
 };

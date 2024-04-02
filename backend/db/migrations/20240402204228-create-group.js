@@ -8,47 +8,40 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Events', {
+    await queryInterface.createTable('Groups', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      venueId: {
+      organizerId: {
         type: Sequelize.INTEGER,
         allowNull: false
-      },
-      groupId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
       },
       name: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      description: {
+      about: {
         type: Sequelize.TEXT,
         allowNull: false
       },
       type: {
-        type: Sequelize.ENUM('Online', 'In Person'),
+        type: Sequelize.ENUM("Online", "In Person"),
         allowNull: false
       },
-      capacity: {
-        type: Sequelize.INTEGER,
+      private: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      },
+      city: {
+        type: Sequelize.STRING,
         allowNull: false
       },
-      price: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      startDate: {
-        type: Sequelize.DATE,
-        allowNull: false
-      },
-      endDate: {
-        type: Sequelize.DATE,
+      state: {
+        type: Sequelize.STRING,
         allowNull: false
       },
       createdAt: {
@@ -64,7 +57,7 @@ module.exports = {
     }, options);
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = "Events";
+    options.tableName = "Groups";
     await queryInterface.dropTable(options);
   }
 };

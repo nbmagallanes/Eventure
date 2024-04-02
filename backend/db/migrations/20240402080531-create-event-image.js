@@ -17,8 +17,7 @@ module.exports = {
       },
       eventId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        unique: true
+        allowNull: false
       },
       url: {
         type: Sequelize.STRING,

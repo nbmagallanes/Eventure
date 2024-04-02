@@ -24,12 +24,10 @@ module.exports = (sequelize, DataTypes) => {
     {
       venueId: {
         type: DataTypes.INTEGER,
-        unique: true,
         allowNull: false,
       },
       groupId: {
         type: DataTypes.INTEGER,
-        unique: true,
         allowNull: false,
       },
       name: {

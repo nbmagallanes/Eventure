@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
       Event.hasMany(models.EventImage, {
         foreignKey: "eventId",
         onDelete: "CASCADE",
+      });
+
+      Event.belongsTo(models.Venue, {
+        foreignKey: "venueId"
       })
     }
   }

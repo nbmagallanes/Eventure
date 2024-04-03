@@ -66,4 +66,4 @@ module.exports = {
     options.tableName = "Events";
     await queryInterface.dropTable(options);
   }
-};
+}; // changed

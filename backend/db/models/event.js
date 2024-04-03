@@ -21,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
 
       Event.belongsTo(models.Venue, {
         foreignKey: "venueId"
+      });
+
+      Event.belongsTo(models.Group, {
+        foreignKey: "groupId"
       })
     }
   }
@@ -28,7 +32,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       venueId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
       },
       groupId: {
         type: DataTypes.INTEGER,

@@ -26,7 +26,7 @@ module.exports = {
           name: "SF Book Club",
           about:
             "Book Club in San Francisco that focuses on fostering a safe community",
-          type: "In Person",
+          type: "In person",
           private: false,
           city: "San Francisco",
           state: "CA",
@@ -36,7 +36,7 @@ module.exports = {
           name: "The Painters Club",
           about:
             "We are a Painting Club that encourages people to tap into their creativity and provide many events",
-          type: "In Person",
+          type: "In person",
           private: true,
           city: "San Francisco",
           state: "CA",

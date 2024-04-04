@@ -179,7 +179,7 @@ router.post('/:groupId/images', requireAuth, async (req, res, next) => {
     };
 
     const newImage = await GroupImage.create({
-        groupId: req.params.groupId,
+        groupId: parseInt(req.params.groupId),
         url: req.body.url,
         preview: req.body.preview,
     });

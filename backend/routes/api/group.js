@@ -202,4 +202,23 @@ router.post('/:groupId/images', [requireAuth, groupAuth], async (req, res) => {
 
 });
 
+// Edit group
+router.put('/:groupId', [requireAuth, groupAuth, validateCreateGroup], async (req, res, next) => {
+
+    const { name, about, type, private, city, state } = req.body;
+
+    const group = await Group.findByPk(req.params.groupId);
+
+    const updatedGroup = await group.update({
+        name,
+        about,
+        type,
+        private,
+        city,
+        state
+    });
+
+    res.json(updatedGroup);
+})
+
 module.exports = router;

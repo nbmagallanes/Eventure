@@ -36,6 +36,27 @@ const validateCreateGroup = [
     handleValidationErrors
 ];
 
+const validateVenue = [
+    check('address')
+        .exists({ checkFalsy: true })
+        .withMessage("Street address is required"),
+    check('city')
+        .exists({ checkFalsy: true })
+        .withMessage("City is required"),
+    check('state')
+        .exists({ checkFalsy: true })
+        .withMessage("State is required"),
+    check('lat')
+        .exists({ checkFalsy: true })
+        .isFloat({ min: -90, max: 90})
+        .withMessage("Latitude must be within -90 and 90"),
+    check('lng')
+        .exists({ checkFalsy: true })
+        .isFloat({ min: -180, max: 180})
+        .withMessage("Longitude must be within -180 and 180"),
+    handleValidationErrors
+];
+
 async function memberTotal(groups) {
     if (groups.length > 1) {
         for (let group of groups) {
@@ -271,6 +292,33 @@ router.get("/:groupId/venues", [requireAuth, venueAuth], async (req, res, next) 
     });
 
     res.json({ "Venues": venues});
-})
+});
+
+// Create venue for a group by id
+router.post('/:groupId/venues', [requireAuth, venueAuth, validateVenue], async (req, res, next) => {
+    const { address, city, state, lat, lng } = req.body;
+
+    const newVenue = await Venue.create({ 
+        groupId: parseInt(req.params.groupId), 
+        address, 
+        city, 
+        state, 
+        lat, 
+        lng 
+    });
+
+    const payload = {
+        id: newVenue.id,
+        groupId: newVenue.groupId, 
+        address: newVenue.address, 
+        city: newVenue.city, 
+        state: newVenue.state, 
+        lat: newVenue.lat, 
+        lng: newVenue.lng
+    }
+
+    res.json(payload);
+});
+
 
 module.exports = router;

@@ -66,6 +66,29 @@ async function imagePreview(groups) {
   }
 };
 
+async function groupAuth(req, res, next) {
+
+    const group = await Group.findByPk(req.params.groupId);
+
+    if (!group) {
+        const err = new Error("Group not found");
+        err.message = "Group couldn't be found";
+        err.status = 404;
+        return next(err);
+    };
+
+    if (req.user.id !== group.organizerId) {
+        const err = new Error("Authorization Error");
+        err.title = "Authorization Error";
+        err.message = "You are not this groups' Organizer";
+        err.status = 403;
+        return next(err);
+    };
+
+    return next();
+
+};
+
 // Get all groups
 router.get("/", async (req, res, next) => {
   const groups = await Group.findAll();
@@ -159,24 +182,7 @@ router.post('/', [requireAuth, validateCreateGroup], async (req, res, next) => {
 });
 
 // Add image to group by group Id
-router.post('/:groupId/images', requireAuth, async (req, res, next) => {
-
-    const group = await Group.findByPk(req.params.groupId);
-    
-    if (!group) {
-        const err = new Error("Group not found");
-        err.message = "Group couldn't be found";
-        err.status = 404;
-        return next(err);
-    };
-
-    if (req.user.id !== group.organizerId) {
-        const err = new Error("Authorization Error");
-        err.title = "Authorization Error";
-        err.message = "You are not this groups' Organizer";
-        err.status = 403;
-        return next(err);
-    };
+router.post('/:groupId/images', [requireAuth, groupAuth], async (req, res) => {
 
     const newImage = await GroupImage.create({
         groupId: parseInt(req.params.groupId),
@@ -194,6 +200,6 @@ router.post('/:groupId/images', requireAuth, async (req, res, next) => {
 
     res.json(payload);
 
-})
+});
 
 module.exports = router;

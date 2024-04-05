@@ -74,7 +74,7 @@ async function memberTotal(groups) {
 };
 
 async function attendingTotal(events) {
-    if (events.length > 1) {
+    if (events.length) {
         for (let event of events) {
             const numAttending = await Attendance.count({
             where: { eventId: event.id }

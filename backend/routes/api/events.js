@@ -10,7 +10,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
 async function attendingTotal(events) {
-    if (events.length > 1) {
+    if (events.length) {
         for (let event of events) {
             const numAttending = await Attendance.count({
             where: { eventId: event.id }

@@ -89,6 +89,35 @@ async function groupAuth(req, res, next) {
 
 };
 
+async function venueAuth(req, res, next) {
+
+    const group = await Group.findByPk(req.params.groupId);
+
+    if (!group) {
+        const err = new Error("Group not found");
+        err.message = "Group couldn't be found";
+        err.status = 404;
+        return next(err);
+    };
+
+    const membership = await Membership.findOne({
+        where: {
+         userId: req.user.id,
+         groupid: req.params.groupId
+        }
+     });
+
+    if (req.user.id !== group.organizerId && membership.status !== "co-host") {
+        const err = new Error("Authorization Error");
+        err.title = "Authorization Error";
+        err.message = "You are not the organizer or co-host of this group";
+        err.status = 403;
+        return next(err);
+    };
+
+    return next();
+};
+
 // Get all groups
 router.get("/", async (req, res, next) => {
   const groups = await Group.findAll();
@@ -230,6 +259,18 @@ router.delete('/:groupId', [requireAuth, groupAuth], async (req, res, next) => {
     res.json({
         "message": "Succesfully deleted"
     })
+})
+
+// Get all venues for a group by id
+router.get("/:groupId/venues", [requireAuth, venueAuth], async (req, res, next) => {
+    const venues = await Venue.findAll({
+       where: {
+        groupId: req.params.groupId
+       },
+       attributes: { exclude : ["createdAt", "updatedAt"] }
+    });
+
+    res.json({ "Venues": venues});
 })
 
 module.exports = router;

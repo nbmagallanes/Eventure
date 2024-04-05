@@ -3,7 +3,7 @@ const { Op } = require("sequelize");
 const bcrypt = require("bcryptjs");
 
 const { setTokenCookie, requireAuth } = require("../../utils/auth");
-const { Group, GroupImage, Membership, Venue, User } = require("../../db/models");
+const { Group, GroupImage, Membership, Venue, User, Event, Attendance, EventImage } = require("../../db/models");
 
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
@@ -73,6 +73,22 @@ async function memberTotal(groups) {
     }
 };
 
+async function attendingTotal(events) {
+    if (events.length > 1) {
+        for (let event of events) {
+            const numAttending = await Attendance.count({
+            where: { eventId: event.id }
+            });
+            event.dataValues.numAttending = numAttending;
+        }   
+    } else {
+        const numAttending = await Attendance.count({
+            where: { eventId: events.id }
+        });
+        events.dataValues.numAttending = numAttending;
+    }
+};
+
 async function imagePreview(groups) {
   for (let group of groups) {
     const image = await GroupImage.findOne({
@@ -85,6 +101,20 @@ async function imagePreview(groups) {
     if (image) group.dataValues.previewImage = image.url;
     else group.dataValues.previewImage = null;
   }
+};
+
+async function eventsImagePreview(events) {
+    for (let event of events) {
+      const image = await EventImage.findOne({
+        where: {
+          eventId: event.id,
+          preview: true,
+        },
+      });
+  
+      if (image) event.dataValues.previewImage = image.url;
+      else event.dataValues.previewImage = null;
+    }
 };
 
 async function groupAuth(req, res, next) {
@@ -319,6 +349,41 @@ router.post('/:groupId/venues', [requireAuth, venueAuth, validateVenue], async (
 
     res.json(payload);
 });
+
+/// Get events of a group by id
+router.get('/:groupId/events', async (req, res, next) => {
+    const group = await Group.findByPk(req.params.groupId);
+
+    if (!group) {
+        const err = new Error("Group not found");
+        err.message = "Group couldn't be found";
+        err.status = 404;
+        return next(err);
+    };
+
+    const events = await Event.findAll({
+        where: {
+            groupId: req.params.groupId
+        },
+        attributes: ["id", "groupId", "venueId", "name", "type", "startDate", "endDate"],
+        include: [
+            { 
+                model: Group,
+                attributes: ["id", "name", "city", "state"]
+            },
+            { 
+            model: Venue,
+            attributes: ["id", "city", "state"]
+            }
+        ]
+    });
+
+    await attendingTotal(events);
+    await eventsImagePreview(events);
+
+    res.json({ "Events": events });
+
+})
 
 
 module.exports = router;

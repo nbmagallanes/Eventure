@@ -103,7 +103,7 @@ async function venueAuth(req, res, next) {
     const membership = await Membership.findOne({
         where: {
          userId: req.user.id,
-         groupid: req.params.groupId
+         groupId: req.params.groupId
         }
      });
 

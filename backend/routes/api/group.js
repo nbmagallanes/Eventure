@@ -221,4 +221,15 @@ router.put('/:groupId', [requireAuth, groupAuth, validateCreateGroup], async (re
     res.json(updatedGroup);
 })
 
+// Delete group
+router.delete('/:groupId', [requireAuth, groupAuth], async (req, res, next) => {
+    const group = await Group.findByPk(req.params.groupId);
+
+    group.destroy();
+
+    res.json({
+        "message": "Succesfully deleted"
+    })
+})
+
 module.exports = router;

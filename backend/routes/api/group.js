@@ -57,8 +57,31 @@ const validateVenue = [
     handleValidationErrors
 ];
 
+const validateEvent = [
+    check('name')
+        .exists({ checkFalsy: true })
+        .isLength({ min: 5 })
+        .withMessage("Name must be at least 5 characters"),
+    check('type')
+        .exists({ checkFalsy: true })
+        .isIn(["Online", "In person"])
+        .withMessage("Type must be Online or In person"),
+    check('capacity')
+        .exists({ checkFalsy: true })
+        .isInt()
+        .withMessage("Capacity must be an integer"),
+    check('price')
+        .exists({ checkFalsy: true })
+        .isFloat({ min: 0 })
+        .withMessage("Price is invalid"),
+    check('description')
+        .exists({ checkFalsy: true })
+        .withMessage("Description is required"),
+    handleValidationErrors
+];
+
 async function memberTotal(groups) {
-    if (groups.length > 1) {
+    if (groups.length) {
         for (let group of groups) {
             const numMembers = await Membership.count({
             where: { groupId: group.id }
@@ -158,7 +181,7 @@ async function venueAuth(req, res, next) {
         }
      });
 
-    if (req.user.id !== group.organizerId && membership.status !== "co-host") {
+    if ((!membership) || (req.user.id !== group.organizerId && membership.status !== "co-host")) {
         const err = new Error("Authorization Error");
         err.title = "Authorization Error";
         err.message = "You are not the organizer or co-host of this group";
@@ -185,7 +208,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
     include: {
       model: Membership,
       where: {
-        userId: req.user.id,
+        userId: parseInt(req.user.id),
         status: {
             [Op.or]: ["co-host", "member"]
         },
@@ -383,6 +406,64 @@ router.get('/:groupId/events', async (req, res, next) => {
 
     res.json({ "Events": events });
 
+});
+
+// Create event for a group by id
+router.post('/:groupId/events', [requireAuth, venueAuth, validateEvent], async (req, res, next) => {
+
+    const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body
+
+    let sDate = new Date(startDate)
+    let eDate = new Date(endDate)
+    let today = new Date()
+
+    if (sDate < today) {
+        const err = new Error("Start Date Error");
+        err.status = 400;
+        err.message = "Start date must be in the future";
+        return next(err);
+    } else if (sDate > eDate) {
+        const err = new Error("End date Error");
+        err.status = 400;
+        err.message = "End date is less than start date";
+        return next(err);
+    };
+
+    const venue = await Venue.findByPk(venueId);
+
+    if (!venue) { 
+    const err = new Error("No Venue Found");
+    err.status = 404;
+    err.message = "Venue couldn't be found";
+    return next(err);
+
+    }
+
+    const newEvent = await Event.create({
+        groupId: parseInt(req.params.groupId),
+        venueId, 
+        name, 
+        type, 
+        capacity, 
+        price, 
+        description, 
+        startDate, 
+        endDate
+    });
+
+    const payload = {
+        id: newEvent.id,
+        venueId: newEvent.venueId,
+        name: newEvent.name,
+        type: newEvent.type,
+        capacity: newEvent.capacity,
+        price: newEvent.price,
+        description: newEvent.description,
+        startDate: newEvent.startDate,
+        endDate: newEvent.endDate
+    }
+
+    res.json(payload)
 })
 
 

@@ -267,7 +267,20 @@ router.put('/:eventId', [requireAuth, eventAuth, validateEvent], async (req, res
         endDate
     });
 
-    res.json(updatedEvent);
+    const payload = {
+        id: updatedEvent.id,
+        groupId: updatedEvent.groupId,
+        venueId: updatedEvent.venueId,
+        name: updatedEvent.name,
+        type: updatedEvent.type,
+        capacity: updatedEvent.capacity,
+        price: updatedEvent.price,
+        description: updatedEvent.description,
+        startDate: updatedEvent.startDate,
+        endDate: updatedEvent.endDate
+    }
+
+    res.json(payload);
 })
 
 

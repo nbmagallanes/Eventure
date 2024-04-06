@@ -17,6 +17,29 @@ const { handleValidationErrors } = require("../../utils/validation");
 
 const router = express.Router();
 
+const validateEvent = [
+    check('name')
+        .exists({ checkFalsy: true })
+        .isLength({ min: 5 })
+        .withMessage("Name must be at least 5 characters"),
+    check('type')
+        .exists({ checkFalsy: true })
+        .isIn(["Online", "In person"])
+        .withMessage("Type must be Online or In person"),
+    check('capacity')
+        .exists({ checkFalsy: true })
+        .isInt()
+        .withMessage("Capacity must be an integer"),
+    check('price')
+        .exists({ checkFalsy: true })
+        .isFloat({ min: 0 })
+        .withMessage("Price is invalid"),
+    check('description')
+        .exists({ checkFalsy: true })
+        .withMessage("Description is required"),
+    handleValidationErrors
+];
+
 async function attendingTotal(events) {
   if (events.length) {
     for (let event of events) {
@@ -197,5 +220,55 @@ router.post("/:eventId/images", [requireAuth, eventAuth], async (req, res, next)
 
     res.json(payload);
 });
+
+// Edit an event by id
+router.put('/:eventId', [requireAuth, eventAuth, validateEvent], async (req, res, next) => {
+
+    const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
+
+    console.log(endDate)
+
+    let sDate = new Date(startDate)
+    let eDate = new Date(endDate)
+    let today = new Date()
+
+    if (sDate < today) {
+        const err = new Error("Start Date Error");
+        err.status = 400;
+        err.message = "Start date must be in the future";
+        return next(err);
+    } else if (sDate > eDate) {
+        const err = new Error("End date Error");
+        err.status = 400;
+        err.message = "End date is less than start date";
+        return next(err);
+    };
+
+    const venue = await Venue.findByPk(venueId);
+
+    if (!venue) { 
+    const err = new Error("No Venue Found");
+    err.status = 404;
+    err.message = "Venue couldn't be found";
+    return next(err);
+
+    }
+
+    const event = await Event.findByPk(req.params.eventId);
+  
+    const updatedEvent = await event.update({
+        venueId, 
+        name,
+        type,
+        capacity,
+        price,
+        description,
+        startDate, 
+        endDate
+    });
+
+    res.json(updatedEvent);
+})
+
 
 module.exports = router;

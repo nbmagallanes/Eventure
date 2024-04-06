@@ -33,9 +33,7 @@ router.get('/', async (req, res, next) => {
             groupId: parseInt(req.params.groupId),
             status: "co-host"
         }
-    })
-
-    // query.where.attributes = ["id", "firstName", "lastName"];
+    });
 
     if (req.user.id === group.organizerId || coHost) {
         query.include.push({
@@ -43,8 +41,6 @@ router.get('/', async (req, res, next) => {
             where: { groupId: parseInt(req.params.groupId) },
             attributes: ["status"]
         });
-
-        console.log(query);
     } else {
         query.include.push({
             model: Membership,
@@ -54,12 +50,12 @@ router.get('/', async (req, res, next) => {
             },
             attributes: ["status"]
         });
-    }
+    };
 
     const members = await User.findAll(query);
 
     res.json({"Members": members})
-})
+});
 
 
 module.exports = router;

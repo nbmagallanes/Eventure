@@ -41,6 +41,11 @@ module.exports = {
           groupId: 2,
           status: "member",
         },
+        {
+          userId: 4,
+          groupId: 2,
+          status: "pending",
+        },
       ],
       { validate: true }
     );

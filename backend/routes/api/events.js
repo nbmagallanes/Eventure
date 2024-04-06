@@ -70,7 +70,7 @@ async function eventsImagePreview(events) {
   }
 }
 
-async function eventAuth(req, res, next) {
+async function imageEventAuth(req, res, next) {
 
     const event = await Event.findByPk(req.params.eventId, {
         include: { model: Group }
@@ -99,6 +99,44 @@ async function eventAuth(req, res, next) {
 
     if (((!membership) && req.user.id !== organizerId) || 
     (membership && membership.status !== "co-host" && attendance.status !== "attending")) {
+        const err = new Error("Authorization Error");
+        err.title = "Authorization Error";
+        err.message = "You are not the organizer, co-host or attendee of this group";
+        err.status = 403;
+        return next(err);
+    };
+
+    return next();
+};
+
+async function eventAuth(req, res, next) {
+
+    const event = await Event.findByPk(req.params.eventId, {
+        include: { model: Group }
+    });
+
+    if (!event) {
+        const err = new Error("Event not found");
+        err.message = "Event couldn't be found";
+        err.status = 404;
+        return next(err);
+    };
+
+    const organizerId = event.Group.dataValues.organizerId;
+    const groupId = event.Group.dataValues.id;
+
+    const membership = await Membership.findOne({
+        where: {
+         userId: req.user.id,
+         groupId: groupId
+        }
+    });
+
+    const attendance = await Attendance.findOne({
+        where: { userId: req.user.id }
+    });
+
+    if (((!membership) && req.user.id !== organizerId) || (membership && membership.status !== "co-host")) {
         const err = new Error("Authorization Error");
         err.title = "Authorization Error";
         err.message = "You are not the organizer or co-host of this group";
@@ -202,7 +240,7 @@ router.get("/:eventId", async (req, res, next) => {
 });
 
 // Add image to event by eventId
-router.post("/:eventId/images", [requireAuth, eventAuth], async (req, res, next) => {
+router.post("/:eventId/images", [requireAuth, imageEventAuth], async (req, res, next) => {
 
     const { url, preview } = req.body;
 

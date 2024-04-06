@@ -321,5 +321,16 @@ router.put('/:eventId', [requireAuth, eventAuth, validateEvent], async (req, res
     res.json(payload);
 })
 
+// Delete event
+router.delete('/:eventId', [requireAuth, eventAuth], async (req, res, next) => {
+    const event = await Event.findByPk(req.params.eventId);
+
+    event.destroy();
+
+    res.json({
+        "message": "Succesfully deleted"
+    })
+})
+
 
 module.exports = router;

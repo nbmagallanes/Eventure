@@ -95,7 +95,7 @@ router.post("/", [requireAuth, checkGroup], async (req, res, next) => {
 });
 
 // Change status of a membership by group
-router.put('/', [requireAuth, membershipAuth, checkGroup], async (req, res, next) => {
+router.put('/', [requireAuth, checkGroup, membershipAuth], async (req, res, next) => {
 
     const reqUserMembership = await Membership.findOne({ where: { userId: req.user.id, groupId: parseInt(req.params.groupId) } })
 

@@ -13,7 +13,7 @@ const {
   User
 } = require("../../db/models");
 
-const { check } = require("express-validator");
+const { check, query } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 
 const router = express.Router();
@@ -39,6 +39,22 @@ const validateEvent = [
         .exists({ checkFalsy: true })
         .withMessage("Description is required"),
     handleValidationErrors
+];
+
+const eventPagination = [
+  query('page')
+    .optional()
+    .isInt({ max: 10 })
+    .withMessage("Page must be less than or queal to 10")
+    .isInt({ min: 1 })
+    .withMessage("Page must be greater than or queal to 1"),
+  query('size')
+    .optional()
+    .isInt({ max: 20})
+    .withMessage("Size must be less than or queal to 20")
+    .isInt({ min: 1})
+    .withMessage("Size must be greater than or queal to 1"),
+  handleValidationErrors
 ];
 
 async function attendingTotal(events) {
@@ -149,7 +165,21 @@ async function eventAuth(req, res, next) {
 };
 
 // Get events
-router.get("/", async (req, res, next) => {
+router.get("/", eventPagination, async (req, res, next) => {
+  let { page, size } = req.query;
+
+  console.log(page, size)
+    
+  page = page === undefined ? 1 : parseInt(page);
+  size = size === undefined ? 20 : parseInt(size);
+
+  const pagination = {};
+
+  if (size > 0 && page > 0 && page < 11 && size < 21) {
+    pagination.limit = size,
+    pagination.offset = size * (page - 1);
+  } 
+
   const events = await Event.findAll({
     attributes: [
       "id",
@@ -170,6 +200,8 @@ router.get("/", async (req, res, next) => {
         attributes: ["id", "city", "state"],
       },
     ],
+
+    ...pagination,
   });
 
   await attendingTotal(events);

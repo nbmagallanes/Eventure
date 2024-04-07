@@ -365,14 +365,12 @@ router.get('/:eventId/attendees', async (req, res, next) => {
   query.attributes = ["id", "firstName", "lastName"];
 
   if (req.user.id === group.organizerId || coHost) {
-    console.log("inside if")
     query.include.push({
         model: Attendance,
         where: { eventId: parseInt(req.params.eventId) },
         attributes: ["status"]
     });
   } else {
-    console.log("inside else")
     query.include.push({
         model: Attendance,
         where: { 
@@ -381,7 +379,6 @@ router.get('/:eventId/attendees', async (req, res, next) => {
         },
         attributes: ["status"]
     });
-    console.log("query" , query)
   };
 
   const attendees = await User.findAll(query);

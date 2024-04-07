@@ -145,9 +145,56 @@ router.put('/', [requireAuth], async (req, res, next) => {
         status: updateAttendance.status
     };
 
-    console.log(payload)
-
     res.json(payload);
+});
+
+// Delete attendance by id
+router.delete('/:userId', requireAuth, async (req, res, next) => {
+
+    const event = await Event.findByPk(req.params.eventId, {
+        include: { model: Group }
+    });
+
+    if (!event) {
+      const err = new Error("Event not found");
+      err.message = "Event couldn't be found";
+      err.status = 404;
+      return next(err)
+    };
+
+    const user = await User.findByPk(req.params.userId);
+
+    if (!user) {
+        const err = new Error("User not found");
+        err.message = "User couldn't be found";
+        err.status = 404;
+        return next(err)
+    };
+
+    if (req.user.id !== event.Group.organizerId && req.user.id !== parseInt(req.params.userId)) {
+        const err = new Error("Authorization Error");
+        err.title = "Authorization Error";
+        err.message = "You are not this groups' organizer or this attendance's owner";
+        err.status = 403;
+        return next(err);
+    };
+
+    const attendance = await Attendance.findOne({
+        where: { userId: user.id, eventId: event.id }
+    })
+
+    if (!attendance) {
+        const err = new Error("Attendance not found");
+        err.message = "Attendance does not exist for this User";
+        err.status = 404;
+        return next(err)
+    };
+
+    attendance.destroy();
+
+    res.json({
+        "message": "Successfully deleted attendance from event"
+    });
 })
 
 module.exports = router;

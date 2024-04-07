@@ -7,6 +7,7 @@ const eventsRouter = require('./events.js');
 const membersRouter = require('./members.js')
 const membershipsRouter = require("./memberships.js");
 const attendancesRouter = require("./attendances.js");
+const groupImages = require("./group-images.js");
 
 const { restoreUser } = require('../../utils/auth.js');
 
@@ -30,6 +31,8 @@ router.use('/groups/:groupId/members', membersRouter);
 router.use('/groups/:groupId/membership', membershipsRouter);
 
 router.use('/events/:eventId/attendance', attendancesRouter);
+
+router.use('/group-images', groupImages);
 
 router.post('/test', (req, res) => {
   res.json({ requestBody: req.body });

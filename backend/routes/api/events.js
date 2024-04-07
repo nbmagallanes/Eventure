@@ -386,7 +386,7 @@ router.get('/:eventId/attendees', async (req, res, next) => {
 
   const attendees = await User.findAll(query);
 
-  res.json(attendees)
+  res.json({ "Attendees": attendees })
 });
 
 

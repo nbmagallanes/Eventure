@@ -464,7 +464,8 @@ router.post('/:groupId/events', [requireAuth, venueAuth, validateEvent], async (
     }
 
     res.json(payload)
-})
+});
+//change
 
 
 module.exports = router;

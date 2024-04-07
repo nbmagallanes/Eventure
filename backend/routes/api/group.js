@@ -204,6 +204,7 @@ router.get("/", async (req, res, next) => {
 // Get groups joined or organized by Current User
 router.get("/current", requireAuth, async (req, res, next) => {
   const groups = await Group.findAll({
+    where: { organizerId: req.user.id },
     include: {
       model: Membership,
       where: {

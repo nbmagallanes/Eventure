@@ -138,7 +138,16 @@ router.put('/', [requireAuth], async (req, res, next) => {
         status,
     });
 
-    res.json(updateAttendance)
+    const payload ={
+        id: updateAttendance.id,
+        eventId: updateAttendance.eventId,
+        userId: updateAttendance.userId,
+        status: updateAttendance.status
+    };
+
+    console.log(payload)
+
+    res.json(payload);
 })
 
 module.exports = router;

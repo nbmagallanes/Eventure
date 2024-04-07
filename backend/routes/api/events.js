@@ -10,6 +10,7 @@ const {
   GroupImage,
   Attendance,
   EventImage,
+  User
 } = require("../../db/models");
 
 const { check } = require("express-validator");
@@ -330,7 +331,63 @@ router.delete('/:eventId', [requireAuth, eventAuth], async (req, res, next) => {
     res.json({
         "message": "Succesfully deleted"
     })
-})
+});
+
+// Get event attendees
+router.get('/:eventId/attendees', async (req, res, next) => {
+
+  const event = await Event.findByPk(req.params.eventId);
+
+  if (!event) {
+    const err = new Error("Event not found");
+    err.message = "Event couldn't be found";
+    err.status = 404;
+    return next(err)
+  };
+
+  let query = {
+      where: {},
+      include: [],
+  };
+
+  const groupId = event.groupId;
+
+  const coHost = await Membership.findOne({
+      where: { 
+          userId: req.user.id,
+          groupId: groupId,
+          status: "co-host"
+      }
+  });
+
+  const group = await Group.findByPk(groupId);
+
+  query.attributes = ["id", "firstName", "lastName"];
+
+  if (req.user.id === group.organizerId || coHost) {
+    console.log("inside if")
+    query.include.push({
+        model: Attendance,
+        where: { eventId: parseInt(req.params.eventId) },
+        attributes: ["status"]
+    });
+  } else {
+    console.log("inside else")
+    query.include.push({
+        model: Attendance,
+        where: { 
+            eventId: parseInt(req.params.eventId),
+            status: ["attending", "waitlist"]
+        },
+        attributes: ["status"]
+    });
+    console.log("query" , query)
+  };
+
+  const attendees = await User.findAll(query);
+
+  res.json(attendees)
+});
 
 
 module.exports = router;

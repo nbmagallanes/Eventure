@@ -73,4 +73,72 @@ router.post('/', [requireAuth], async (req, res, next) => {
     res.json(payload)
 });
 
+// Change the status of an attendance for an event by id
+router.put('/', [requireAuth], async (req, res, next) => {
+
+    const { userId, status } = req.body
+
+    const event = await Event.findByPk(req.params.eventId, {
+        include: { model: Group }
+    });
+
+    if (!event) {
+      const err = new Error("Event not found");
+      err.message = "Event couldn't be found";
+      err.status = 404;
+      return next(err)
+    };
+
+    const user = await User.findByPk(userId);
+
+    if (!user) {
+        const err = new Error("User not found");
+        err.message = "User couldn't be found";
+        err.status = 404;
+        return next(err)
+    };
+
+    const coHost = await Membership.findOne({
+        where: { 
+            userId: req.user.id,
+            groupId: event.Group.id,
+            status: "co-host"
+        }
+    });
+
+    if (req.user.id !== event.Group.organizerId && !coHost) {
+        const err = new Error("Authorization Error");
+        err.title = "Authorization Error";
+        err.message = "You are not this groups' organizer or attendee";
+        err.status = 403;
+        return next(err);
+    };
+
+    if (status === "pending") {
+        const err = new Error("Status change error");
+        err.message = "Cannot change an attendance status to pending";
+        err.status = 400;
+        return next(err);
+    }
+
+    const attendance = await Attendance.findOne({
+        where: { userId: userId, eventId: parseInt(req.params.eventId) }
+    })
+
+    if (!attendance) {
+        const err = new Error("Attendance Error");
+        err.title = "Attendance Error";
+        err.message = "Attendance between the user and the event does not exist";
+        err.status = 404;
+        return next(err);
+    };
+
+    const updateAttendance = await attendance.update({
+        userId,
+        status,
+    });
+
+    res.json(updateAttendance)
+})
+
 module.exports = router;

@@ -33,6 +33,22 @@ const checkGroup = async (req, res, next) => {
   return next();
 };
 
+const membershipAuth = async (req, res, next) => {
+
+    const group = await Group.findByPk(req.params.groupId);
+
+    if (req.user.id !== group.organizerId) {
+        const err = new Error("Authorization Error");
+        err.title = "Authorization Error";
+        err.message = "You are not this groups' organizer or co-host";
+        err.status = 403;
+        return next(err);
+    };
+
+    return next();
+
+};
+
 //Request membership
 router.post("/", [requireAuth, checkGroup], async (req, res, next) => {
 
@@ -76,6 +92,67 @@ router.post("/", [requireAuth, checkGroup], async (req, res, next) => {
   }
 
   res.json(result);
+});
+
+// Change status of a membership by group
+router.put('/', [requireAuth, membershipAuth, checkGroup], async (req, res, next) => {
+
+    const reqUserMembership = await Membership.findOne({ where: { userId: req.user.id, groupId: parseInt(req.params.groupId) } })
+
+    const { memberId, status } = req.body
+
+    const group = await Group.findByPk(req.params.groupId);
+
+    const user = await User.findByPk(memberId);
+
+    if (!user) {
+        const err = new Error("User not found");
+        err.message = "User couldn't be found";
+        err.status = 404;
+        return next(err);
+    };
+
+    const membership = await Membership.findOne({
+        where: { userId: user.id, groupId: parseInt(req.params.groupId) }
+    });
+
+    if (!membership) {
+        const err = new Error("Membership not found");
+        err.message = "Membership between the user and the group does not exist";
+        err.status = 404;
+        return next(err);
+    };
+
+    if (status === "pending") {
+        const err = new Error("Pending change error");
+        err.message = "Cannot change a membership status to pending";
+        err.status = 400;
+        return next(err);
+
+    }
+
+    if (group.organizerId === req.user.id && membership.status === "member" && status === "co-host") {
+        
+        updateStatus = await membership.update({
+            status: status
+        });
+
+    } else if ((group.organizerId === req.user.id || 
+        (reqUserMembership && reqUserMembership.status === "co-host")) &&
+        (membership.status === "pending" && status === "member")) {
+            updateStatus = await membership.update({
+                status: status
+            });
+    } 
+
+    const payload = {
+        id: membership.id,
+        groupId: parseInt(req.params.groupId),
+        memberId: user.id,
+        status: updateStatus.status
+    }
+
+    res.json(payload)
 });
 
 module.exports = router;

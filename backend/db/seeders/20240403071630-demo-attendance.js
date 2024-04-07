@@ -23,7 +23,7 @@ module.exports = {
       [
         {
           eventId: 1,
-          userId: 1,
+          userId: 4,
           status: "attending",
         },
         {

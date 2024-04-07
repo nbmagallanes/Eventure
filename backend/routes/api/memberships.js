@@ -155,4 +155,47 @@ router.put('/', [requireAuth, checkGroup, membershipAuth], async (req, res, next
     res.json(payload)
 });
 
+// Delete membership
+router.delete('/:memberId', [requireAuth, checkGroup], async (req, res, next) => {
+
+    const user = await User.findByPk(parseInt(req.params.memberId));
+
+    if (!user) {
+        const err = new Error("User not found");
+        err.message = "User couldn't be found";
+        err.status = 404;
+        return next(err);
+    };
+
+    const group = await Group.findByPk(req.params.groupId);
+
+    if (req.user.id !== group.organizerId && req.user.id !== parseInt(req.params.memberId)) {
+        const err = new Error("Authorization Error");
+        err.title = "Authorization Error";
+        err.message = "You are not this groups' organizer or this membership's owner";
+        err.status = 403;
+        return next(err);
+    };
+
+    const membership = await Membership.findOne({
+        where: {
+            userId: parseInt(req.params.memberId),
+            groupId: parseInt(req.params.groupId)
+        }
+    });
+
+    if (!membership) {
+        const err = new Error("Membership not found");
+        err.message = "Membership does not exist for this User";
+        err.status = 404;
+        return next(err);
+    };
+
+    membership.destroy();
+
+    res.json( {
+        "message": "Succesfully deleted membership from group"
+    });
+});
+
 module.exports = router;

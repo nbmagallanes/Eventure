@@ -203,24 +203,37 @@ router.get("/", async (req, res, next) => {
 
 // Get groups joined or organized by Current User
 router.get("/current", requireAuth, async (req, res, next) => {
-  const groups = await Group.findAll({
-    where: { organizerId: req.user.id },
-    include: {
-      model: Membership,
-      where: {
-        userId: parseInt(req.user.id),
-        status: {
-            [Op.or]: ["co-host", "member"]
+    let newArr = [];
+    const groupOrg = await Group.findAll({ where: { organizerId: req.user.id } });
+    
+    const groupMem = await Group.findAll({
+        include: {
+            model: Membership,
+            where: {
+                userId: req.user.id,
+                status: { [Op.or]: ["co-host", "member"] }
+            },
+            attributes: []
         },
-      },
-      attributes: [],
-    },
-  });
+    });
 
-  await memberTotal(groups);
-  await imagePreview(groups);
+    const groups = [...groupOrg, ...groupMem];
 
-  return res.json({ Groups: groups });
+    for (let group of groups) {
+        await memberTotal(groups);
+        await imagePreview(groups);
+
+        const payload = {
+            ...group.toJSON()
+        };
+
+        payload.createdAt = payload.createdAt.toString();
+        payload.updatedAt = payload.updatedAt.toString();
+
+        newArr.push(payload);
+    };
+  
+  return res.json({ "Groups": newArr});
 });
 
 // Get group info by Id

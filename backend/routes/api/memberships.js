@@ -188,7 +188,7 @@ router.delete('/:memberId', [requireAuth, checkGroup], async (req, res, next) =>
     if (req.user.id !== group.organizerId && req.user.id !== parseInt(req.params.memberId)) {
         const err = new Error("Authorization Error");
         err.title = "Authorization Error";
-        err.message = "You are not this groups' organizer or this membership's owner";
+        err.message = "You are not authorized to make this request";
         err.status = 403;
         return next(err);
     };

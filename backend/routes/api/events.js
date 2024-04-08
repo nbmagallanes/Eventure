@@ -114,13 +114,20 @@ async function imageEventAuth(req, res, next) {
         where: { userId: req.user.id }
     });
 
-    if (((!membership) && req.user.id !== organizerId) || 
-    (membership && membership.status !== "co-host" && attendance.status !== "attending")) {
-        const err = new Error("Authorization Error");
-        err.title = "Authorization Error";
-        err.message = "You are not authorized to make this request";
-        err.status = 403;
-        return next(err);
+    // console.log("this is the membership", membership.status),
+    // console.log("this is the attendance", attendance.status);
+
+    if ((req.user.id !== organizerId) || 
+    (membership && membership.status !== "co-host" && 
+    attendance.status !== "attending")) {
+      // console.log("check bools", (!membership && req.user.id !== organizerId),
+      // (membership && membership.status !== "co-host" && attendance.status !== "attending"))
+
+      const err = new Error("Authorization Error");
+      err.title = "Authorization Error";
+      err.message = "You are not authorized to make this request";
+      err.status = 403;
+      return next(err);
     };
 
     return next();

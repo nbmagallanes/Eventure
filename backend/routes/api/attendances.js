@@ -33,9 +33,10 @@ router.post('/', [requireAuth], async (req, res, next) => {
     });
 
     if (!membership) {
-        const err = new Error("Not a member");
-        err.message = "Must be a member of this group to request to attend this event";
-        err.status = 404;
+        const err = new Error("Authorization Error");
+        err.title = "Authorization Error";
+        err.message = "You are not authorized to make this request";
+        err.status = 403;
         return next(err);
     };
 

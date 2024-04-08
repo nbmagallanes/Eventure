@@ -35,7 +35,7 @@ router.post('/', [requireAuth], async (req, res, next) => {
     if (!membership) {
         const err = new Error("Authorization Error");
         err.title = "Authorization Error";
-        err.message = "You are not authorized to make this request";
+        err.message = "Forbidden";
         err.status = 403;
         return next(err);
     };
@@ -110,7 +110,7 @@ router.put('/', [requireAuth], async (req, res, next) => {
     if (req.user.id !== event.Group.organizerId && !coHost) {
         const err = new Error("Authorization Error");
         err.title = "Authorization Error";
-        err.message = "You are not authorized to make this request";
+        err.message = "Forbidden";
         err.status = 403;
         return next(err);
     };
@@ -175,7 +175,7 @@ router.delete('/:userId', requireAuth, async (req, res, next) => {
     if (req.user.id !== event.Group.organizerId && req.user.id !== parseInt(req.params.userId)) {
         const err = new Error("Authorization Error");
         err.title = "Authorization Error";
-        err.message = "You are not authorized to make this request";
+        err.message = "Forbidden";
         err.status = 403;
         return next(err);
     };

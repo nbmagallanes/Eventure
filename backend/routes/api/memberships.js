@@ -48,7 +48,7 @@ const membershipAuth = async (req, res, next) => {
   if (req.user.id !== group.organizerId || (membership && membership.status !== "co-host")) {
     const err = new Error("Authorization Error");
     err.title = "Authorization Error";
-    err.message = "You are not authorized to make this request";
+    err.message = "Forbidden";
     err.status = 403;
     return next(err);
   };
@@ -154,7 +154,7 @@ router.put('/', [requireAuth, checkGroup, membershipAuth], async (req, res, next
     console.log("inside else error")
     const err = new Error("Authorization Error");
     err.title = "Authorization Error";
-    err.message = "You are not Authorized to make this request";
+    err.message = "Forbidden";
     err.status = 403;
     return next(err);
   }
@@ -188,7 +188,7 @@ router.delete('/:memberId', [requireAuth, checkGroup], async (req, res, next) =>
     if (req.user.id !== group.organizerId && req.user.id !== parseInt(req.params.memberId)) {
         const err = new Error("Authorization Error");
         err.title = "Authorization Error";
-        err.message = "You are not authorized to make this request";
+        err.message = "Forbidden";
         err.status = 403;
         return next(err);
     };

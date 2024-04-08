@@ -58,14 +58,10 @@ const validateEvent = [
 const eventPagination = [
   query('page')
     .optional()
-    .isInt({ max: 10 })
-    .withMessage("Page must be less than or queal to 10")
     .isInt({ min: 1 })
     .withMessage("Page must be greater than or queal to 1"),
   query('size')
     .optional()
-    .isInt({ max: 20})
-    .withMessage("Size must be less than or queal to 20")
     .isInt({ min: 1})
     .withMessage("Size must be greater than or queal to 1"),
   handleValidationErrors
@@ -132,7 +128,7 @@ async function imageEventAuth(req, res, next) {
 
       const err = new Error("Authorization Error");
       err.title = "Authorization Error";
-      err.message = "You are not authorized to make this request";
+      err.message = "Forbidden";
       err.status = 403;
       return next(err);
     };
@@ -170,7 +166,7 @@ async function eventAuth(req, res, next) {
     if (((!membership) && req.user.id !== organizerId) || (membership && membership.status !== "co-host")) {
         const err = new Error("Authorization Error");
         err.title = "Authorization Error";
-        err.message = "You are not authorized to make this request";
+        err.message = "Forbidden";
         err.status = 403;
         return next(err);
     };
@@ -182,14 +178,15 @@ async function eventAuth(req, res, next) {
 router.get("/", eventPagination, async (req, res, next) => {
   let { page, size } = req.query;
 
-  console.log(page, size)
-    
-  page = page === undefined ? 1 : parseInt(page);
-  size = size === undefined ? 20 : parseInt(size);
+  if (!page || page > 10) page = 1;
+  if (!size || size > 20) size = 20;
+
+  page = parseInt(page);
+  size = parseInt(size);
 
   const pagination = {};
 
-  if (size > 0 && page > 0 && page < 11 && size < 21) {
+  if (size > 0 && page > 0) {
     pagination.limit = size,
     pagination.offset = size * (page - 1);
   } 

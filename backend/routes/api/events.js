@@ -117,7 +117,7 @@ async function imageEventAuth(req, res, next) {
     // console.log("this is the membership", membership.status),
     // console.log("this is the attendance", attendance.status);
 
-    if ((req.user.id !== organizerId) && (!membership || (membership.status !== "co-host" && attendance.status !== "attending"))) {
+    if ((req.user.id !== organizerId) && (!membership || (membership.status !== "co-host" && (!attendance || attendance.status !== "attending")))) {
       // console.log("check bools", (!membership && req.user.id !== organizerId),
       // (membership && membership.status !== "co-host" && attendance.status !== "attending"))
 

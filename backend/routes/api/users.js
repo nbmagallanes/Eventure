@@ -49,11 +49,37 @@ router.get('/', async (req, res) => {
 router.post(
   '/',
   validateSignup,
-  async (req, res) => {
-    const { firstName, lastName, email, password, username } = req.body;
-    const hashedPassword = bcrypt.hashSync(password);
-    const user = await User.create({ firstName, lastName, email, username, hashedPassword });
+  async (req, res, next) => {
+    let credentials = [];
 
+    const { firstName, lastName, email, password, username } = req.body;
+
+    const users = await User.findAll( {attributes: ["email", "username"]});
+
+    users.forEach(user => {credentials.push(user.toJSON())});
+
+    for (let cred of credentials) {
+      if (cred.email === email) {
+        const err = new Error("User already exists");
+        err.title = "Validation Error";
+        err.message = "User already exists";
+        err.errors = { "email": "User with that email already exists" }
+        err.status = 500;
+        return next(err);
+      } else if (cred.username === username) {
+        const err = new Error("User already exists");
+        err.title = "Validation Error";
+        err.message = "User already exists";
+        err.errors = { "username": "User with that username already exists" }
+        err.status = 500;
+        return next(err);
+      }
+    };
+
+    const hashedPassword = bcrypt.hashSync(password);
+
+    const user = await User.create({ firstName, lastName, email, username, hashedPassword });
+    
     const safeUser = {
       id: user.id,
       firstName: user.firstName,

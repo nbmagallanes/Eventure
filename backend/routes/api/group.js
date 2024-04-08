@@ -355,7 +355,7 @@ router.put('/:groupId', [requireAuth, groupAuth, validateCreateGroup], async (re
 router.delete('/:groupId', [requireAuth, groupAuth], async (req, res, next) => {
     const group = await Group.findByPk(req.params.groupId);
 
-    group.destroy();
+    await group.destroy();
 
     res.json({
         "message": "Succesfully deleted"
@@ -468,7 +468,7 @@ router.post('/:groupId/events', [requireAuth, venueAuth, validateEvent], async (
         name: newEvent.name,
         type: newEvent.type,
         capacity: newEvent.capacity,
-        price: Number(newEvent.price).toFixed(2),
+        price: Number(newEvent.price),
         description: newEvent.description,
         startDate: newEvent.startDate,
         endDate: newEvent.endDate

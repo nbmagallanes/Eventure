@@ -354,7 +354,7 @@ router.put('/:eventId', [requireAuth, eventAuth, validateEvent], async (req, res
 router.delete('/:eventId', [requireAuth, eventAuth], async (req, res, next) => {
     const event = await Event.findByPk(req.params.eventId);
 
-    event.destroy();
+    await event.destroy();
 
     res.json({
         "message": "Succesfully deleted"

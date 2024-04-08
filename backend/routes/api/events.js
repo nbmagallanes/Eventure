@@ -118,7 +118,7 @@ async function imageEventAuth(req, res, next) {
     (membership && membership.status !== "co-host" && attendance.status !== "attending")) {
         const err = new Error("Authorization Error");
         err.title = "Authorization Error";
-        err.message = "You are not the organizer, co-host or attendee of this group";
+        err.message = "You are not authorized to make this request";
         err.status = 403;
         return next(err);
     };
@@ -156,7 +156,7 @@ async function eventAuth(req, res, next) {
     if (((!membership) && req.user.id !== organizerId) || (membership && membership.status !== "co-host")) {
         const err = new Error("Authorization Error");
         err.title = "Authorization Error";
-        err.message = "You are not the organizer or co-host of this group";
+        err.message = "You are not authorized to make this request";
         err.status = 403;
         return next(err);
     };

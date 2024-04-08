@@ -153,7 +153,7 @@ async function groupAuth(req, res, next) {
     if (req.user.id !== group.organizerId) {
         const err = new Error("Authorization Error");
         err.title = "Authorization Error";
-        err.message = "You are not this groups' Organizer";
+        err.message = "You are not authorized to make this request";
         err.status = 403;
         return next(err);
     };
@@ -183,7 +183,7 @@ async function venueAuth(req, res, next) {
     if ((!membership && req.user.id !== group.organizerId ) || (membership && membership.status !== "co-host")) {
         const err = new Error("Authorization Error");
         err.title = "Authorization Error";
-        err.message = "You are not the organizer or co-host of this group";
+        err.message = "You are not authorized to make this request";
         err.status = 403;
         return next(err);
     };

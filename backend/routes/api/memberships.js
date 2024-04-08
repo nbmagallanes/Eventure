@@ -48,7 +48,7 @@ const membershipAuth = async (req, res, next) => {
   if (req.user.id !== group.organizerId || (membership && membership.status !== "co-host")) {
     const err = new Error("Authorization Error");
     err.title = "Authorization Error";
-    err.message = "You are not this groups' organizer or co-host";
+    err.message = "You are not authorized to make this request";
     err.status = 403;
     return next(err);
   };
@@ -138,19 +138,28 @@ router.put('/', [requireAuth, checkGroup, membershipAuth], async (req, res, next
     return next(err);
   };
 
-  if (group.organizerId === req.user.id && membership.status === "member" && status === "co-host") {
-      
-  updateStatus = await membership.update({
-    status: status
-  });
-
+  if (group.organizerId === req.user.id && status === "co-host") {
+    updateStatus = await membership.update({
+      status: status
+    });
+    console.log("inside if statement")
   } else if ((group.organizerId === req.user.id || 
     (reqUserMembership && reqUserMembership.status === "co-host")) &&
-    (membership.status === "pending" && status === "member")) {
+    (status === "member")) {
+      console.log("inside else if statement1")
       updateStatus = await membership.update({
         status: status
       });
-  };
+  } else {
+    console.log("inside else error")
+    const err = new Error("Authorization Error");
+    err.title = "Authorization Error";
+    err.message = "You are not Authorized to make this request";
+    err.status = 403;
+    return next(err);
+  }
+  console.log("this is the updateStatus", updateStatus);
+  console.log("statusssss", updateStatus.status)
 
   const payload = {
     id: membership.id,

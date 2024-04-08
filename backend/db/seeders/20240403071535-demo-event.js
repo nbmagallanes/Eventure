@@ -27,7 +27,7 @@ module.exports = {
           name: "SF Book Club: Meeting 1",
           description:
             "Meet outside of Peet's Coffee, don't forget to bring your book!",
-          type: "In Person",
+          type: "In person",
           capacity: 15,
           price: 0,
           startDate: "2024-04-05",
@@ -39,7 +39,7 @@ module.exports = {
           name: "SF Book Club: Meeting 2",
           description:
             "Meet outside of Peet's Coffee, don't forget to bring your book!",
-          type: "In Person",
+          type: "In person",
           capacity: 15,
           price: 0,
           startDate: "2024-04-12",
@@ -51,7 +51,7 @@ module.exports = {
           name: "Painting Session",
           description:
             "All materials will be provided for this event. Come ready to get creative and paint!",
-          type: "In Person",
+          type: "In person",
           capacity: 20,
           price: 10,
           startDate: "2024-07-10",

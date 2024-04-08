@@ -180,7 +180,7 @@ async function venueAuth(req, res, next) {
         }
      });
 
-    if ((!membership) || (req.user.id !== group.organizerId && membership.status !== "co-host")) {
+    if ((!membership && req.user.id !== group.organizerId ) || (membership && membership.status !== "co-host")) {
         const err = new Error("Authorization Error");
         err.title = "Authorization Error";
         err.message = "You are not the organizer or co-host of this group";

@@ -63,7 +63,13 @@ router.get('/', checkGroup, async (req, res, next) => {
 
     const members = await User.findAll(query);
 
-    res.json({"Members": members})
+    let newArr =[];
+    if (members) {
+        members.forEach(member => { newArr.push(member.toJSON()) })
+        newArr.forEach(member => { member.Memberships =  member.Memberships[0]})
+    };
+
+    res.json({"Members": newArr})
 });
 
 module.exports = router;

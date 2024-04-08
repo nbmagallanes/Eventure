@@ -280,7 +280,7 @@ router.get("/:eventId", async (req, res, next) => {
     numAttending: event.dataValues.numAttending,
     Group: event.Group,
     Venue: event.Venue,
-    EventImages: event.EventImage,
+    EventImages: event.EventImages,
   };
 
   res.json(payload);
@@ -411,7 +411,13 @@ router.get('/:eventId/attendees', async (req, res, next) => {
 
   const attendees = await User.findAll(query);
 
-  res.json({ "Attendees": attendees })
+  let newArr =[];
+  if (attendees) {
+    attendees.forEach(attendee => { newArr.push(attendee.toJSON()) })
+    newArr.forEach(attendee => { attendee.Attendances =  attendee.Attendances[0]})
+  };
+
+  res.json({ "Attendees": newArr })
 });
 
 

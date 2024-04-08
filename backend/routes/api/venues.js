@@ -80,7 +80,17 @@ router.put('/:venueId', [requireAuth, editVenueAuth, validateVenue], async (req,
         lng 
     });
 
-    res.json(updatedVenue)
+    const payload = {
+        id: updatedVenue.id,
+        groupId: updatedVenue.groupId,
+        address: updatedVenue.address,
+        city: updatedVenue.city,
+        state: updatedVenue.state,
+        lat: updatedVenue.lat,
+        lng: updatedVenue.lng
+    }
+
+    res.json(payload)
 });
 
 module.exports = router;

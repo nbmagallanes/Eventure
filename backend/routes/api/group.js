@@ -76,6 +76,20 @@ const validateEvent = [
     check('description')
         .exists({ checkFalsy: true })
         .withMessage("Description is required"),
+    check('startDate')
+        .custom(startDate => {
+            let today = new Date();
+            let sDate = new Date(startDate);
+            return sDate > today;
+        })
+        .withMessage("Start date must be in the future"),
+    check('endDate')
+        .custom((endDate, { req }) => {
+            let eDate = new Date(endDate);
+            let sDate = new Date(req.body.startDate);
+            return eDate > sDate;
+        })
+        .withMessage("End date is less than start date"),
     handleValidationErrors
 ];
 
@@ -424,23 +438,7 @@ router.get('/:groupId/events', async (req, res, next) => {
 // Create event for a group by id
 router.post('/:groupId/events', [requireAuth, venueAuth, validateEvent], async (req, res, next) => {
 
-    const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body
-
-    let sDate = new Date(startDate)
-    let eDate = new Date(endDate)
-    let today = new Date()
-
-    if (sDate < today) {
-        const err = new Error("Start Date Error");
-        err.status = 400;
-        err.message = "Start date must be in the future";
-        return next(err);
-    } else if (sDate > eDate) {
-        const err = new Error("End date Error");
-        err.status = 400;
-        err.message = "End date is less than start date";
-        return next(err);
-    };
+    const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
 
     const venue = await Venue.findByPk(venueId);
 
@@ -449,8 +447,7 @@ router.post('/:groupId/events', [requireAuth, venueAuth, validateEvent], async (
     err.status = 404;
     err.message = "Venue couldn't be found";
     return next(err);
-
-    }
+    };
 
     const newEvent = await Event.create({
         groupId: parseInt(req.params.groupId),
@@ -466,11 +463,12 @@ router.post('/:groupId/events', [requireAuth, venueAuth, validateEvent], async (
 
     const payload = {
         id: newEvent.id,
+        groupId: newEvent.groupId,
         venueId: newEvent.venueId,
         name: newEvent.name,
         type: newEvent.type,
         capacity: newEvent.capacity,
-        price: newEvent.price,
+        price: Number(newEvent.price).toFixed(2),
         description: newEvent.description,
         startDate: newEvent.startDate,
         endDate: newEvent.endDate
@@ -478,7 +476,6 @@ router.post('/:groupId/events', [requireAuth, venueAuth, validateEvent], async (
 
     res.json(payload)
 });
-//change
 
 
 module.exports = router;

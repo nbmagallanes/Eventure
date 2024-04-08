@@ -21,8 +21,6 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
         return next(err);
     };
 
-    console.log(image.eventId)
-
     const event = await Event.findOne({
         where: { id: image.eventId },
         include: { model: Group }

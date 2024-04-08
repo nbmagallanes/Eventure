@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       price: {
-        type: DataTypes.FLOAT(6,2),
+        type: DataTypes.DECIMAL(6,2),
         allowNull: false,
       },
       startDate: {

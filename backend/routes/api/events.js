@@ -38,6 +38,20 @@ const validateEvent = [
     check('description')
         .exists({ checkFalsy: true })
         .withMessage("Description is required"),
+    check('startDate')
+      .custom(startDate => {
+        let today = new Date();
+        let sDate = new Date(startDate);
+        return sDate > today;
+      })
+      .withMessage("Start date must be in the future"),
+    check('endDate')
+      .custom((endDate, { req }) => {
+        let eDate = new Date(endDate);
+        let sDate = new Date(req.body.startDate);
+        return eDate > sDate;
+      })
+      .withMessage("End date is less than start date"),
     handleValidationErrors
 ];
 
@@ -114,12 +128,7 @@ async function imageEventAuth(req, res, next) {
         where: { userId: req.user.id }
     });
 
-    // console.log("this is the membership", membership.status),
-    // console.log("this is the attendance", attendance.status);
-
     if ((req.user.id !== organizerId) && (!membership || (membership.status !== "co-host" && (!attendance || attendance.status !== "attending")))) {
-      // console.log("check bools", (!membership && req.user.id !== organizerId),
-      // (membership && membership.status !== "co-host" && attendance.status !== "attending"))
 
       const err = new Error("Authorization Error");
       err.title = "Authorization Error";
@@ -301,24 +310,6 @@ router.post("/:eventId/images", [requireAuth, imageEventAuth], async (req, res, 
 router.put('/:eventId', [requireAuth, eventAuth, validateEvent], async (req, res, next) => {
 
     const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
-
-    console.log(endDate)
-
-    let sDate = new Date(startDate)
-    let eDate = new Date(endDate)
-    let today = new Date()
-
-    if (sDate < today) {
-        const err = new Error("Start Date Error");
-        err.status = 400;
-        err.message = "Start date must be in the future";
-        return next(err);
-    } else if (sDate > eDate) {
-        const err = new Error("End date Error");
-        err.status = 400;
-        err.message = "End date is less than start date";
-        return next(err);
-    };
 
     const venue = await Venue.findByPk(venueId);
 

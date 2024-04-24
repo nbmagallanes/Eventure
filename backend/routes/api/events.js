@@ -58,10 +58,14 @@ const validateEvent = [
 const eventPagination = [
   query('page')
     .optional()
+    .isInt({ max: 10 })
+    .withMessage("Page must be less than or queal to 10")
     .isInt({ min: 1 })
     .withMessage("Page must be greater than or queal to 1"),
   query('size')
     .optional()
+    .isInt({ max: 20})
+    .withMessage("Size must be less than or queal to 20")
     .isInt({ min: 1})
     .withMessage("Size must be greater than or queal to 1"),
   handleValidationErrors

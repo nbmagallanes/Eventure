@@ -7,6 +7,7 @@ import Navigation from './components/Navigation/Navigation-bonus';
 import * as sessionActions from './store/session';
 import { Modal } from './context/Modal';
 import Landing from './components/Landing/Landing';
+import GroupsFeed from './components/GroupsFeed/GroupsFeed';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
         path: '/',
         element: <Landing />
       },
+      {
+        path: 'groups',
+        element: <GroupsFeed />
+      }
       // {
       //   path: 'login',
       //   element: <LoginFormPage />

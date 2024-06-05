@@ -1,3 +1,3 @@
-import Groups from "./GroupsFeed";
+import GroupsFeed from "./GroupsFeed";
 
-export default Groups;
+export default GroupsFeed;

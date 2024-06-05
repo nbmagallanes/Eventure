@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Outlet, createBrowserRouter, RouterProvider } from 'react-router-dom';
 // import LoginFormPage from './components/LoginFormPage';
 // import SignupFormPage from './components/SignupFormPage';
-import Navigation from './components/Navigation/Navigation-bonus';
+import Navigation from './components/Navigation/Navigation';
 import * as sessionActions from './store/session';
 import { Modal } from './context/Modal';
 import Landing from './components/Landing/Landing';
@@ -44,7 +44,7 @@ const router = createBrowserRouter([
       {
         path: 'groups/:groupId',
         element: <GroupDetails />
-      }
+      },
       // {
       //   path: 'login',
       //   element: <LoginFormPage />

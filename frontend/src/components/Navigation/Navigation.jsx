@@ -11,35 +11,41 @@ function Navigation({ isLoaded }) {
 
   const sessionLinks = sessionUser ?
     (
-      <li>
+      // <li>
+      <div className='profile-button'>
         <ProfileButton user={sessionUser} />
-      </li>
+      </div>
+      // </li>
     ) : (
-      <>
-        <li>
+      <div className='buttons'>
+        {/* <li> */}
           <OpenModalButton
             buttonText="Log In"
             modalComponent={<LoginFormModal />}
+            className='modal-button'
           />
           {/* <NavLink to="/login">Log In</NavLink> */}
-        </li>
-        <li>
+        {/* </li> */}
+        {/* <li> */}
           <OpenModalButton
             buttonText="Sign Up"
             modalComponent={<SignupFormModal />}
+            className='modal-button'
           />
           {/* <NavLink to="/signup">Sign Up</NavLink> */}
-        </li>
-      </>
+        {/* </li> */}
+      </div>
     );
 
   return (
-    <ul>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
+    // <ul>
+    <div className='nav-bar'>
+      {/* <li> */}
+        <NavLink to="/" className='logo'>Eventure</NavLink>
+      {/* </li> */}
       {isLoaded && sessionLinks}
-    </ul>
+    </div>
+    // </ul>
   );
 }
 

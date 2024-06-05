@@ -1,0 +1,109 @@
+.landing-container {
+    margin: 60px auto auto auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1190px;
+    width: 80%;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+}
+
+.section-one-container {
+    display: flex;
+    gap: 10px;
+    max-height: 340px;
+}
+
+.section-one-element {
+    flex: 3;
+}
+
+.title-text {
+    display: flex;
+    flex-direction: column;
+    flex: 4; 
+    margin: 0px 25px auto auto;
+}
+
+.title-text h1 {
+    font-size: 40px;
+
+}
+
+.title-text p {
+    margin: 5px;
+    font-size: 20px;
+}
+
+.image-container {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.section-one-element img{
+    /* display: block;
+    margin:  0 0 0 30px; */
+    max-width: 100%;
+    max-height: 90%;
+    width: 390px;
+}
+
+.section-two-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 50px auto 60px auto;
+    max-width: 40%;
+}
+
+.section-two-container h3 {
+    margin: auto auto 5px auto
+}
+
+.section-two-container p {
+    margin: 5px auto auto auto
+}
+
+.section-three-container {
+    display: flex;
+    gap: 30px;
+    text-align: center;
+    justify-content: space-evenly;
+    align-items: center;
+    max-width: 80%;
+    margin: 10px auto auto auto
+}
+
+.section-three-element {
+    flex: 1
+}
+
+.link {
+    text-decoration: none;
+    font-weight: 550;
+    font-size: large;
+    color: #064750
+
+}
+
+.section-four-container {
+    padding: 20px
+}
+
+.join-button {
+    padding: 10px 20px;
+    font-size: medium;
+    background-color: #064750;
+    color: white;
+    border: 10 black;
+}
+
+.section-three-element img {
+    display: block;
+    margin:  0 auto 20px;
+    max-width: 50%;
+    max-height: 50%;
+
+}

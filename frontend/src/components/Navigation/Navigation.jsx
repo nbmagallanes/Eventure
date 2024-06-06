@@ -12,8 +12,12 @@ function Navigation({ isLoaded }) {
   const sessionLinks = sessionUser ?
     (
       // <li>
-      <div className='profile-button'>
-        <ProfileButton user={sessionUser} />
+      <div className='logged-in-navbar'>
+        <NavLink className='new-group-link'>Start a new group</NavLink>
+        <div className='profile-button'>
+          <ProfileButton user={sessionUser} />
+        </div>
+        <p>PH</p>
       </div>
       // </li>
     ) : (
@@ -43,7 +47,7 @@ function Navigation({ isLoaded }) {
       {/* <li> */}
         <NavLink to="/" className='logo'>Eventure</NavLink>
       {/* </li> */}
-      {isLoaded && sessionLinks}
+        {isLoaded && sessionLinks}
     </div>
     // </ul>
   );

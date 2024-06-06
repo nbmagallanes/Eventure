@@ -43,8 +43,8 @@ export default function EventDetails() {
                             <p>{`${event?.Group?.previewImage}`}</p>
                         </div>
                         <div>
-                            <p>{group.name}</p>
-                            <p>{group.private ? "Private" : "Public"}</p>
+                            <p>{group?.name}</p>
+                            <p>{group?.private ? "Private" : "Public"}</p>
                         </div>
                     </div>
                     <div>

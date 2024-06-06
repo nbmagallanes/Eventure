@@ -13,7 +13,7 @@ function Navigation({ isLoaded }) {
     (
       // <li>
       <div className='logged-in-navbar'>
-        <NavLink className='new-group-link'>Start a new group</NavLink>
+        <NavLink to='groups/new' className='new-group-link'>Start a new group</NavLink>
         <div className='profile-button'>
           <ProfileButton user={sessionUser} />
         </div>

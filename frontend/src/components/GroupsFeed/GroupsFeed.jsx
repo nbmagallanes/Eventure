@@ -7,8 +7,8 @@ import "./GroupsFeed.css"
 
 export default function GroupsFeed() {
     const dispatch = useDispatch();
-    const groups = useSelector( state => state.groupsState.groups)
-    // const groups = Object.values(groupsObj) // array with all the groups
+    const groupsObj = useSelector( state => state.groupsState.groups)
+    const groups = Object.values(groupsObj) // array with all the groups
 
     // console.log('groupsObj', groupsObj)
     console.log('groups', groups)

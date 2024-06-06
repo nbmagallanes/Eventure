@@ -415,7 +415,7 @@ router.get('/:groupId/events', async (req, res, next) => {
         where: {
             groupId: parseInt(req.params.groupId)
         },
-        attributes: ["id", "groupId", "venueId", "name", "type", "startDate", "endDate"],
+        attributes: ["id", "groupId", "venueId", "name", "type", "description", "startDate", "endDate"],
         include: [
             { 
                 model: Group,

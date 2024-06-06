@@ -6,15 +6,17 @@ import './GroupDetails.css'
 
 export default function GroupDetails() {
     const dispatch = useDispatch();
-    const group = useSelector( state => state.groupsState.groups)
+    const group = useSelector( state => state.groupsState.group)
     const { groupId } = useParams()
 
     // console.log('ID', groupId)
-    // console.log('group', group)
+    // console.log('group', group.id)
     useEffect(() => {
         console.log('useEffect running');
         dispatch(getGroup(groupId));
     }, [dispatch, groupId]);
+
+    if (!group.id) return <div></div>
 
     return (
         <div className='page-container'>

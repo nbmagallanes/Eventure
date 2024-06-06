@@ -178,6 +178,17 @@ async function eventAuth(req, res, next) {
     return next();
 };
 
+async function groupPreviewImage(groupId) {
+  const image = await GroupImage.findOne({
+    where: {
+      groupId,
+      preview: true,
+    }
+  })
+
+  return image ? image.url : null;
+}
+
 // Get events
 router.get("/", eventPagination, async (req, res, next) => {
   let { page, size } = req.query;
@@ -202,6 +213,7 @@ router.get("/", eventPagination, async (req, res, next) => {
       "venueId",
       "name",
       "type",
+      "description",
       "startDate",
       "endDate",
     ],
@@ -253,6 +265,7 @@ router.get("/:eventId", async (req, res, next) => {
   }
 
   await attendingTotal(event);
+  const groupImage = await groupPreviewImage(event.groupId)
 
   const {
     id,
@@ -279,7 +292,10 @@ router.get("/:eventId", async (req, res, next) => {
     startDate,
     endDate,
     numAttending: event.dataValues.numAttending,
-    Group: event.Group,
+    Group: {
+      ...event.Group.dataValues,
+      previewImage: groupImage
+    },
     Venue: event.Venue,
     EventImages: event.EventImages,
   };
@@ -381,19 +397,22 @@ router.get('/:eventId/attendees', async (req, res, next) => {
 
   const groupId = event.groupId;
 
-  const coHost = await Membership.findOne({
-      where: { 
-          userId: req.user.id,
-          groupId: groupId,
-          status: "co-host"
-      }
-  });
+  let coHost;
+  req.user ? (
+    coHost = await Membership.findOne({
+        where: { 
+            userId: req.user.id,
+            groupId: groupId,
+            status: "co-host"
+        }
+    })
+  ) : (coHost = null)
 
   const group = await Group.findByPk(groupId);
 
   query.attributes = ["id", "firstName", "lastName"];
 
-  if (req.user.id === group.organizerId || coHost) {
+  if ((req.user) && (req.user.id === group.organizerId || coHost)) {
     query.include.push({
         model: Attendance,
         where: { eventId: parseInt(req.params.eventId) },

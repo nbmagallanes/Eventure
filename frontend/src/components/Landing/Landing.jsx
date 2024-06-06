@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import './Landing.css'
 import treesLogo from '../../../../images/trees.png';
-import groupLogo from '../../../../images/teamwork.png'
+import groupLogo from '../../../../images/teamwork.png';
 import eventLogo from '../../../../images/eventLogo.png'
 
 export default function Landing() {

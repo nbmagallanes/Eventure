@@ -20,9 +20,9 @@ export const getAllGroups = () => async (dispatch) => {
     const response = await csrfFetch("/api/groups")
 
     if (response.ok) {
-        const { Groups } = await response.json()
-        console.log('response', Groups)
-        dispatch(getGroups(Groups))
+        const data = await response.json()
+        console.log('response', data)
+        dispatch(getGroups(data.Groups))
     } else {
         const error = await response.json()
         console.log("Error", error)
@@ -45,21 +45,24 @@ export const getGroup = (groupId) => async (dispatch) => {
 
 
 // Reducer
-const initialState = { groups: {} }
+const initialState = { groups: {}, group: {} }
 
 const groupsReducer = (state=initialState, action) => {
     let newState = {};
     switch (action.type) {
         case GET_GROUPS:
-            newState = {...state, groups: {}}
-            action.groups.forEach( group => {newState.groups[group.id] = group})
+            // newState = {...state, groups: {}}
+            // action.groups.forEach( group => {newState.groups[group.id] = group})
+            // console.log('New state', newState)
+            // return newState
+            newState = { ...state, groups: action.groups }
             console.log('New state', newState)
             return newState
         case LOAD_GROUP:
             // newState = { ...state, group: {}}
             // newState.group = action.group
             // console.log('New group state', newState)
-            return {...state, groups: action.group}
+            return {...state, group: action.group}
         default:
             return state
     }

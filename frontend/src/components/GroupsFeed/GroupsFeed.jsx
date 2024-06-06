@@ -7,20 +7,22 @@ import "./GroupsFeed.css"
 
 export default function GroupsFeed() {
     const dispatch = useDispatch();
-    const groupsObj = useSelector( state => state.groupsState.groups)
-    const groups = Object.values(groupsObj) // array with all the groups
+    const groups = useSelector( state => state.groupsState.groups)
+    // const groups = Object.values(groupsObj) // array with all the groups
 
     // console.log('groupsObj', groupsObj)
-    // console.log('groups', groups)
-
+    console.log('groups', groups)
+    
     useEffect(() => {
         dispatch(getAllGroups())
     }, [dispatch])
+    
+    if (!groups.length) return <div></div>
 
     return (
         <div className="group-feed-container">
             <div className="nav-links">
-                <NavLink>Events</NavLink>
+                <NavLink to='/events'>Events</NavLink>
                 <NavLink>Groups</NavLink>
             </div>
             <div>

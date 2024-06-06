@@ -9,6 +9,8 @@ import { Modal } from './context/Modal';
 import Landing from './components/Landing/Landing';
 import GroupsFeed from './components/GroupsFeed/GroupsFeed';
 import GroupDetails from './components/GroupDetails/GroupDetails';
+import EventsFeed from './components/EventsFeed/EventsFeed';
+import EventDetails from './components/EventDetails/EventDetails';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -45,6 +47,14 @@ const router = createBrowserRouter([
         path: 'groups/:groupId',
         element: <GroupDetails />
       },
+      {
+        path: 'events',
+        element: <EventsFeed />
+      },
+      {
+        path: 'events/:eventId',
+        element: <EventDetails />
+      }
       // {
       //   path: 'login',
       //   element: <LoginFormPage />

@@ -1,11 +1,12 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./Group.css"
 
 export default function Group({data}) {
+
     const { /*previewImage,*/ id, name, city, state, about } = data;
 
     return (
-        <Link to={`/groups/${id}`}>
+        <NavLink to={`/groups/${id}`}>
             <div className="group-container">
                 <div>
                     <span>Placeholder for Image</span>
@@ -17,10 +18,10 @@ export default function Group({data}) {
                     <div className="event-private-info">
                         <p># Events</p>
                         <p>*</p>
-                        <p>{data.private === false ? "Public" : "Private"}</p>
+                        <p>{data?.private === false ? "Public" : "Private"}</p>
                     </div>
                 </div>
             </div>
-        </Link>
+        </NavLink>
     )
 }

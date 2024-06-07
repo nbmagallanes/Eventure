@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { getGroup } from '../../store/groupsReducer';
 import './GroupDetails.css'
+import OpenModalButton from '../OpenModalButton';
+import DeleteGroupModal from '../DeleteGroupModal/DeleteGroupModal';
 
 export default function GroupDetails() {
     const dispatch = useDispatch();
@@ -40,7 +42,11 @@ export default function GroupDetails() {
                         <div>
                             <button onClick={() => navigate('events/new')}>Create event</button>
                             <button onClick={() => navigate('edit')}>Update</button>
-                            <button >Delete</button>
+                            <OpenModalButton
+                                buttonText='Delete'
+                                modalComponent={<DeleteGroupModal  className='delete-modal-button' navigate={navigate}/>}
+                                className='open-modal-button'
+                            />
                         </div>
                     ) : (
                         <div> 

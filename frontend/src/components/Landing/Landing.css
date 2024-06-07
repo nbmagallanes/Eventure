@@ -107,3 +107,11 @@
     max-height: 50%;
 
 }
+
+.disabled-link {
+    pointer-events: none;
+    text-decoration: none;
+    font-weight: 550;
+    font-size: large;
+    color: gray
+}

@@ -1,10 +1,13 @@
 import { NavLink } from "react-router-dom";
+import { useSelector } from 'react-redux';
 import './Landing.css'
 import treesLogo from '../../../../images/trees.png';
 import groupLogo from '../../../../images/teamwork.png';
 import eventLogo from '../../../../images/eventLogo.png'
 
 export default function Landing() {
+    const user = useSelector( state => state.session.user)
+    
     return (
         <div className="landing-container">
             <div className="section-one-container">
@@ -33,7 +36,7 @@ export default function Landing() {
                 </div>
                 <div className="section-three-element">
                     <img src={groupLogo} alt='teamwork logo' />
-                    <NavLink className='link' to=''>Start a new group</NavLink>
+                    <NavLink className={user ? 'link' : 'disabled-link'} to='/groups/new'>Start a new group</NavLink>
                     <p>Would like to create a new group? Follow the link above to get started and become a group organizer!</p>
                 </div>
             </div>

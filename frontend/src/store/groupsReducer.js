@@ -5,6 +5,7 @@ const GET_GROUPS = 'groups/getGroups'
 const LOAD_GROUP = 'groups/loadGroup'
 const CREATE_GROUP = 'groups/createGroup'
 const UPDATE_GROUP = 'groups/updateGroup'
+const DELETE_GROUP = 'groups/deleteGroup'
 
 // Action Creators
 export const getGroups = (groups) => ({
@@ -24,6 +25,11 @@ export const createGroup = (group) => ({
 
 export const updateGroup = (group) => ({
     type: UPDATE_GROUP,
+    group
+});
+
+export const removeGroup = (group) => ({
+    type: DELETE_GROUP,
     group
 });
 
@@ -48,6 +54,7 @@ export const getGroup = (groupId) => async (dispatch) => {
         const payload = await response.json()
         console.log('response', payload)
         dispatch(loadGroup(payload))
+        return payload
     } else {
         const error = await response.json()
         console.log("Error", error)
@@ -75,7 +82,7 @@ export const createNewGroup = (group) => async (dispatch) => {
 };
 
 export const editGroup = ({editedGroup, groupId}) => async (dispatch) => {
-    console.log('this is from editGroup', editedGroup, groupId)
+
     const response = await csrfFetch(`/api/groups/${groupId}`, {
         method: 'PUT',
         body: JSON.stringify(editedGroup)
@@ -93,7 +100,27 @@ export const editGroup = ({editedGroup, groupId}) => async (dispatch) => {
         console.log("UG Error", error)
         return error
     }
+
 };
+
+export const deleteGroup = (groupId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/groups/${groupId}`, {
+        method: 'DELETE',
+    })
+
+    console.log("delete Group response", response)
+
+    if (response.ok) {
+        // const resGroup = await response.json()
+        // console.log('UG response', resGroup)
+        dispatch(removeGroup(groupId))
+    } else {
+        const error = await response.json()
+        console.log("UG Error", error)
+        return error
+    }
+    
+}
 
 
 // Reducer
@@ -126,6 +153,11 @@ const groupsReducer = (state=initialState, action) => {
             newState = {...state, groups: {...state.groups, [updatedGroup.id]: updatedGroup}}
             console.log("UPDATE GROUP", newState)
             return newState
+        }
+        case DELETE_GROUP: {
+            newState = {...state}
+            delete newState[action.group.id]
+            break;
         }
         default:
             return state

@@ -8,11 +8,13 @@ export default function UpdateGroupForm() {
     const group = useSelector(state => state.groupsState.group)
     const user = useSelector(state => state.session.user)
 
-    const [location, setLocation] = useState('');
-    const [name, setName] = useState('');
-    const [about, setAbout] = useState('');
-    const [type, setType] = useState('');
-    const [isPrivate, setIsPrivate] = useState('');
+    const [location, setLocation] = useState(group.city ? `${group.city}, ${group.state}` : '');
+    const [name, setName] = useState(group.name ? group.name : '');
+    const [about, setAbout] = useState(group.about ? group.about : '');
+    const [type, setType] = useState(group.type ? group?.type : '');
+    const [isPrivate, setIsPrivate] = useState( (group.private === true ||
+                                                group.private === false)? 
+                                                group.private : '');
     const[submitted, setSubmitted] = useState(false)
     const [validationErrors, setValidationErrors] = useState({});
     const dispatch = useDispatch();
@@ -21,31 +23,38 @@ export default function UpdateGroupForm() {
 
     useEffect(() => {
         if (!group.id) {
-            console.log('first use effect ran')
-            dispatch(getGroup(groupId))
+            dispatch(getGroup(groupId)).then( (group) => {
+                setLocation(`${group.city}, ${group.state}`);
+                setName(group.name);
+                setAbout(group.about);
+                setType(group.type);
+                setIsPrivate(group.private)
+            });
         }
     }, [dispatch, group, groupId])
 
-    useEffect(() => {
-        if (group.id) {
-            console.log('second use effect ran')
-            setLocation(`${group.city}, ${group.state}`)
-            setName(group.name)
-            setAbout(group.about)
-            setType(group.type)
-            setIsPrivate(group.private)
-        }
-    }, [group])
+    // useEffect(() => {
+    //     if (group.id) {
+    //         console.log('second use effect ran')
+    //         setLocation(`${group.city}, ${group.state}`)
+    //         setName(group.name)
+    //         setAbout(group.about)
+    //         setType(group.type)
+    //         setIsPrivate(group.private)
+    //     }
+    // }, [group])
 
     useEffect(() => {
-        console.log('third use effect ran')
+        // console.log('third use effect ran')
         const errors = {};
         if (!location.length) errors.location = "Location is required"
         if (!name.length) errors.name = "Name is required"
         else if (name.length > 60) errors.name = "Name must be 60 character or less"
         if (!about.length || about.length < 50) errors.about = "Desciption must be at least 50 characters long"
         if (!type) errors.type = "Group Type is required"
-        if (!isPrivate) errors.isPrivate = "Visibility Type is required"
+        if ((isPrivate !== false && isPrivate !== 'false') && (isPrivate !== true && isPrivate !== 'true')) {
+            errors.isPrivate = "Visibility Type is required"
+        }
         setValidationErrors(errors)
     }, [location, name, about, type, isPrivate])
 

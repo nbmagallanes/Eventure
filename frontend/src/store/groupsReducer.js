@@ -4,6 +4,7 @@ import { csrfFetch } from "./csrf";
 const GET_GROUPS = 'groups/getGroups'
 const LOAD_GROUP = 'groups/loadGroup'
 const CREATE_GROUP = 'groups/createGroup'
+const UPDATE_GROUP = 'groups/updateGroup'
 
 // Action Creators
 export const getGroups = (groups) => ({
@@ -18,6 +19,11 @@ export const loadGroup = (group) => ({
 
 export const createGroup = (group) => ({
     type: CREATE_GROUP,
+    group
+});
+
+export const updateGroup = (group) => ({
+    type: UPDATE_GROUP,
     group
 });
 
@@ -54,16 +60,37 @@ export const createNewGroup = (group) => async (dispatch) => {
         body: JSON.stringify(group)
     })
 
-    console.log("create New Group response", response)
+    // console.log("create New Group response", response)
 
     if (response.ok) {
         const resGroup = await response.json()
-        console.log('CG response', resGroup)
+        // console.log('CG response', resGroup)
         dispatch(createGroup(resGroup))
         return resGroup
     } else {
         const error = await response.json()
-        console.log("CG Error", error)
+        // console.log("CG Error", error)
+        return error
+    }
+};
+
+export const editGroup = ({editedGroup, groupId}) => async (dispatch) => {
+    console.log('this is from editGroup', editedGroup, groupId)
+    const response = await csrfFetch(`/api/groups/${groupId}`, {
+        method: 'PUT',
+        body: JSON.stringify(editedGroup)
+    })
+
+    console.log("edit Group response", response)
+
+    if (response.ok) {
+        const resGroup = await response.json()
+        console.log('UG response', resGroup)
+        dispatch(updateGroup(resGroup))
+        return resGroup
+    } else {
+        const error = await response.json()
+        console.log("UG Error", error)
         return error
     }
 };
@@ -83,17 +110,23 @@ const groupsReducer = (state=initialState, action) => {
             // newState = { ...state, groups: action.groups }
             console.log('New state', newState)
             return newState
-        case LOAD_GROUP:
-            // newState = { ...state, group: {}}
-            // newState.group = action.group
-            // console.log('New group state', newState)
-            return {...state, group: action.group}
-        case CREATE_GROUP:
-            // newState = {...state}
-            // newState.groups[action.group.id] = action.group
-            newState = {...state, groups: {...state.groups, [action.group.id]: action.group}}
-            console.log("CREATE GROUP", newState)
+        case LOAD_GROUP: {
+            const loadedGroup = action.group;
+            newState = {...state, group: loadedGroup}
             return newState
+        }
+        case CREATE_GROUP: {
+            const newGroup = action.group;
+            newState = {...state, groups: {...state.groups, [newGroup.id]: newGroup}}
+            console.log("CREATE GROUP", newState)
+            return newState 
+        }
+        case UPDATE_GROUP: {
+            const updatedGroup = action.group;
+            newState = {...state, groups: {...state.groups, [updatedGroup.id]: updatedGroup}}
+            console.log("UPDATE GROUP", newState)
+            return newState
+        }
         default:
             return state
     }

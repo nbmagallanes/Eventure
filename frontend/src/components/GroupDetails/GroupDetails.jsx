@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { getGroup } from '../../store/groupsReducer';
 import './GroupDetails.css'
 
 export default function GroupDetails() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const group = useSelector( state => state.groupsState.group)
+    const user = useSelector(state => state.session.user);
     const { groupId } = useParams()
 
     // console.log('ID', groupId)
@@ -34,7 +36,17 @@ export default function GroupDetails() {
                         <p>{group.private === false ? "Public" : "Private"}</p>
                     </div>
                     <p>{`Organized by ${group.Organizer?.firstName} ${group.Organizer?.lastName}`}</p>
-                    <button>Join this group</button>
+                    {user && user.id === group.Organizer?.id ? (
+                        <div>
+                            <button onClick={() => navigate('events/new')}>Create event</button>
+                            <button onClick={() => navigate('edit')}>Update</button>
+                            <button >Delete</button>
+                        </div>
+                    ) : (
+                        <div> 
+                            <button>Join this group</button>
+                        </div>
+                    )}
                 </div>
             </div>
             <div className='bottom-page-container'>

@@ -41,6 +41,10 @@ function SignupFormModal() {
     });
   };
 
+  const notVisible = !email || !firstName || !lastName || 
+                            username.length < 4 || password.length < 6;
+
+
   return (
     <>
       <h1>Sign Up</h1>
@@ -105,7 +109,7 @@ function SignupFormModal() {
           />
         </label>
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit">Sign Up</button>
+        <button type="submit" disabled={notVisible}>Sign Up</button>
       </form>
     </>
   );

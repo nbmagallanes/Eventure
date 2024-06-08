@@ -7,8 +7,8 @@ import "./EventsFeed.css"
 
 export default function EventsFeed() {
     const dispatch = useDispatch();
-    const events = useSelector( state => state.eventsState.events)
-    // const events = Object.values(eventsObj)
+    const eventsObj = useSelector( state => state.eventsState.events)
+    const events = Object.values(eventsObj)
 
     useEffect(() => {
         dispatch(getAllEvents())
@@ -26,7 +26,7 @@ export default function EventsFeed() {
                 <h4>Events in Eventure</h4>
             </div>
             <div>
-                { events.map( event => (
+                { events?.map( event => (
                     <Event data={event} key={event.id}/>
                 ))}
             </div>

@@ -8,8 +8,9 @@ import { getGroup } from '../../store/groupsReducer';
 
 export default function EventDetails() {
     const dispatch = useDispatch();
-    const event = useSelector( state => state.eventsState.events);
+    const event = useSelector( state => state.eventsState.event);
     const group = useSelector( state => state.groupsState.group)
+    const eventImage = event?.EventImages?.find((image) => image?.preview === true)
     const { eventId } = useParams();
 
     useEffect(() => {
@@ -26,6 +27,18 @@ export default function EventDetails() {
     if (!event.id) return <div></div>;
     if (!group.id) return <div></div>;
 
+    const dateConverter = (dateString) =>{
+        const newDate = new Date(dateString)
+        const date = dateString.split('T')[0]
+        const time = newDate.toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+            timeZoneName: 'short'
+        });
+        return [date, time]
+    }
+
     return (
         <div>
             <div>
@@ -40,7 +53,7 @@ export default function EventDetails() {
                 <div>
                     <div>
                         <div>
-                            <p>{`${event?.Group?.previewImage}`}</p>
+                            <img src={eventImage?.url} alt='Event Image'/>
                         </div>
                         <div>
                             <p>{group?.name}</p>
@@ -48,8 +61,14 @@ export default function EventDetails() {
                         </div>
                     </div>
                     <div>
-                        <p>START {event.startDate}</p>
-                        <p>END {event.endDate}</p>
+                        <div>
+                            <p>START {dateConverter(event.startDate)[0]}</p>
+                            <p>{dateConverter(event.startDate)[1]}</p>
+                        </div>
+                        <div>
+                            <p>END {dateConverter(event.endDate)[0]}</p>
+                            <p>{dateConverter(event.endDate)[1]}</p>
+                        </div>
                         <p>{event.price === 0 ? "Free" : `$${event.price}`}</p>
                         <p>{event.type}</p>
                     </div>

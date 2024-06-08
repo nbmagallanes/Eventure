@@ -1,7 +1,9 @@
 import { csrfFetch } from "./csrf";
+import { addEventImage } from "./imagesReducer";
 
 const GET_EVENTS = 'events/getEvents'
 const LOAD_EVENT = 'events/loadEvent'
+const CREATE_EVENT = 'events/createEvent'
 
 // Action Creators
 export const getEvents = (events) => ({
@@ -13,6 +15,11 @@ export const loadEvent = (event) => ({
     type: LOAD_EVENT,
     event
 });
+
+export const createEvent = (event) => ({
+    type: CREATE_EVENT,
+    event
+})
 
 // Thunks
 export const getAllEvents = () => async (dispatch) => {
@@ -41,19 +48,57 @@ export const getEvent = (eventId) => async (dispatch) => {
     }
 };
 
+export const createNewEvent = ({newEvent, groupId}) => async (dispatch) => {
+    const { venueId, name, type, capacity, price, description, startDate, endDate, imageUrl } = newEvent
+    const response = await csrfFetch(`/api/groups/${groupId}/events`, {
+        method: 'POST',
+        body: JSON.stringify({
+            venueId,
+            name,
+            type,
+            capacity,
+            price,
+            description,
+            startDate,
+            endDate,
+        })
+    })
+
+    console.log("create New event response", response)
+
+    if (response.ok) {
+        const resEvent = await response.json()
+        // console.log('CG response', resGroup)
+        await dispatch(addEventImage({imageUrl, resEvent}))
+        await dispatch(createEvent(resEvent))
+        return resEvent
+    } else {
+        const error = await response.json()
+        // console.log("CG Error", error)
+        return error
+    }
+};
+
 // Reducer
-const initialState = { events: {} }
+const initialState = { events: {}, event: {} }
 
 const eventsReducer = (state=initialState, action) => {
     let newState = {};
     switch (action.type) {
         case GET_EVENTS:
-            newState = {...state, events: action.events}
-            // action.events.forEach( event => {newState.events[event.id] = event})
+            newState = {...state, events: {} }
+            action.events.forEach( event => { newState.events[event.id] = event })
+            // newState = {...state, events: action.events} // original that was working
             console.log('New state', newState)
             return newState
         case LOAD_EVENT:
-            return {...state, events: action.event}
+            return {...state, event: action.event}
+        case CREATE_EVENT:{
+            const newEvent = action.event;
+            newState = {...state, events: {...state.events, [newEvent.id]: newEvent}}
+            console.log('CREAT EVENT', newState)
+            return newState
+        }
         default:
             return state
     }

@@ -442,7 +442,7 @@ router.post('/:groupId/events', [requireAuth, venueAuth, validateEvent], async (
 
     const venue = await Venue.findByPk(venueId);
 
-    if (!venue) { 
+    if (type === 'In person' && !venue) { 
     const err = new Error("No Venue Found");
     err.status = 404;
     err.message = "Venue couldn't be found";

@@ -1,15 +1,18 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
-
-import "./EventDetails.css"
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import OpenModalButton from '../OpenModalButton';
+import DeleteEventModal from '../DeleteEventModal';
 import { getEvent } from '../../store/eventsReducer';
 import { getGroup } from '../../store/groupsReducer';
+import "./EventDetails.css"
 
 export default function EventDetails() {
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     const event = useSelector( state => state.eventsState.event);
     const group = useSelector( state => state.groupsState.group)
+    const user = useSelector( state => state.session.user)
     const eventImage = event?.EventImages?.find((image) => image?.preview === true)
     const { eventId } = useParams();
 
@@ -39,6 +42,8 @@ export default function EventDetails() {
         return [date, time]
     }
 
+    if (!event.id || event.id !== +eventId) return <div></div>
+
     return (
         <div>
             <div>
@@ -60,7 +65,7 @@ export default function EventDetails() {
                             <p>{group?.private ? "Private" : "Public"}</p>
                         </div>
                     </div>
-                    <div>
+                    <div className='event-info-container'>
                         <div>
                             <p>START {dateConverter(event.startDate)[0]}</p>
                             <p>{dateConverter(event.startDate)[1]}</p>
@@ -70,7 +75,16 @@ export default function EventDetails() {
                             <p>{dateConverter(event.endDate)[1]}</p>
                         </div>
                         <p>{event.price === 0 ? "Free" : `$${event.price}`}</p>
-                        <p>{event.type}</p>
+                        <div>
+                            <p>{event.type}</p>
+                            {user && user.id === group?.Organizer?.id ? (
+                                <OpenModalButton
+                                    buttonText='Delete'
+                                    modalComponent={<DeleteEventModal  className='delete-modal-button' navigate={navigate}/>}
+                                    className='delete-event-open-button'
+                                />
+                            ) : ( null )}
+                        </div>
                     </div>
                 </div>
             </div>

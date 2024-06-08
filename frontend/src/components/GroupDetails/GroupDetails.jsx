@@ -20,7 +20,7 @@ export default function GroupDetails() {
         dispatch(getGroup(groupId));
     }, [dispatch, groupId]);
 
-    if (!group.id) return <div></div>
+    if (!group.id || group.id !== +groupId) return <div></div>
 
     return (
         <div className='page-container'>

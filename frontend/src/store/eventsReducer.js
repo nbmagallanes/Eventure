@@ -4,6 +4,7 @@ import { addEventImage } from "./imagesReducer";
 const GET_EVENTS = 'events/getEvents'
 const LOAD_EVENT = 'events/loadEvent'
 const CREATE_EVENT = 'events/createEvent'
+const DELETE_EVENT = 'events/deleteEvent'
 
 // Action Creators
 export const getEvents = (events) => ({
@@ -19,7 +20,12 @@ export const loadEvent = (event) => ({
 export const createEvent = (event) => ({
     type: CREATE_EVENT,
     event
-})
+});
+
+export const removeEvent = (event) => ({
+    type: DELETE_EVENT,
+    event
+});
 
 // Thunks
 export const getAllEvents = () => async (dispatch) => {
@@ -79,6 +85,24 @@ export const createNewEvent = ({newEvent, groupId}) => async (dispatch) => {
     }
 };
 
+export const deleteEvent = (eventId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/events/${eventId}`, {
+        method: 'DELETE',
+    })
+
+    console.log("delete Event response", response)
+
+    if (response.ok) {
+        // const resGroup = await response.json()
+        // console.log('UG response', resGroup)
+        dispatch(removeEvent(eventId))
+    } else {
+        const error = await response.json()
+        console.log("DE Error", error)
+        return error
+    }
+}
+
 // Reducer
 const initialState = { events: {}, event: {} }
 
@@ -97,6 +121,11 @@ const eventsReducer = (state=initialState, action) => {
             const newEvent = action.event;
             newState = {...state, events: {...state.events, [newEvent.id]: newEvent}}
             console.log('CREAT EVENT', newState)
+            return newState
+        }
+        case DELETE_EVENT: {
+            newState = {...state}
+            delete newState[action.event.id]
             return newState
         }
         default:

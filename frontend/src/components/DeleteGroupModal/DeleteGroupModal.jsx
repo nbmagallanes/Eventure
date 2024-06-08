@@ -20,7 +20,7 @@ export default function DeleteGroupModal({navigate}) {
             <h2>Confirm Delete</h2>
             <p>Are you sure you want to remove this group?</p>
             <button className='yes button' onClick={(e) => deleteCurrentGroup(e)}> Yes (Delete Group)</button>
-            <button className='no button' onClick={ () => closeModal() }>No (Kepp Going)</button>
+            <button className='no button' onClick={ () => closeModal() }>No (Keep Group)</button>
         </div>
     )
 }

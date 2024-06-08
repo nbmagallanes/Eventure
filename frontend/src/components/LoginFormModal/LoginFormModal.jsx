@@ -18,16 +18,22 @@ function LoginFormModal() {
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
-        if (data && data.errors) {
-          setErrors(data.errors);
+        if (data && data.message === "Invalid credentials") {
+          setErrors(data.message);
         }
       });
   };
 
+  const handleClick = async () => {
+    setCredential('Demo-lition')
+    setPassword('password')
+  }
+  
   return (
     <>
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
+        {errors.length && <p>The provided credentials were invalid.</p>}
         <label>
           Username or Email
           <input
@@ -46,8 +52,13 @@ function LoginFormModal() {
             required
           />
         </label>
-        {errors.credential && <p>{errors.credential}</p>}
-        <button type="submit">Log In</button>
+        <button 
+          type="submit" 
+          disabled={credential.length >= 4 && password.length >= 6 ? false : true}
+        >
+          Log In
+        </button>
+        <button onClick={() => handleClick()}>Log in as Demo User</button>
       </form>
     </>
   );

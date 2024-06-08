@@ -8,10 +8,10 @@ export default function DeleteGroupModal({navigate}) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
-    const deleteCurrentGroup = (e) => {
+    const deleteCurrentGroup = async (e) => {
         e.preventDefault();
-        dispatch(deleteGroup(group.id));
         closeModal();
+        await dispatch(deleteGroup(group.id));
         navigate('/groups');
     };
 

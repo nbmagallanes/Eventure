@@ -5,6 +5,7 @@ import { getGroup } from '../../store/groupsReducer';
 import './GroupDetails.css'
 import OpenModalButton from '../OpenModalButton';
 import DeleteGroupModal from '../DeleteGroupModal/DeleteGroupModal';
+import { getAllGroupEvents } from '../../store/eventsReducer';
 
 export default function GroupDetails() {
     const dispatch = useDispatch();
@@ -18,6 +19,7 @@ export default function GroupDetails() {
     useEffect(() => {
         console.log('useEffect running');
         dispatch(getGroup(groupId));
+        dispatch(getAllGroupEvents(groupId))
     }, [dispatch, groupId]);
 
     if (!group.id || group.id !== +groupId) return <div></div>
@@ -34,25 +36,33 @@ export default function GroupDetails() {
                     <p>{`${group.city}, ${group.state}`}</p>
                     <div className='event-private-container'>
                         <p># Events</p>
-                        <p>*</p>
+                        <p>&#8226;</p>
                         <p>{group.private === false ? "Public" : "Private"}</p>
                     </div>
                     <p>{`Organized by ${group.Organizer?.firstName} ${group.Organizer?.lastName}`}</p>
-                    {user && user.id === group.Organizer?.id ? (
-                        <div>
-                            <button onClick={() => navigate('events/new')}>Create event</button>
-                            <button onClick={() => navigate('edit')}>Update</button>
-                            <OpenModalButton
-                                buttonText='Delete'
-                                modalComponent={<DeleteGroupModal  className='delete-modal-button' navigate={navigate}/>}
-                                className='open-modal-button'
-                            />
-                        </div>
-                    ) : (
-                        <div> 
-                            <button>Join this group</button>
-                        </div>
-                    )}
+                    { !user ? (
+                        null
+                        ) : (
+                            user && user.id === group.Organizer?.id ? (
+                                <div>
+                                    <button onClick={() => navigate('events/new')}>Create event</button>
+                                    <button onClick={() => navigate('edit')}>Update</button>
+                                    <OpenModalButton
+                                        buttonText='Delete'
+                                        modalComponent={<DeleteGroupModal  className='delete-modal-button' navigate={navigate}/>}
+                                        className='open-modal-button'
+                                    />
+                                </div>
+                            ) : (
+                                <div> 
+                                    <button onClick={() => (alert("Feature coming soon."))}>Join this group</button>
+                                </div>
+                            )
+
+                        )
+                    }
+                    
+                    
                 </div>
             </div>
             <div className='bottom-page-container'>
@@ -62,6 +72,8 @@ export default function GroupDetails() {
                     <h2>What we&apos;re about</h2>
                     <p>{group.about}</p>
                 </div>
+            </div>
+            <div className='event-feed-container'>
                 <div className='events-container'>
                     <h3>Upcoming Events</h3>
                     <p>Place holder for Upcoming Events</p>

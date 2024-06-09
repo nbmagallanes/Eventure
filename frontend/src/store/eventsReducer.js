@@ -5,6 +5,7 @@ const GET_EVENTS = 'events/getEvents'
 const LOAD_EVENT = 'events/loadEvent'
 const CREATE_EVENT = 'events/createEvent'
 const DELETE_EVENT = 'events/deleteEvent'
+const GET_GROUP_EVENT = 'events/getGroupEvent'
 
 // Action Creators
 export const getEvents = (events) => ({
@@ -26,6 +27,12 @@ export const removeEvent = (event) => ({
     type: DELETE_EVENT,
     event
 });
+
+export const getGroupEvents = (events) => ({
+    type: GET_GROUP_EVENT,
+    events
+});
+
 
 // Thunks
 export const getAllEvents = () => async (dispatch) => {
@@ -101,7 +108,22 @@ export const deleteEvent = (eventId) => async (dispatch) => {
         console.log("DE Error", error)
         return error
     }
-}
+};
+
+export const getAllGroupEvents = (groupId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/groups/${groupId}/events`, {
+        method: 'GET'
+    })
+
+    if (response.ok) {
+        const {Events} = await response.json()
+        console.log('this is the response for get events by group id', Events)
+        dispatch(getGroupEvents(Events))
+    } else {
+        const error = await response.json()
+        return error
+    }
+};
 
 // Reducer
 const initialState = { events: {}, event: {} }
@@ -126,6 +148,12 @@ const eventsReducer = (state=initialState, action) => {
         case DELETE_EVENT: {
             newState = {...state}
             delete newState[action.event.id]
+            return newState
+        }
+        case GET_GROUP_EVENT: {
+            newState = {...state, events: {} }
+            action.events.forEach( event => { newState.events[event.id] = event })
+            console.log("new new", newState)
             return newState
         }
         default:

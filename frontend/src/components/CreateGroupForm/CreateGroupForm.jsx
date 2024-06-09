@@ -9,6 +9,7 @@ export default function CreateGroupForm () {
     const [about, setAbout] = useState("");
     const [type, setType] = useState("");
     const [isPrivate, setIsPrivate] = useState("");
+    const [imageUrl, setImageUrl] = useState("");
     const[submitted, setSubmitted] = useState(false)
     const [validationErrors, setValidationErrors] = useState({});
     const dispatch = useDispatch();
@@ -22,6 +23,7 @@ export default function CreateGroupForm () {
         if (!about.length || about.length < 50) errors.about = "Desciption must be at least 50 characters long"
         if (!type) errors.type = "Group Type is required"
         if (!isPrivate) errors.isPrivate = "Visibility Type is required"
+        if (imageUrl.slice(-5) !== '.jpeg' && imageUrl.slice(-4) !== '.jpg' && imageUrl.slice(-4) !== '.png') errors.imageUrl = "Image URL must end in .png, .jpg, or .jpeg"
         setValidationErrors(errors)
     }, [location, name, about, type, isPrivate])
 
@@ -121,16 +123,16 @@ export default function CreateGroupForm () {
                         </select>
                         <div style={{color:'red'}}>{submitted && validationErrors.isPrivate}</div>
                     </div>
-                    {/* <div>
+                    <div>
                         <p>Please add in image url for your group below:</p>
-                        <input id='about' 
+                        <input id='image' 
                         type='url' 
-                        value={} 
-                        onChange={(e) => {setAbout(e.target.value)}} 
+                        value={imageUrl} 
+                        onChange={(e) => {setImageUrl(e.target.value)}} 
                         placeholder='Image url'
                     />
-                        <div style={{color:'red'}}>Placeholder to put errors</div>
-                    </div> */}
+                        <div style={{color:'red'}}>{submitted && validationErrors.imageUrl}</div>
+                    </div>
                 </div>
                 <div>
                     <button>Create Group</button>

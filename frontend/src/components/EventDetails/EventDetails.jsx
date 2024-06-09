@@ -68,21 +68,26 @@ export default function EventDetails() {
                     <div className='event-info-container'>
                         <div>
                             <p>START {dateConverter(event.startDate)[0]}</p>
+                            <p>&#8226;</p>
                             <p>{dateConverter(event.startDate)[1]}</p>
                         </div>
                         <div>
                             <p>END {dateConverter(event.endDate)[0]}</p>
+                            <p>&#8226;</p>
                             <p>{dateConverter(event.endDate)[1]}</p>
                         </div>
                         <p>{event.price === 0 ? "Free" : `$${event.price}`}</p>
                         <div>
                             <p>{event.type}</p>
                             {user && user.id === group?.Organizer?.id ? (
-                                <OpenModalButton
-                                    buttonText='Delete'
-                                    modalComponent={<DeleteEventModal  className='delete-modal-button' navigate={navigate}/>}
-                                    className='delete-event-open-button'
-                                />
+                                <div>
+                                    <button>Update</button>
+                                    <OpenModalButton
+                                        buttonText='Delete'
+                                        modalComponent={<DeleteEventModal  className='delete-modal-button' navigate={navigate}/>}
+                                        className='delete-event-open-button'
+                                    />
+                                </div>
                             ) : ( null )}
                         </div>
                     </div>

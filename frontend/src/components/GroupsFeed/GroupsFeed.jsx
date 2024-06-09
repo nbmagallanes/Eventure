@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAllGroups } from "../../store/groupsReducer";
+// import { getAllEvents } from "../../store/eventsReducer";
 import Group from "../Group/Group";
 import "./GroupsFeed.css"
 
@@ -15,6 +16,7 @@ export default function GroupsFeed() {
     
     useEffect(() => {
         dispatch(getAllGroups())
+        // dispatch(getAllEvents())
     }, [dispatch])
     
     if (!groups.length) return <div></div>

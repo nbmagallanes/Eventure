@@ -29,7 +29,7 @@ function SignupFormModal() {
 
     if (!validateEmail(email)) {
       newErrors.email = "The provided email is invalid"
-    };
+    }
 
     if (password === confirmPassword) {
       setErrors({});

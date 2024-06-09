@@ -2,21 +2,178 @@
     display: flex;
     flex-direction: column;
     max-width: 950px;
-    margin: 0 auto;
+    margin: 50px auto 20px;
+    padding: 0px 10px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+}
+
+.link-image {
+    display: flex;
+    flex-direction: column;
+}
+
+.link a{
+    color: rgb(16, 83, 176)
+}
+
+.link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 20px;
+    margin: 5px 0px;
+    gap: 5px;
+}
+
+.link p {
+    margin: 5px 0px;
+    color: black
 }
 
 .top-page-container {
     display: flex;
-    /* justify-content: center; */
+    gap: 20px;
 }
 
-.bottom-page-container {
+.top-page-container img { 
+    max-width: 600px;
+    max-height: 300px;
+}
+
+.group-info-container {
     display: flex;
     flex-direction: column;
-    align-items: start;
+    justify-content: space-between;
+}
+
+.group-info-content p {
+    color: grey;
+    margin: 5px 0;
+    font-size: medium;
+}
+
+.group-info-content h1 {
+    font-weight: normal;
+}
+
+.edit-group-container button {
+    margin: 5px 8px 0px 0px;
+    padding: 5px 10px;
+    background-color: grey;
+    color: white;
 }
 
 .event-private-container {
     display: flex;
+    justify-content: start;
     gap: 10px
 }
+
+.bottom-page-container {
+    background-color: rgba(234, 234, 234, 0.826);
+    min-height: 700px;
+}
+.bottom-page-content {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin-top: 40px;
+    max-width: 950px;
+    margin: 40px auto 20px;
+    padding: 0px 10px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+}
+
+.organizer-container h2{
+    margin: 30px auto 10px auto;
+    font-weight: normal;
+}
+
+.organizer-container p {
+    margin: 10px auto;
+    color: gray;
+}
+
+.about-container {
+    margin-top: 40px;
+}
+
+.about-container h2{
+    margin: 10px auto;
+    font-weight: normal;
+}
+
+.about-container p{
+    margin: 10px auto;
+}
+
+.event-feed-container {
+    margin-top: 15px;
+}
+
+.upcoming-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.event-container {
+    background-color: white;
+    padding: 10px;
+    margin: 10px auto;
+    width: 550px;
+    max-width: 550px;
+    height: 230px;
+    max-height: 230px;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.image-info-container {
+    display: flex;
+    gap: 10px;
+    margin: 10px 5px;
+    width: 540px;
+    height: 130px
+}
+
+.events-container img {
+    max-width: 150px;
+    max-height: 150px;
+    width: 150px;
+    height: 130px
+}
+
+.events-container h2 {
+    font-weight: normal;
+}
+
+.events-container a {
+    text-decoration: none;
+}
+
+.date {
+    color: rgb(4, 103, 103);
+}
+
+.info-section p{
+    font-size: small;
+    /* margin: 5px 5px; */
+}
+
+.event-type {
+    font-size: small;
+    color: grey;
+}
+
+.info-section h2{
+    font-size: large;
+    color: black
+    /* margin: 5px 5px; */
+}
+
+.about-section p{
+    margin: 10px 5px;
+    font-size: 15px;
+    color: black;
+}
+

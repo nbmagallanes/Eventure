@@ -3,22 +3,22 @@ import "./Event.css"
 
 export default function Event({ data }) {
 
-    const { id, name, description, startDate, /*previewImage,*/ type } = data;
+    const { id, name, description, startDate, previewImage, type } = data;
 
     return (
         <NavLink to={`/events/${id}`}>
             <div className="event-container">
-                <div>
+                <div className="image-info-container">
                     <div>
-                        <span>Placeholder for Image</span>
+                        <img src={previewImage} alt='Event Image'/>
                     </div>
-                    <div>
-                        <p>{startDate}</p>
+                    <div className="info-section">
+                        <p className="date">{startDate}</p>
                         <h2>{name}</h2>
-                        <p>{type === 'In person' ?  `${data.Venue.city}, ${data.Venue.state}` : 'Online'}</p>
+                        <p className="event-type">{type === 'In person' ?  `${data.Venue.city}, ${data.Venue.state}` : 'Online'}</p>
                     </div>
                 </div>
-                <div>
+                <div className="about-section">
                     <p>{description}</p>
                 </div>
             </div>

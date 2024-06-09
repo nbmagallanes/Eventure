@@ -12,7 +12,7 @@ export default function GroupsFeed() {
     const groups = Object.values(groupsObj) // array with all the groups
 
     // console.log('groupsObj', groupsObj)
-    console.log('groups', groups)
+    // console.log('groups', groups)
     
     useEffect(() => {
         dispatch(getAllGroups())

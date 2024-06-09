@@ -10,7 +10,7 @@ export default function Group({data}) {
     const dispatch = useDispatch();
     const eventsObj = useSelector( state => state.eventsState.events)
     const events = Object.values(eventsObj)
-    console.log(events)
+    // console.log(events)
 
     useEffect(() => {
         dispatch(getAllEvents())

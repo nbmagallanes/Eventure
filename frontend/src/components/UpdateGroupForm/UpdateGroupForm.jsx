@@ -3,10 +3,13 @@ import { useDispatch, useSelector} from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { editGroup } from '../../store/groupsReducer';
 import { getGroup } from '../../store/groupsReducer';
+import { addGroupImage } from '../../store/imagesReducer';
 
 export default function UpdateGroupForm() {
     const group = useSelector(state => state.groupsState.group)
     const user = useSelector(state => state.session.user)
+    const groupImage = group?.GroupImages?.find((image) =>  image.preview === true);
+    const url = groupImage.url
 
     const [location, setLocation] = useState(group.city ? `${group.city}, ${group.state}` : '');
     const [name, setName] = useState(group.name ? group.name : '');
@@ -17,6 +20,7 @@ export default function UpdateGroupForm() {
                                                 group.private : '');
     const[submitted, setSubmitted] = useState(false)
     const [validationErrors, setValidationErrors] = useState({});
+    const [imageUrl, setImageUrl] = useState(url ? url : '');
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { groupId } = useParams()
@@ -29,20 +33,14 @@ export default function UpdateGroupForm() {
                 setAbout(group.about);
                 setType(group.type);
                 setIsPrivate(group.private)
+                setImageUrl()
             });
         }
     }, [dispatch, group, groupId])
 
-    // useEffect(() => {
-    //     if (group.id) {
-    //         console.log('second use effect ran')
-    //         setLocation(`${group.city}, ${group.state}`)
-    //         setName(group.name)
-    //         setAbout(group.about)
-    //         setType(group.type)
-    //         setIsPrivate(group.private)
-    //     }
-    // }, [group])
+    useEffect(() => {
+        if (imageUrl) dispatch(addGroupImage({imageUrl: url, resGroup: group}))
+    }, [imageUrl])
 
     useEffect(() => {
         // console.log('third use effect ran')
@@ -55,8 +53,11 @@ export default function UpdateGroupForm() {
         if ((isPrivate !== false && isPrivate !== 'false') && (isPrivate !== true && isPrivate !== 'true')) {
             errors.isPrivate = "Visibility Type is required"
         }
+        // console.log("this is the url", imageUrl, imageUrl && imageUrl.slice(-5) !== '.jpeg' && imageUrl.slice(-4) !== '.jpg' && imageUrl.slice(-4) !== '.png')
+        if (imageUrl && imageUrl.slice(-5) !== '.jpeg' && imageUrl.slice(-4) !== '.jpg' && imageUrl.slice(-4) !== '.png') errors.imageUrl = "Image URL must end in .png, .jpg, or .jpeg"
         setValidationErrors(errors)
     }, [location, name, about, type, isPrivate])
+
 
     useEffect (() => {
         if ((user?.id && group?.id && user?.id !== group.Organizer?.id) || !user?.id) navigate('/');
@@ -85,6 +86,7 @@ export default function UpdateGroupForm() {
             setAbout("")
             setType("")
             setIsPrivate("")
+            setImageUrl("")
             navigate(`/groups/${response.id}`)
         }
     }
@@ -158,16 +160,16 @@ export default function UpdateGroupForm() {
                         </select>
                         <div style={{color:'red'}}>{submitted && validationErrors.isPrivate}</div>
                     </div>
-                    {/* <div>
+                    <div>
                         <p>Please add in image url for your group below:</p>
-                        <input id='about' 
+                        <input id='image' 
                         type='url' 
-                        value={} 
-                        onChange={(e) => {setAbout(e.target.value)}} 
+                        value={imageUrl} 
+                        onChange={(e) => {setImageUrl(e.target.value)}} 
                         placeholder='Image url'
                     />
-                        <div style={{color:'red'}}>Placeholder to put errors</div>
-                    </div> */}
+                        <div style={{color:'red'}}>{submitted && validationErrors.imageUrl}</div>
+                    </div>
                 </div>
                 <div>
                     <button>Update Group</button>

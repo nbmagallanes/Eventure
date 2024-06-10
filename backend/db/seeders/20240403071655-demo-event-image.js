@@ -23,13 +23,13 @@ module.exports = {
       [
         {
           eventId: 1,
-          url: "UrlHolder1",
+          url: "https://www.fodors.com/assets/destinations/708044/dolores-park-san-francisco-california-usa_main.jpg",
           preview: true,
         },
         {
           eventId: 1,
           url: "UrlHolder2",
-          preview: true,
+          preview: false,
         },
         {
           eventId: 2,

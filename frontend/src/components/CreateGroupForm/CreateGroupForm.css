@@ -1,0 +1,77 @@
+.group-form-container {
+    width: 1000px;
+    margin: 10px auto;
+    padding: 10px 20px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+.group-form-title-container {
+    border-bottom: 2px solid grey;
+}
+
+.group-form-title-container h1 {
+    margin-bottom: 10px;
+    font-weight: normal;
+    font-size: medium;
+    color: rgb(4, 103, 103);
+}
+
+.group-form-title-container h2 {
+    margin-bottom: 10px;
+    font-weight: normal;
+}
+
+.group-form-sub-section {
+    border-bottom: 2px solid grey;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 0px;
+}
+
+.group-form-container h2 {
+    font-weight: normal;
+    margin: 0px 0px 10px 0px;
+}
+
+.group-form-container p {
+    /* font-weight: normal; */
+    margin: 10px 0px;
+}
+
+.group-form-sub-section input {
+    width: 330px;
+    height: 20px;
+    background-color: rgb(208, 222, 238);
+    margin-top: 20px;
+    border: 3px solid black;
+}
+
+.group-form-about-container textarea {
+    height: 200px;
+    width: 330px;
+    background-color: rgb(208, 222, 238);
+    margin-top: 20px;
+    border: 3px solid black;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+
+.group-form-about-container-input::placeholder {
+    text-align: start;
+    position: absolute;
+    top: 3%;
+}
+
+.group-form-final-steps-container select {
+    background-color: rgb(208, 222, 238);
+    border: 3px solid black;
+}
+
+.group-form-create-button button {
+    background-color: rgb(225, 37, 37);
+    margin-top: 20px;
+    width: 150px;
+    height: 50px;
+    color: white;
+    font-size: medium;
+    border: 3px solid black
+}

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { createNewGroup } from '../../store/groupsReducer';
+import './CreateGroupForm.css'
 
 export default function CreateGroupForm () {
     const [location, setLocation] = useState("");
@@ -55,18 +56,20 @@ export default function CreateGroupForm () {
     }
 
     return (
-        <div className='form-container'>
-            <div className='title-container'>
-                <h4>BECOME AN ORGANIZER</h4>
-                <p>We&apos;ll walk you through a few steps to build your local community</p>
+        <div className='group-form-container'>
+            <div className='group-form-title-container'>
+                <h1>BECOME AN ORGANIZER</h1>
+                <h2>We&apos;ll walk you through a few steps to build your local community</h2>
             </div>
             <form onSubmit={handleSubmit}>
-                <div className='location-container sub-section'>
-                    <h3>First, set your group&apos;s location</h3>
-                    <p>
-                        Eventure groups meet locally, in person and online. We&apos;ll connect you 
-                        with people in your area, and more can join you online.
-                    </p>
+                <div className='group-form-location-container group-form-sub-section'>
+                    <div className='group-form-sub-one'> 
+                        <h2>First, set your group&apos;s location.</h2>
+                        <p>
+                            Eventure groups meet locally, in person and online. We&apos;ll connect you 
+                            with people in your area, and more can join you online.
+                        </p>
+                    </div>
                     <input id='location' 
                         type='text' 
                         value={location} 
@@ -75,10 +78,12 @@ export default function CreateGroupForm () {
                     />
                     <div style={{color:'red'}}>{submitted && validationErrors.location}</div>
                 </div>
-                <div className='name-container sub-section'>
-                    <h3>What will your group&apos;s name be?</h3>
-                    <p>Choose a name that will give people a clear idea of what the group is about.</p>
-                    <p>Feel free to get creative! You can edit this later if you change your mind.</p>
+                <div className='group-form-name-container group-form-sub-section'>
+                    <div className='group-form-sub-one'>
+                        <h2>What will your group&apos;s name be?</h2>
+                        <p>Choose a name that will give people a clear idea of what the group is about.</p>
+                        <p>Feel free to get creative! You can edit this later if you change your mind.</p>
+                    </div>
                     <input id='name' 
                         type='text' 
                         value={name} 
@@ -87,24 +92,27 @@ export default function CreateGroupForm () {
                     />
                     <div style={{color:'red'}}>{submitted && validationErrors.name}</div>
                 </div>
-                <div className='about-container sub-section'>
-                    <h3>Now describe what your group will be about</h3>
-                    <p>People will see this when we promote your group, but you&apos;ll be able to add to it later, too.</p>
+                <div className='group-form-about-container group-form-sub-section'>
+                    <div className='group-form-sub-one'>
+                        <h2>Now describe what your group will be about</h2>
+                        <p>People will see this when we promote your group, but you&apos;ll be able to add to it later, too.</p>
+                    </div>
                     <ol>
                         <li>What&apos;s the purpose of the group?</li>
                         <li>Who should join?</li>
                         <li>What will you do at your events?</li>
                     </ol>
-                    <input id='about' 
-                        type='text' 
+                    <textarea id='about' 
+                        type='text'
                         value={about} 
+                        className='group-form-about-container-input'
                         onChange={(e) => {setAbout(e.target.value)}} 
                         placeholder='Please write at least 30 characters'
                     />
                     <div style={{color:'red'}}>{submitted && validationErrors.about}</div>
                 </div>
-                <div className='final-steps-container sub-section'>
-                    <h3>Final steps...</h3>
+                <div className='group-form-final-steps-container group-form-sub-section'>
+                    <h2>Final steps...</h2>
                     <div>
                         <p>Is this an in person or online group?</p>
                         <select name='type' value={type} onChange={(e) => {setType(e.target.value)}} >
@@ -134,7 +142,7 @@ export default function CreateGroupForm () {
                         <div style={{color:'red'}}>{submitted && validationErrors.imageUrl}</div>
                     </div>
                 </div>
-                <div>
+                <div className='group-form-create-button'>
                     <button>Create Group</button>
                 </div>
             </form>

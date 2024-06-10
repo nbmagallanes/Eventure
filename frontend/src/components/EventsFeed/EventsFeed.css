@@ -1,0 +1,77 @@
+.events-feed-container {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    max-width: 580px;
+    margin: 0px auto 20px auto;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+
+.events-feed-title h4 { 
+    color: grey;
+    margin: 20px 0px;
+    font-weight: normal;
+}
+
+.singular-event-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 10px;
+    height: 280px;
+    border-top: 2px solid lightgray;
+    padding: 10px 0px
+}
+
+.singular-event-container img {
+    max-width: 250px;
+    width: 250px;
+    height: 180px;
+    max-height: 180px;
+    border: 2px solid black;
+}
+
+.event-feed-image-info-container {
+    display: flex;
+    height: 184px;
+    gap: 20px
+    /* padding: 2px 0px */
+}
+
+.events-feed-info-section h1{
+    color: black;
+    margin: 10px 0px 10px 0px;
+    font-size: x-large;
+    font-weight: normal;
+}
+
+/* .events-feed-info-section {
+    
+} */
+
+
+.events-feed-event-type {
+    color: grey;
+    font-weight: lighter;
+    font-size: medium;
+    margin: 0px;
+}
+
+.events-feed-about-section p {
+    color: black;
+    font-size: medium;
+    margin-top: 0px;
+}
+
+.events-feed-info-section p {
+    color: rgb(4, 103, 103);
+}
+
+.events-list-container a {
+    text-decoration: none;
+}
+
+.events-feed-date {
+    margin: 0px
+}

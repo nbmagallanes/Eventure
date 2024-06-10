@@ -93,3 +93,14 @@
     font-size: medium;
 }
 
+.group-events-info-section h2{
+    font-weight: normal;
+}
+
+.group-details-events-feed-container h2 {
+    font-weight: normal;
+}
+
+.info-section h1 {
+    font-weight: normal;
+}

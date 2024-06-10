@@ -17,15 +17,15 @@ export default function EventsFeed() {
     if (!events.length) return <div></div>
 
     return (
-        <div className="event-feed-container">
+        <div className="events-feed-container">
             <div className="nav-links">
                 <NavLink>Events</NavLink>
                 <NavLink to='/groups'>Groups</NavLink>
             </div>
-            <div>
+            <div className="events-feed-title">
                 <h4>Events in Eventure</h4>
             </div>
-            <div>
+            <div className="events-list-container">
                 { events?.map( event => (
                     <Event data={event} key={event.id}/>
                 ))}

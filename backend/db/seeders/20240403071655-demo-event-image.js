@@ -28,28 +28,28 @@ module.exports = {
         },
         {
           eventId: 1,
-          url: "UrlHolder2",
+          url: "https://cloudinary-assets.dostuffmedia.com/res/dostuff-media/image/upload/venue-56254/1503005876.jpg",
           preview: false,
         },
         {
           eventId: 2,
-          url: "UrlHolder3",
+          url: "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1nKEs8.img?w=800&h=415&q=60&m=2&f=jpg",
           preview: true,
         },
         {
           eventId: 3,
-          url: "UrlHolder4",
+          url: "https://www.altenconstruction.com/projects/images/Mission-Dolores-Park-7.jpg",
           preview: true,
-        },
-        {
-          eventId: 3,
-          url: "UrlHolder5",
-          preview: false,
         },
         {
           eventId: 4,
-          url: "UrlHolder5",
-          preview: false,
+          url: "https://www.howtopastel.com/wp-content/uploads/2023/06/Students-in-my-Yorkshire-Dales-workshop.png",
+          preview: true,
+        },
+        {
+          eventId: 5,
+          url: "https://www.tiredearth.com/images/720/eco%20(1).jpg",
+          preview: true,
         },
       ],
       { validate: true }

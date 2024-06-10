@@ -28,20 +28,26 @@ module.exports = {
         },
         {
           groupId: 2,
-          url: "placeHolderUrl2",
-          preview: false,
+          url: "https://www.jacksonsart.com/blog/wp-content/uploads/2020/12/unnamed.jpg",
+          preview: true,
         },
         {
           groupId: 2,
-          url: "placeHolderUrl3",
-          preview: true,
+          url: "https://3.bp.blogspot.com/-KG-eDVbl-4c/WZ8HWW2TRwI/AAAAAAAAFwc/4wGKpKr-RiItl62bgRfGuER6y_GSOz2-gCLcBGAs/s1600/2017_HRVAW_KimEnglish-11.jpg",
+          preview: false,
         },
         {
           groupId: 3,
-          url: "placeHolderUrl4",
+          url: "https://blog.cryptoflies.com/wp-content/uploads/2023/12/sony-bbc-earth-nature-metaverse-experience-585x346.png",
+          preview: true,
+        },
+        {
+          groupId: 4,
+          url: "https://americanhiking.org/wp-content/uploads/2017/03/P1010042-750x563.jpg",
           preview: true,
         },
       ],
+
       { validate: true }
     );
   },

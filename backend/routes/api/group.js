@@ -440,14 +440,14 @@ router.post('/:groupId/events', [requireAuth, venueAuth, validateEvent], async (
 
     const { venueId, name, type, capacity, price, description, startDate, endDate } = req.body;
 
-    const venue = await Venue.findByPk(venueId);
+    // const venue = await Venue.findByPk(venueId);
 
-    if (type === 'In person' && !venue) { 
-    const err = new Error("No Venue Found");
-    err.status = 404;
-    err.message = "Venue couldn't be found";
-    return next(err);
-    };
+    // if (type === 'In person' && !venue) { 
+    // const err = new Error("No Venue Found");
+    // err.status = 404;
+    // err.message = "Venue couldn't be found";
+    // return next(err);
+    // };
 
     const newEvent = await Event.create({
         groupId: parseInt(req.params.groupId),

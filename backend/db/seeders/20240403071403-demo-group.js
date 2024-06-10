@@ -23,9 +23,9 @@ module.exports = {
       [
         {
           organizerId: 1,
-          name: "SF Book Club",
+          name: "San Francisco Book Club: Dolores Park",
           about:
-            "Book Club in San Francisco that focuses on fostering a safe community",
+            "We are a book club located in San Francisco. We meet up every other week to go over the current book we are reading and hang out. Join us if you are a book lover!",
           type: "In person",
           private: false,
           city: "San Francisco",
@@ -33,9 +33,9 @@ module.exports = {
         },
         {
           organizerId: 2,
-          name: "The Painters Club",
+          name: "Outdoor Artists Collective",
           about:
-            "We are a Painting Club that encourages people to tap into their creativity and provide many events",
+            "Join and paint with us! Our group holds many events throughout the Bay Area where we go out to beautiful landscapes and try to recreate them.",
           type: "In person",
           private: true,
           city: "San Francisco",
@@ -43,12 +43,12 @@ module.exports = {
         },
         {
           organizerId: 3,
-          name: "The Bay Area Social Club",
+          name: "Virtual Nature Explorers",
           about:
-            "Social Club that focuses on making connections through online events, mostly based around San Mateo",
+            "We offer a platform for virtual nature walks, wildlife live streams, and online educational events about different ecosystems and conservation efforts.",
           type: "Online",
           private: false,
-          city: "San Mateo",
+          city: "Davis",
           state: "CA",
         },
       ],

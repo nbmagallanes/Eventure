@@ -1,0 +1,76 @@
+.create-event-form-container {
+    width: 800px;
+    margin: 10px auto;
+    padding: 10px 20px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+
+.create-event-title-container h1 {
+    font-weight: normal;
+    font-size: x-large;
+    margin: 10px 0px;
+}
+
+.create-event-sub-section {
+    border-bottom: 2px solid grey;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 0px;
+}
+
+.create-event-sub-section div {
+    margin-bottom: 10px;
+}
+
+.create-event-sub-section p {
+    margin: 0px 0px 5px 0px;
+}
+
+.create-event-name-container input {
+    width: 330px;
+    height: 20px;
+    border: 2px solid black;
+    background-color: rgb(208, 222, 238);
+}
+
+.create-event-image-url input {
+    width: 330px;
+    height: 20px;
+    border: 2px solid black;
+    background-color: rgb(208, 222, 238);
+}
+
+.create-event-text-area textarea {
+    width: 800px;
+    height: 150px;
+    border: 2px solid black;
+    background-color: rgb(208, 222, 238);
+}
+
+.create-event-details-container select {
+    border: 2px solid black;
+    background-color: rgb(208, 222, 238);
+}
+
+.create-event-details-container input {
+    border: 2px solid black;
+    width: 50px;
+    background-color: rgb(208, 222, 238);
+    
+}
+
+.create-event-data-container input {
+    border: 2px solid black;
+    background-color: rgb(208, 222, 238);
+}
+
+.create-event-button button {
+    background-color: rgb(225, 37, 37);
+    margin-top: 20px;
+    width: 150px;
+    height: 50px;
+    color: white;
+    font-size: medium;
+    border: 3px solid black
+}

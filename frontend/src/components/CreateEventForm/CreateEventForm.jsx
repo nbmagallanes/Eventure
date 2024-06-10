@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { createNewEvent } from '../../store/eventsReducer';
 import { getGroup } from '../../store/groupsReducer';
+import './CreateEventForm.css';
 
 export default function CreateEventForm() {
     let group = useSelector(state => state.groupsState.group)
@@ -79,12 +80,12 @@ export default function CreateEventForm() {
     }
 
     return (
-        <div className='form-container'>
-            <div className='title-container'>
-                <h4>{`Create an event for ${group.name}`}</h4>
+        <div className='create-event-form-container'>
+            <div className='create-event-title-container'>
+                <h1>{`Create an event for ${group.name}`}</h1>
             </div>
             <form onSubmit={handleSubmit}>
-                <div className='name-container sub-section'>
+                <div className='create-event-name-container create-event-sub-section'>
                     <p>What is the name of your event?</p>
                     <input id='name' 
                         type='text' 
@@ -94,57 +95,59 @@ export default function CreateEventForm() {
                     />
                     <div style={{color:'red'}}>{submitted && validationErrors.name}</div>
                 </div>
-                <div className='type-container sub-section'>
-                    <p>Is this an in-person or online event?</p>
-                    <select name='type' value={type} onChange={(e) => {setType(e.target.value)}} >
-                            <option value='' disabled>(select one)</option>
-                            <option value='In person'>In person</option>
-                            <option value='Online'>Online</option>
-                    </select>
-                    <div style={{color:'red'}}>{submitted && validationErrors.type}</div>
-                </div>
-                { type === 'In person' ? (
-                    <div className='venue-container sub-section'>
-                        <p>Select the venue:</p>
-                        <select name='venue' value={venue} onChange={(e) => {setVenue(e.target.value)}}>
-                            <option value='' disabled>(select one)</option>
-                            {group?.Venues.map( (venue) => (
-                                <option key={venue.id} value={venue.id}>{`${venue.address}`}</option>
-                            ))}
+                <div className='create-event-details-container create-event-sub-section'>
+                    <div className='create-event-type-container'>
+                        <p>Is this an in-person or online event?</p>
+                        <select name='type' value={type} onChange={(e) => {setType(e.target.value)}} >
+                                <option value='' disabled>(select one)</option>
+                                <option value='In person'>In person</option>
+                                <option value='Online'>Online</option>
                         </select>
                         <div style={{color:'red'}}>{submitted && validationErrors.type}</div>
                     </div>
-                ) : ( null )}
-                <div className='private-container sub-section'>
-                    <p>Is this event private or public?</p>
-                    <select name='type' value={isPrivate} onChange={(e) => {setIsPrivate(e.target.value)}}>
-                            <option value='' disabled>(select one)</option>
-                            <option value='Private'>Private</option>
-                            <option value='Public'>Public</option>
-                    </select>
-                    <div style={{color:'red'}}>{submitted && validationErrors.isPrivate}</div>
+                    { type === 'In person' ? (
+                        <div className='create-event-venue-container'>
+                            <p>Select the venue:</p>
+                            <select name='venue' value={venue} onChange={(e) => {setVenue(e.target.value)}}>
+                                <option value='' disabled>(select one)</option>
+                                {group?.Venues.map( (venue) => (
+                                    <option key={venue.id} value={venue.id}>{`${venue.address}`}</option>
+                                ))}
+                            </select>
+                            <div style={{color:'red'}}>{submitted && validationErrors.type}</div>
+                        </div>
+                    ) : ( null )}
+                    <div className='create-event-private-container'>
+                        <p>Is this event private or public?</p>
+                        <select name='type' value={isPrivate} onChange={(e) => {setIsPrivate(e.target.value)}}>
+                                <option value='' disabled>(select one)</option>
+                                <option value='Private'>Private</option>
+                                <option value='Public'>Public</option>
+                        </select>
+                        <div style={{color:'red'}}>{submitted && validationErrors.isPrivate}</div>
+                    </div>
+                    <div className='create-event-capacity-container'>
+                        <p>What is the capacity for this event?</p>
+                        <input id='capacity' 
+                            type='text' 
+                            value={capacity} 
+                            onChange={(e) => {setCapacity(e.target.value)}} 
+                            placeholder='0'
+                        />
+                        <div style={{color:'red'}}>{submitted && validationErrors.capacity}</div>
+                    </div>
+                    <div className='create-event-price-container'>
+                        <p>What is the price for your event?</p>
+                        <input id='price' 
+                            type='text' 
+                            value={price} 
+                            onChange={(e) => {setPrice(e.target.value)}} 
+                            placeholder='0'
+                        />
+                        <div style={{color:'red'}}>{submitted && validationErrors.price}</div>
+                    </div>
                 </div>
-                <div className='capacity-container sub-section'>
-                    <p>What is the capacity for this event?</p>
-                    <input id='capacity' 
-                        type='text' 
-                        value={capacity} 
-                        onChange={(e) => {setCapacity(e.target.value)}} 
-                        placeholder='0'
-                    />
-                    <div style={{color:'red'}}>{submitted && validationErrors.capacity}</div>
-                </div>
-                <div className='price-container sub-section'>
-                    <p>What is the price for your event?</p>
-                    <input id='price' 
-                        type='text' 
-                        value={price} 
-                        onChange={(e) => {setPrice(e.target.value)}} 
-                        placeholder='0'
-                    />
-                    <div style={{color:'red'}}>{submitted && validationErrors.price}</div>
-                </div>
-                <div className='event-data-container sub-section'>
+                <div className='create-event-data-container create-event-sub-section'>
                     <div>
                         <p>When does your event start?</p>
                         <input id='start-date' 
@@ -165,7 +168,8 @@ export default function CreateEventForm() {
                         />
                         <div style={{color:'red'}}>{submitted && validationErrors.endDate}</div>
                     </div>
-                    <div>
+                </div>
+                    <div className='create-event-image-url create-event-sub-section'>
                         <p>Please add an image url for your event below:</p>
                         <input id='image' 
                             type='text' 
@@ -175,9 +179,9 @@ export default function CreateEventForm() {
                         />
                         <div style={{color:'red'}}>{submitted && validationErrors.imageUrl}</div>
                     </div>
-                    <div>
+                    <div className='create-event-text-area'>
                         <p>Please describe your event</p>
-                        <input id='description' 
+                        <textarea id='description' 
                             type='text' 
                             value={description}
                             onChange={(e) => {setDescription(e.target.value)}} 
@@ -185,8 +189,7 @@ export default function CreateEventForm() {
                         />
                         <div style={{color:'red'}}>{submitted && validationErrors.description}</div>
                     </div>
-                </div>
-                <div>
+                <div className='create-event-button'>
                     <button>Create Event</button>
                 </div>
             </form>

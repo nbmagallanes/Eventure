@@ -16,7 +16,7 @@ export default function DeleteEventModal({navigate}) {
     };
 
     return (
-        <div className='modal-container'>
+        <div className='delete-modal-container'>
             <h2>Confirm Delete</h2>
             <p>Are you sure you want to remove this event?</p>
             <button className='yes button' onClick={(e) => deleteCurrentEvent(e)}> Yes (Delete Event)</button>

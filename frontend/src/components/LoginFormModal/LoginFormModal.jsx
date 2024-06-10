@@ -30,37 +30,46 @@ function LoginFormModal() {
   }
   
   return (
-    <>
+    <div className='login-form-container'>
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
-        {errors.length && <p>The provided credentials were invalid.</p>}
-        <label>
-          Username or Email
-          <input
-            type="text"
-            value={credential}
-            onChange={(e) => setCredential(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        <button 
-          type="submit" 
-          disabled={credential.length >= 4 && password.length >= 6 ? false : true}
-        >
-          Log In
-        </button>
-        <button onClick={() => handleClick()}>Log in as Demo User</button>
+        <div className='login-form-label-container'>
+          {errors.length && <p>The provided credentials were invalid.</p>}
+          <label>
+            Username or Email
+          </label>  
+            <input
+              type="text"
+              value={credential}
+              onChange={(e) => setCredential(e.target.value)}
+              required
+            />
+        </div>
+        <div className='login-form-label-container'>
+          <label>
+            Password
+          </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+        </div>
+        <div className='login-form-label-container'>
+          <button 
+            className='login-form-button'
+            type="submit" 
+            disabled={credential.length >= 4 && password.length >= 6 ? false : true}
+          >
+            Log In
+          </button>
+        </div>
+        <div className='login-form-label-container'>
+          <button className='login-demo-user' onClick={() => handleClick()}>Log in as Demo User</button>
+        </div>
       </form>
-    </>
+    </div>
   );
 }
 

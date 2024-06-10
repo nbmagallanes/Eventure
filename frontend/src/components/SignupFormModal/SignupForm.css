@@ -1,0 +1,46 @@
+.signup-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 350px;
+    height: 520px;
+    margin: 10px auto;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.signup-error-message {
+    width: 300px;
+    color:red;
+    margin: 5px 0px;
+}
+
+.signup-form-container h1 {
+    font-weight: normal;
+    margin: 10px 0px;
+}
+
+.signup-form-label-container {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0px;
+}
+
+.signup-form-grouped-container {
+    margin-bottom: 30px;
+}
+
+.signup-form-grouped-container input {
+    width: 300px;
+    border: 2px solid black;
+    background-color: rgb(208, 222, 238);
+}
+
+.signup-form-button {
+    background-color: rgb(218, 71, 83);
+    margin-top: 0px;
+    width: 310px;
+    height: 40px;
+    color: white;
+    font-size: medium;
+    border: 3px solid black
+}

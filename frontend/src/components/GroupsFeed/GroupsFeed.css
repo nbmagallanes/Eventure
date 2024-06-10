@@ -3,7 +3,9 @@
     flex-direction: column;
     /* align-items: center; */
     max-width: 580px;
-    margin: 0 auto
+    margin: 0px auto 20px auto;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+
 }
 
 .nav-links {
@@ -11,16 +13,83 @@
     justify-content: start;
     gap: 20px;
     font-size: x-large;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+    margin-top: 40px;
 }
 
 .nav-links a {
     color: grey;
     text-decoration: none;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
 
 .nav-links a.active {
     text-decoration: underline;
     color: teal
 }
+
+.title h4{
+    color: grey;
+    margin: 20px 0px;
+    font-weight: normal;
+}
+
+.group-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    height: 215px;
+}
+
+.group-container img {
+    max-width: 250px;
+    width: 250px;
+    height: 180px;
+    max-height: 180px;
+    border: 2px solid black;
+}
+
+.group-list-container a {
+    text-decoration: none;
+}
+
+.group-feed-info-container {
+    max-height: 184px;
+    height: 184px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.info-section h1 {
+    color: black;
+    margin: 0px 0px 10px 0px;
+    font-size: x-large;
+}
+
+.info-section h3 {
+    color: grey;
+    font-weight: lighter;
+    font-size: medium;
+    margin: 0px;
+} 
+
+.info-section p {
+    color: black;
+    font-size: medium;
+    margin-top: 40px;
+} 
+
+.group-feed-event-private-section {
+    display: flex;
+    gap: 5px;
+    /* margin: 0px 0px; */
+    display: flex;
+    align-items: end;
+
+}
+
+.event-private-element {
+    margin: 0px;
+    color: gray;
+    font-size: medium;
+}
+

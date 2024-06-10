@@ -27,10 +27,10 @@ export default function GroupsFeed() {
                 <NavLink to='/events'>Events</NavLink>
                 <NavLink>Groups</NavLink>
             </div>
-            <div>
+            <div className="title">
                 <h4>Groups in Eventure</h4>
             </div>
-            <div>
+            <div className="group-list-container">
                 { groups.map( group => (
                     <Group data={group} key={group.id}/>
                 ))}

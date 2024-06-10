@@ -22,14 +22,16 @@ export default function Group({data}) {
                 <div>
                     <img src={previewImage} alt='Group Image'/>
                 </div>
-                <div>
-                    <h2>{name}</h2>
-                    <h3>{`${city}, ${state}`}</h3>
-                    <p>{about}</p>
-                    <div className="event-private-info">
-                        <p>{(events.filter((singleEvent) => singleEvent.Group.id === id)).length} events</p>
-                        <p>&#8226;</p>
-                        <p>{data?.private === false ? "Public" : "Private"}</p>
+                <div className="group-feed-info-container">
+                    <div className="info-section">
+                        <h1>{name}</h1>
+                        <h3>{`${city}, ${state}`}</h3>
+                        <p>{about}</p>
+                    </div>
+                    <div className="group-feed-event-private-section">
+                        <p className="event-private-element">{(events.filter((singleEvent) => singleEvent.Group.id === id)).length} events</p>
+                        <p className="event-private-element">&#8226;</p>
+                        <p className="event-private-element">{data?.private === false ? "Public" : "Private"}</p>
                     </div>
                 </div>
             </div>

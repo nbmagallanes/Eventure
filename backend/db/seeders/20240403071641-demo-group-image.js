@@ -23,8 +23,8 @@ module.exports = {
       [
         {
           groupId: 1,
-          url: "placeHolderUrl1",
-          preview: false,
+          url: "https://images.stockcake.com/public/9/9/4/9947ad79-779f-42df-bbe0-d4274324f54d_large/reading-in-nature-stockcake.jpg",
+          preview: true,
         },
         {
           groupId: 2,

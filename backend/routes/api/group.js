@@ -428,11 +428,14 @@ router.get('/:groupId/events', async (req, res, next) => {
         ]
     });
 
-    await attendingTotal(events);
-    await eventsImagePreview(events);
+    // If group exists but it doesnt have any events
+    if (!events.length) res.json({ "Events": [] })
+    else {
+        await attendingTotal(events);
+        await eventsImagePreview(events);
 
-    res.json({ "Events": events });
-
+        res.json({ "Events": events });
+    }
 });
 
 // Create event for a group by id

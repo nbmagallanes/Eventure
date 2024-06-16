@@ -12,12 +12,14 @@ export default function GroupDetails() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const group = useSelector( state => state.groupsState.group)
+    console.log("groupppppppppp", group)
     const user = useSelector(state => state.session.user);
     const eventsObj = useSelector(state => state.eventsState.events)
     const events = Object.values(eventsObj);
     const { groupId } = useParams();
     const groupImage = group?.GroupImages?.find((image) =>  image.preview === true).url;
     console.log("group image!", groupImage)
+    console.log("eventsssss", events)
 
     let upcomingEvents = []
     let pastEvents = []
@@ -31,15 +33,10 @@ export default function GroupDetails() {
     upcomingEvents.sort((a, b) => new Date(a.startDate) - new Date(b.startDate))
     pastEvents.sort((a, b) => new Date(b.startDate) - new Date(a.startDate))
 
-    console.log('events!!', events)
-    console.log('past events!!', pastEvents)
-    console.log('upcoming events!!', upcomingEvents)
-
     useEffect(() => {
-        console.log('useEffect running');
         dispatch(getGroup(groupId));
         dispatch(getAllGroupEvents(groupId))
-    }, [dispatch, groupId]);
+    }, [groupId]);
 
     if (!group.id || group.id !== +groupId) return <div></div>
 

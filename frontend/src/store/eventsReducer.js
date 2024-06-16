@@ -53,7 +53,7 @@ export const getEvent = (eventId) => async (dispatch) => {
 
     if (response.ok) {
         const payload = await response.json()
-        console.log('response', payload)
+        // console.log('response', payload)
         dispatch(loadEvent(payload))
     } else {
         const error = await response.json()
@@ -77,7 +77,7 @@ export const createNewEvent = ({newEvent, groupId}) => async (dispatch) => {
         })
     })
 
-    console.log("create New event response", response)
+    // console.log("create New event response", response)
 
     if (response.ok) {
         const resEvent = await response.json()
@@ -97,7 +97,7 @@ export const deleteEvent = (eventId) => async (dispatch) => {
         method: 'DELETE',
     })
 
-    console.log("delete Event response", response)
+    // console.log("delete Event response", response)
 
     if (response.ok) {
         // const resGroup = await response.json()
@@ -111,14 +111,16 @@ export const deleteEvent = (eventId) => async (dispatch) => {
 };
 
 export const getAllGroupEvents = (groupId) => async (dispatch) => {
+
     const response = await csrfFetch(`/api/groups/${groupId}/events`, {
         method: 'GET'
     })
-
+        
     if (response.ok) {
         const {Events} = await response.json()
         console.log('this is the response for get events by group id', Events)
         dispatch(getGroupEvents(Events))
+        return Events
     } else {
         const error = await response.json()
         return error

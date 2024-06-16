@@ -3,6 +3,7 @@ import { useDispatch} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { createNewGroup } from '../../store/groupsReducer';
 import './CreateGroupForm.css'
+// import { addGroupImage } from '../../store/imagesReducer';
 
 export default function CreateGroupForm () {
     const [location, setLocation] = useState("");
@@ -24,9 +25,14 @@ export default function CreateGroupForm () {
         if (!about.length || about.length < 50) errors.about = "Desciption must be at least 50 characters long"
         if (!type) errors.type = "Group Type is required"
         if (!isPrivate) errors.isPrivate = "Visibility Type is required"
-        if (imageUrl.slice(-5) !== '.jpeg' && imageUrl.slice(-4) !== '.jpg' && imageUrl.slice(-4) !== '.png') errors.imageUrl = "Image URL must end in .png, .jpg, or .jpeg"
+        // if (imageUrl && imageUrl.slice(-5) !== '.jpeg' && imageUrl.slice(-4) !== '.jpg' && imageUrl.slice(-4) !== '.png') errors.imageUrl = "Image URL must end in .png, .jpg, or .jpeg"
+        console.log(imageUrl)
         setValidationErrors(errors)
     }, [location, name, about, type, isPrivate])
+
+    console.log('THIS IS THE IMAGE URL', imageUrl)
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -38,12 +44,14 @@ export default function CreateGroupForm () {
             name,
             about,
             type,
-            private: isPrivate === 'true' ? true : false,
+            isPrivate: isPrivate === 'true' ? true : false,
             city: location.split(', ')[0],
-            state: location.split(', ')[1]
+            state: location.split(', ')[1],
+            imageUrl
         }
 
         const response = await dispatch(createNewGroup(newGroup))
+        // console.log('this is the response form the create group form', response)
 
         if (response) {
             setLocation("")
@@ -51,6 +59,7 @@ export default function CreateGroupForm () {
             setAbout("")
             setType("")
             setIsPrivate("")
+            setImageUrl("")
             navigate(`/groups/${response.id}`)
         }
     }

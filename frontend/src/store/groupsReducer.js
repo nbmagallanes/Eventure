@@ -1,4 +1,5 @@
 import { csrfFetch } from "./csrf";
+import { addGroupImage } from "./imagesReducer";
 
 // import { csrfFetch } from './csrf.js';
 const GET_GROUPS = 'groups/getGroups'
@@ -62,17 +63,28 @@ export const getGroup = (groupId) => async (dispatch) => {
 };
 
 export const createNewGroup = (group) => async (dispatch) => {
+
+    console.log('this is the group passed in from create new group', group)
+    
+    const { name, about, type, isPrivate, city, state, imageUrl } = group;
+
     const response = await csrfFetch("/api/groups", {
         method: 'POST',
-        body: JSON.stringify(group)
+        body: JSON.stringify({
+            name: name,
+            about: about,
+            type: type,
+            private: isPrivate,
+            city: city,
+            state: state
+        })
     })
-
-    // console.log("create New Group response", response)
 
     if (response.ok) {
         const resGroup = await response.json()
         // console.log('CG response', resGroup)
-        dispatch(createGroup(resGroup))
+        await dispatch(addGroupImage({imageUrl, resGroup}))
+        await dispatch(createGroup(resGroup))
         return resGroup
     } else {
         const error = await response.json()

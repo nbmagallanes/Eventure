@@ -43,6 +43,7 @@ export const getAllGroups = () => async (dispatch) => {
         dispatch(getGroups(data.Groups))
     } else {
         const error = await response.json()
+        return error
     }
 };
 

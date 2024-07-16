@@ -28,7 +28,7 @@ export default function UpdateGroupForm() {
         if (!group.id) {
             dispatch(getGroup(groupId))
             .then( (group) => {
-                const previewUrl = group.GroupImages.reverse().find((image) =>  image.preview === true).url
+                const previewUrl = group.GroupImages.findLast((image) =>  image.preview === true).url
                 setLocation(`${group.city}, ${group.state}`);
                 setName(group.name);
                 setAbout(group.about);

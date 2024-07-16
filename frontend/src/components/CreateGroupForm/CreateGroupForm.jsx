@@ -3,7 +3,6 @@ import { useDispatch} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { createNewGroup } from '../../store/groupsReducer';
 import './CreateGroupForm.css'
-// import { addGroupImage } from '../../store/imagesReducer';
 
 export default function CreateGroupForm () {
     const [location, setLocation] = useState("");
@@ -25,14 +24,11 @@ export default function CreateGroupForm () {
         if (!about.length || about.length < 50) errors.about = "Desciption must be at least 50 characters long"
         if (!type) errors.type = "Group Type is required"
         if (!isPrivate) errors.isPrivate = "Visibility Type is required"
-        // if (imageUrl && imageUrl.slice(-5) !== '.jpeg' && imageUrl.slice(-4) !== '.jpg' && imageUrl.slice(-4) !== '.png') errors.imageUrl = "Image URL must end in .png, .jpg, or .jpeg"
-        console.log(imageUrl)
+        if (!imageUrl || (imageUrl && (imageUrl.slice(-5) !== '.jpeg' && imageUrl.slice(-4) !== '.jpg' && imageUrl.slice(-4) !== '.png'))) errors.imageUrl = "Image URL must end in .png, .jpg, or .jpeg"
+        
         setValidationErrors(errors)
-    }, [location, name, about, type, isPrivate])
-
-    console.log('THIS IS THE IMAGE URL', imageUrl)
-
-
+        
+    }, [location, name, about, type, isPrivate, imageUrl])
 
     const handleSubmit = async (e) => {
         e.preventDefault();

@@ -3,14 +3,12 @@ import { useDispatch, useSelector} from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { editGroup } from '../../store/groupsReducer';
 import { getGroup } from '../../store/groupsReducer';
-import { addGroupImage } from '../../store/imagesReducer';
 import '../CreateGroupForm/CreateGroupForm.css'
 
 export default function UpdateGroupForm() {
     const group = useSelector(state => state.groupsState.group)
     const user = useSelector(state => state.session.user)
-    const groupImage = group?.GroupImages?.find((image) =>  image.preview === true);
-    const url = groupImage.url
+    const url = group?.GroupImages?.findLast((image) =>  image.preview === true).url
 
     const [location, setLocation] = useState(group.city ? `${group.city}, ${group.state}` : '');
     const [name, setName] = useState(group.name ? group.name : '');
@@ -28,23 +26,20 @@ export default function UpdateGroupForm() {
 
     useEffect(() => {
         if (!group.id) {
-            dispatch(getGroup(groupId)).then( (group) => {
+            dispatch(getGroup(groupId))
+            .then( (group) => {
+                const previewUrl = group.GroupImages.reverse().find((image) =>  image.preview === true).url
                 setLocation(`${group.city}, ${group.state}`);
                 setName(group.name);
                 setAbout(group.about);
                 setType(group.type);
                 setIsPrivate(group.private)
-                setImageUrl()
-            });
+                setImageUrl(previewUrl);
+            })
         }
-    }, [dispatch, group, groupId])
+    }, [dispatch, group, group.id, groupId])
 
     useEffect(() => {
-        if (imageUrl) dispatch(addGroupImage({imageUrl: url, resGroup: group}))
-    }, [imageUrl])
-
-    useEffect(() => {
-        // console.log('third use effect ran')
         const errors = {};
         if (!location.length) errors.location = "Location is required"
         if (!name.length) errors.name = "Name is required"
@@ -54,10 +49,9 @@ export default function UpdateGroupForm() {
         if ((isPrivate !== false && isPrivate !== 'false') && (isPrivate !== true && isPrivate !== 'true')) {
             errors.isPrivate = "Visibility Type is required"
         }
-        // console.log("this is the url", imageUrl, imageUrl && imageUrl.slice(-5) !== '.jpeg' && imageUrl.slice(-4) !== '.jpg' && imageUrl.slice(-4) !== '.png')
-        if (imageUrl && imageUrl.slice(-5) !== '.jpeg' && imageUrl.slice(-4) !== '.jpg' && imageUrl.slice(-4) !== '.png') errors.imageUrl = "Image URL must end in .png, .jpg, or .jpeg"
+        if (!imageUrl || (imageUrl && (imageUrl.slice(-5) !== '.jpeg' && imageUrl.slice(-4) !== '.jpg' && imageUrl.slice(-4) !== '.png'))) errors.imageUrl = "Image URL must end in .png, .jpg, or .jpeg"
         setValidationErrors(errors)
-    }, [location, name, about, type, isPrivate])
+    }, [location, name, about, type, isPrivate, imageUrl])
 
 
     useEffect (() => {
@@ -74,9 +68,10 @@ export default function UpdateGroupForm() {
             name,
             about,
             type,
-            private: isPrivate === 'true' ? true : false,
+            isPrivate: isPrivate === 'true' ? true : false,
             city: location.split(', ')[0],
-            state: location.split(', ')[1]
+            state: location.split(', ')[1],
+            imageUrl
         }
 
         const response = await dispatch(editGroup({editedGroup, groupId}))

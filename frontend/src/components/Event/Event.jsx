@@ -27,7 +27,9 @@ export default function Event({ data }) {
                     <div className="events-feed-info-section">
                         <p className="events-feed-date">{`${dateConverter(startDate)[0]} • ${dateConverter(startDate)[1]}`}</p>
                         <h1>{name}</h1>
-                        <h3 className="events-feed-event-type">{type === 'In person' ?  `${data.Venue.city}, ${data.Venue.state}` : 'Online'}</h3>
+                        <h3 className="events-feed-event-type">{type === 'In person' ?  ( !data.Venue?.city && !data.Venue?.state ? 
+                        `${data.Group?.city}, ${data.Group?.state}` : `${data.Venue?.city}, ${data.Venue?.state}`) 
+                        : 'Online'}</h3>
                     </div>
                 </div>
                 <div className="events-feed-about-section">

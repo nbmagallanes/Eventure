@@ -19,7 +19,7 @@ export default function Group({data}) {
     return (
         <NavLink to={`/groups/${id}`}>
             <div className="group-container">
-                <div>
+                <div className="group-feed-image-container">
                     <img src={previewImage} alt='Group Image'/>
                 </div>
                 <div className="group-feed-info-container">

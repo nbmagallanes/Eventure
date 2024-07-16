@@ -1,7 +1,7 @@
 .group-container {
     display: flex;
     justify-content: center;
-    border-top: 2px solid lightgray;
+    border-top: 1px solid lightgray;
 }
 
 .event-private-info {

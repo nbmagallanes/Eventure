@@ -20,7 +20,7 @@
     justify-content: center;
     gap: 10px;
     height: 280px;
-    border-top: 2px solid lightgray;
+    border-top: 1px solid lightgray;
     padding: 10px 0px
 }
 
@@ -29,7 +29,7 @@
     width: 250px;
     height: 180px;
     max-height: 180px;
-    border: 2px solid black;
+    border-radius: 15px;
 }
 
 .event-feed-image-info-container {

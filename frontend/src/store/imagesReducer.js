@@ -54,19 +54,19 @@ export const addGroupImage = ({ imageUrl, resGroup }) => async (dispatch) => {
     }
 }
 
-const initialState = { images: {}}
+const initialState = { groupImages: {}, eventImages: {} }
 
-const imageReducer = (state=initialState, action) =>  {
+const imagesReducer = (state=initialState, action) =>  {
     let newState = {};
     switch (action.type) {
         case POST_EVENT_IMAGE: {
             const newImage = action.image;
-            newState = {...state, images: { ...state.images, [newImage.id]: newImage}}
+            newState = {...state, eventImages: { ...state.eventImages, [newImage.id]: newImage}}
             return newState
         }
         case POST_GROUP_IMAGE: {
             const newImage = action.image;
-            newState = {...state, images: { ...state.images, [newImage.id]: newImage}}
+            newState = {...state, groupImages: { ...state.groupImages, [newImage.id]: newImage}}
             return newState
         }
         default:
@@ -74,4 +74,4 @@ const imageReducer = (state=initialState, action) =>  {
     }
 }
 
-export default imageReducer;
+export default imagesReducer;

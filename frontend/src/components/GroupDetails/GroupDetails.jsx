@@ -12,26 +12,25 @@ export default function GroupDetails() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const group = useSelector( state => state.groupsState.group)
-    console.log("groupppppppppp", group)
     const user = useSelector(state => state.session.user);
     const eventsObj = useSelector(state => state.eventsState.events)
     const events = Object.values(eventsObj);
     const { groupId } = useParams();
-    const groupImage = group?.GroupImages?.find((image) =>  image.preview === true).url;
-    console.log("group image!", groupImage)
-    console.log("eventsssss", events)
+    const groupImage = group?.GroupImages?.findLast((image) =>  image.preview === true).url
 
     let upcomingEvents = []
     let pastEvents = []
     let today = new Date()
 
-    events.forEach((event) => {
-        if (new Date(event.startDate) < today) pastEvents.push(event)
-        if (new Date(event.startDate) > today) upcomingEvents.push(event)
-    })
-
-    upcomingEvents.sort((a, b) => new Date(a.startDate) - new Date(b.startDate))
-    pastEvents.sort((a, b) => new Date(b.startDate) - new Date(a.startDate))
+    if (events.length) {
+        events.forEach((event) => {
+            if (new Date(event.startDate) < today && event.groupId === +groupId) pastEvents.push(event)
+            if (new Date(event.startDate) > today && event.groupId === +groupId) upcomingEvents.push(event)
+        })
+    
+        upcomingEvents.sort((a, b) => new Date(a.startDate) - new Date(b.startDate))
+        pastEvents.sort((a, b) => new Date(b.startDate) - new Date(a.startDate))
+    }
 
     useEffect(() => {
         dispatch(getGroup(groupId));
@@ -122,7 +121,11 @@ export default function GroupDetails() {
                                                     <div className="group-events-info-section">
                                                         <p className="group-details-event-date">{event.startDate}</p>
                                                         <h2>{event.name}</h2>
-                                                        <p className="group-details-event-type">{event.type === 'In person' ?  `${event.Venue.city}, ${event.Venue.state}` : 'Online'}</p>
+                                                        {/* <p className="group-details-event-type">{event.type === 'In person' ?  `${event.Venue.city}, ${event.Venue.state}` : 'Online'}</p> */}
+                                                        <p className="group-details-event-type">{event.type === 'In person' ?  ( !event.Venue?.city && !event.Venue?.state ? 
+                                                            `${event.Group?.city}, ${event.Group?.state}` : `${event.Venue?.city}, ${event.Venue?.state}`) 
+                                                            : 'Online'}
+                                                        </p>
                                                     </div>
                                                 </div>
                                                 <div className="group-details-event-about-section">
@@ -148,7 +151,11 @@ export default function GroupDetails() {
                                                     <div className="group-events-info-section">
                                                         <p className="group-details-event-date">{event.startDate}</p>
                                                         <h2>{event.name}</h2>
-                                                        <p className="group-details-event-type">{event.type === 'In person' ?  `${event.Venue.city}, ${event.Venue.state}` : 'Online'}</p>
+                                                        {/* <p className="group-details-event-type">{event.type === 'In person' ?  `${event.Venue.city}, ${event.Venue.state}` : 'Online'}</p> */}
+                                                        <p className="group-details-event-type">{event.type === 'In person' ?  ( !event.Venue?.city && !event.Venue?.state ? 
+                                                            `${event.Group?.city}, ${event.Group?.state}` : `${event.Venue?.city}, ${event.Venue?.state}`) 
+                                                            : 'Online'}
+                                                        </p>
                                                     </div>
                                                 </div>
                                                 <div className="group-details-event-about-section">

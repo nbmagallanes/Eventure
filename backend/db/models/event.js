@@ -33,13 +33,13 @@ module.exports = (sequelize, DataTypes) => {
       venueId: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        validate: {
-          typeValidator(value){
-            if (!value && this.type === 'In person'){
-              throw new Error('A venue is needed for in person events')
-            }
-          }
-        }
+        // validate: {
+        //   typeValidator(value){
+        //     if (!value && this.type === 'In person'){
+        //       throw new Error('A venue is needed for in person events')
+        //     }
+        //   }
+        // }
       },
       groupId: {
         type: DataTypes.INTEGER,

@@ -28,7 +28,7 @@ module.exports = {
         },
         {
           groupId: 2,
-          url: "https://www.jacksonsart.com/blog/wp-content/uploads/2020/12/unnamed.jpg",
+          url: "https://www.jacksonsart.com/blog/wp-content/uploads/2018/05/w-almost-finished-in-surroundings.jpg",
           preview: true,
         },
         {
@@ -39,11 +39,6 @@ module.exports = {
         {
           groupId: 3,
           url: "https://blog.cryptoflies.com/wp-content/uploads/2023/12/sony-bbc-earth-nature-metaverse-experience-585x346.png",
-          preview: true,
-        },
-        {
-          groupId: 4,
-          url: "https://americanhiking.org/wp-content/uploads/2017/03/P1010042-750x563.jpg",
           preview: true,
         },
       ],

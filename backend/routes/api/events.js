@@ -234,6 +234,8 @@ router.get("/", eventPagination, async (req, res, next) => {
   await attendingTotal(events);
   await eventsImagePreview(events);
 
+  console.log('BACKEND get events to search for start date', events)
+
   res.json({ Events: events });
 });
 

@@ -477,6 +477,8 @@ router.post('/:groupId/events', [requireAuth, venueAuth, validateEvent], async (
         endDate: newEvent.endDate
     }
 
+    console.log('CREATE EVENT ROUTE', newEvent.startDate)
+
     res.json(payload)
 });
 

@@ -1,10 +1,13 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate, NavLink } from 'react-router-dom';
 import OpenModalButton from '../OpenModalButton';
 import DeleteEventModal from '../DeleteEventModal';
 import { getEvent } from '../../store/eventsReducer';
 import { getGroup } from '../../store/groupsReducer';
+import { LuClock5 } from "react-icons/lu";
+import { PiCurrencyCircleDollarLight } from "react-icons/pi";
+import { FaMapPin } from "react-icons/fa";
 import "./EventDetails.css"
 
 export default function EventDetails() {
@@ -14,7 +17,7 @@ export default function EventDetails() {
     const group = useSelector( state => state.groupsState.group)
     const user = useSelector( state => state.session.user)
     const eventImage = event?.EventImages?.find((image) => image?.preview === true)
-    const groupImage = group?.GroupImages?.find((image) =>  image.preview === true).url;
+    const groupImage = group?.GroupImages?.findLast((image) =>  image.preview === true).url;
     const { eventId } = useParams();
 
     useEffect(() => {
@@ -64,35 +67,42 @@ export default function EventDetails() {
                             <img src={eventImage?.url} alt='Event Image'/>
                         </div>
                         <div className='event-details-general-info-container'>
-                            <div className='event-details-group-info-container'>
-                                <div>
-                                    <img src={groupImage}/>
+                            <NavLink to={`/groups/${group?.id}`}>
+                                <div className='event-details-group-info-container'>
+                                    <div>
+                                        <img src={groupImage}/>
+                                    </div>
+                                    <div className='event-group-name-type-container'>
+                                        <h4>{group?.name}</h4>
+                                        <p>{group?.private ? "Private" : "Public"}</p>
+                                    </div>
                                 </div>
-                                <div className='event-group-name-type-container'>
-                                    <h4>{group?.name}</h4>
-                                    <p>{group?.private ? "Private" : "Public"}</p>
-                                </div>
-                            </div>
+                            </NavLink>
                             <div className='event-info-container'>
                                 <div className='event-details-date-display-container'>
-                                    <div className='event-details-date-display-content'>
-                                        <p>START</p>
-                                        <p className='specific-date'>{dateConverter(event.startDate)[0]}</p>
-                                        <p className='specific-date'>&#8226;</p>
-                                        <p className='specific-date'>{dateConverter(event.startDate)[1]}</p>
-                                    </div>
-                                    <div className='event-details-date-display-content'>
-                                        <p>END</p>
-                                        <p className='specific-date'>{dateConverter(event.endDate)[0]}</p>
-                                        <p className='specific-date'>&#8226;</p>
-                                        <p className='specific-date'>{dateConverter(event.endDate)[1]}</p>
+                                    <p><LuClock5 /></p>
+                                    <div className='event-details-date-display-content-container'>
+                                        <div className='event-details-date-display-content'>
+                                            <p>START</p>
+                                            <p className='specific-date'>{dateConverter(event.startDate)[0]}</p>
+                                            <p className='specific-date'>&#8226;</p>
+                                            <p className='specific-date'>{dateConverter(event.startDate)[1]}</p>
+                                        </div>
+                                        <div className='event-details-date-display-content'>
+                                            <p>END</p>
+                                            <p className='specific-date'>{dateConverter(event.endDate)[0]}</p>
+                                            <p className='specific-date'>&#8226;</p>
+                                            <p className='specific-date'>{dateConverter(event.endDate)[1]}</p>
+                                        </div>
                                     </div>
                                 </div>
-                                <div>
+                                <div className='event-detail-price-container'>
+                                    <p><PiCurrencyCircleDollarLight /></p>
                                     <p>{event.price === 0 ? "FREE" : `$${event.price}`}</p>
                                 </div>
                                 <div className='event-details-type-buttons-container'>
-                                    <div>
+                                    <div className='event-details-type-container'>
+                                        <p><FaMapPin /></p>
                                         <p>{event.type}</p>     
                                     </div>
                                     {user && user.id === group?.Organizer?.id ? (

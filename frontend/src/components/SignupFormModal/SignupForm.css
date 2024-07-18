@@ -44,3 +44,8 @@
     font-size: medium;
     border: 3px solid black
 }
+
+.signup-form-button:disabled {
+    background-color: lightgrey;
+    border: 2px solid grey;
+}

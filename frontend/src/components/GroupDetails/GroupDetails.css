@@ -159,14 +159,15 @@
     max-height: 150px;
     width: 180px;
     height: 130px;
-    border: 1px solid black
+    
 }
 
 .event-group-image{
     max-width: 180px;
     max-height: 150px;
     width: 180px;
-    height: 130px
+    height: 130px;
+    border-radius: 8px;
 }
 
 .group-details-events-container h2 {
@@ -181,10 +182,14 @@
     color: rgb(4, 103, 103);
 }
 
+.group-details-event-date-container {
+    display: flex;
+}
+
 
 .group-events-info-section p {
     font-size: small;
-    margin: 5px 5px; 
+    margin: 5px 5px 5px 0px; 
 }
 
 .group-events-info-section h2{
@@ -196,19 +201,16 @@
     color: grey
 }
 
-/*
-
-.info-section h2{
-    font-size: large;
-    color: black
-    /* margin: 5px 5px; 
-}
-
-*/
-
-.group-details-event-about-section{
+.group-details-event-about-section {
     margin: 10px 5px;
     font-size: 15px;
     color: black;
 } 
+
+.join-group button {
+    padding: 10px 30px;
+    background: rgb(206,43,39);
+    color: white;
+    font-size: medium;
+}
 

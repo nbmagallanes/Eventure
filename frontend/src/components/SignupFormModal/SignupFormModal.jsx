@@ -15,21 +15,21 @@ function SignupFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
-  const validateEmail = (email) => {
-    const atIndex = email.indexOf('@');
-    const dotIndex = email.lastIndexOf('.')
-    if (atIndex > 0 && dotIndex > atIndex + 1 && dotIndex < email.length -1) return true;
-    return false;
-  }
+  // const validateEmail = (email) => {
+  //   const atIndex = email.indexOf('@');
+  //   const dotIndex = email.lastIndexOf('.')
+  //   if (atIndex > 0 && dotIndex > atIndex + 1 && dotIndex < email.length -1) return true;
+  //   return false;
+  // }
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     let newErrors = {}
 
-    if (!validateEmail(email)) {
-      newErrors.email = "The provided email is invalid"
-    }
+    // if (!validateEmail(email)) {
+    //   newErrors.email = "The provided email is invalid"
+    // }
 
     if (password === confirmPassword) {
       setErrors({});
@@ -45,10 +45,10 @@ function SignupFormModal() {
         .then(closeModal)
         .catch(async (res) => {
           const data = await res.json();
-          if (data?.errors) {
-            newErrors = {...data?.errors, ...newErrors}
+          if (data?.errors && data?.errors.email === "Invalid email") {
+            newErrors = {...data?.errors, email : "The provided email is invalid."}
             setErrors(newErrors)
-          }
+          } else if (data?.errors) setErrors(data?.errors)
         });
     }
     return setErrors({
@@ -56,7 +56,7 @@ function SignupFormModal() {
     });
   };
 
-  const notVisible = !email || !firstName || !lastName || 
+  const notVisible = !email || !firstName || !lastName || !confirmPassword ||
                             username.length < 4 || password.length < 6;
 
 

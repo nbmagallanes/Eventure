@@ -40,9 +40,11 @@ export default function Landing() {
                     <p>Would like to create a new group? Follow the link above to get started and become a group organizer!</p>
                 </div>
             </div>
-            <div className="section-four-container">
-                <button className="join-button">Join Eventure</button>
-            </div>
+            {user ? null : (
+                <div className="section-four-container">
+                    <button className="join-button">Join Eventure</button>
+                </div>
+            )}
         </div>
     )
 }

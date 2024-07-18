@@ -82,7 +82,7 @@ export default function CreateEventForm() {
     return (
         <div className='create-event-form-container'>
             <div className='create-event-title-container'>
-                <h1>{`Create an event for ${group.name}`}</h1>
+                <h1>{`Create a new event for ${group.name}`}</h1>
             </div>
             <form onSubmit={handleSubmit}>
                 <div className='create-event-name-container create-event-sub-section'>

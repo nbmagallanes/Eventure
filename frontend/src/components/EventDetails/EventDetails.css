@@ -100,7 +100,16 @@
     color: rgb(4, 103, 103);
 }
 
-.event-details-date-display-container > div{
+.event-details-date-display-container {
+    display: flex;
+}
+
+.event-details-date-display-content-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.event-details-date-display-container > div {
     margin: 0px 0px;
 }
 
@@ -139,4 +148,12 @@
 
 .event-list-name-organizer p {
     color: grey
+}
+
+.event-detail-price-container {
+    display: flex;
+}
+
+.event-details-type-container {
+    display: flex;
 }

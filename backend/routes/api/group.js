@@ -127,14 +127,14 @@ async function attendingTotal(events) {
 
 async function imagePreview(groups) {
   for (let group of groups) {
-    const image = await GroupImage.findOne({
+    const images = await GroupImage.findAll({
       where: {
         groupId: group.id,
         preview: true,
       },
     });
 
-    if (image) group.dataValues.previewImage = image.url;
+    if (images) group.dataValues.previewImage = images[images.length - 1].url;
     else group.dataValues.previewImage = null;
   }
 };

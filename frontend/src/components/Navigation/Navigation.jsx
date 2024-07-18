@@ -4,10 +4,17 @@ import ProfileButton from './ProfileButton';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import './Navigation.css';
+import { useState } from 'react';
 
 function Navigation({ isLoaded }) {
+  const [arrow, setArrow] = useState(false)
   const sessionUser = useSelector(state => state.session.user);
+
+  const onClick = () => {
+    setArrow(prevArrow => !prevArrow)
+  }
 
   const sessionLinks = sessionUser ?
     (
@@ -15,9 +22,9 @@ function Navigation({ isLoaded }) {
       <div className='logged-in-navbar'>
         <NavLink to='groups/new' className='new-group-link'>Start a new group</NavLink>
         <div className='profile-button'>
-          <ProfileButton user={sessionUser} />
+          <ProfileButton user={sessionUser} onClick={onClick}/>
         </div>
-        <p>PH</p>
+        <p>{arrow ? <IoIosArrowUp /> :  <IoIosArrowDown /> }</p>
       </div>
       // </li>
     ) : (

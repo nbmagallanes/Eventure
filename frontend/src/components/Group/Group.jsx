@@ -10,6 +10,7 @@ export default function Group({data}) {
     const dispatch = useDispatch();
     const eventsObj = useSelector( state => state.eventsState.events)
     const events = Object.values(eventsObj)
+    const eventsById = events.filter((singleEvent) => singleEvent.Group.id === id).length
     // console.log(events)
 
     useEffect(() => {
@@ -29,7 +30,7 @@ export default function Group({data}) {
                         <p>{about}</p>
                     </div>
                     <div className="group-feed-event-private-section">
-                        <p className="event-private-element">{(events.filter((singleEvent) => singleEvent.Group.id === id)).length} events</p>
+                        <p className="event-private-element">{eventsById === 1 ? `${eventsById} event` : `${eventsById} events`}</p>
                         <p className="event-private-element">&#8226;</p>
                         <p className="event-private-element">{data?.private === false ? "Public" : "Private"}</p>
                     </div>

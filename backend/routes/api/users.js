@@ -51,6 +51,7 @@ router.post(
   validateSignup,
   async (req, res, next) => {
     let credentials = [];
+    let valErrors = {}
 
     const { firstName, lastName, email, password, username } = req.body;
 
@@ -58,23 +59,43 @@ router.post(
 
     users.forEach(user => {credentials.push(user.toJSON())});
 
+    // for (let cred of credentials) {
+    //   if (cred.email === email) {
+    //     const err = new Error("User already exists");
+    //     err.title = "Validation Error";
+    //     err.message = "User already exists";
+    //     err.errors = { "email": "User with that email already exists" }
+    //     err.status = 500;
+    //     return next(err);
+    //   } else if (cred.username === username) {
+    //     const err = new Error("User already exists");
+    //     err.title = "Validation Error";
+    //     err.message = "User already exists";
+    //     err.errors = { "username": "User with that username already exists" }
+    //     err.status = 500;
+    //     return next(err);
+    //   }
+    // };
+
     for (let cred of credentials) {
       if (cred.email === email) {
-        const err = new Error("User already exists");
-        err.title = "Validation Error";
-        err.message = "User already exists";
-        err.errors = { "email": "User with that email already exists" }
-        err.status = 500;
-        return next(err);
-      } else if (cred.username === username) {
-        const err = new Error("User already exists");
-        err.title = "Validation Error";
-        err.message = "User already exists";
-        err.errors = { "username": "User with that username already exists" }
-        err.status = 500;
-        return next(err);
+        valErrors.email = "Email must be unique." 
+      } 
+      
+      if (cred.username === username) {
+        valErrors.username = "Username must be unique." 
       }
     };
+
+
+    if (Object.values(valErrors).length) {
+      const err = new Error("User already exists");
+      err.ttle = "Validation Error";
+      err.message = "User already exists";
+      err.errors = valErrors;
+      err.status = 500;
+      return next(err);
+    }
 
     const hashedPassword = bcrypt.hashSync(password);
 

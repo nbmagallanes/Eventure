@@ -10,11 +10,28 @@ export default function EventsFeed() {
     const eventsObj = useSelector( state => state.eventsState.events)
     const events = Object.values(eventsObj)
 
+    let upcomingEvents = []
+    let pastEvents = []
+    let orderedEvents = []
+    let today = new Date()
+
+    if (events.length) {
+        events.forEach((event) => {
+            if (new Date(event.startDate) < today) pastEvents.push(event)
+            if (new Date(event.startDate) > today) upcomingEvents.push(event)
+        })
+    
+        upcomingEvents.sort((a, b) => new Date(a.startDate) - new Date(b.startDate))
+        pastEvents.sort((a, b) => new Date(b.startDate) - new Date(a.startDate))
+        
+        orderedEvents = [...upcomingEvents, ...pastEvents]
+    }
+
+    // if (!events.length) return <div></div>
+
     useEffect(() => {
         dispatch(getAllEvents())
     }, [dispatch])
-
-    if (!events.length) return <div></div>
 
     return (
         <div className="events-feed-container">
@@ -26,7 +43,7 @@ export default function EventsFeed() {
                 <h4>Events in Eventure</h4>
             </div>
             <div className="events-list-container">
-                { events?.map( event => (
+                { orderedEvents?.map( event => (
                     <Event data={event} key={event.id}/>
                 ))}
             </div>

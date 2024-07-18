@@ -63,7 +63,7 @@ export default function CreateGroupForm () {
     return (
         <div className='group-form-container'>
             <div className='group-form-title-container'>
-                <h1>BECOME AN ORGANIZER</h1>
+                <h1>START A NEW GROUP</h1>
                 <h2>We&apos;ll walk you through a few steps to build your local community</h2>
             </div>
             <form onSubmit={handleSubmit}>
@@ -79,7 +79,7 @@ export default function CreateGroupForm () {
                         type='text' 
                         value={location} 
                         onChange={(e) => {setLocation(e.target.value)}} 
-                        placeholder='city, STATE'
+                        placeholder='City, STATE'
                     />
                     <div style={{color:'red'}}>{submitted && validationErrors.location}</div>
                 </div>
@@ -99,7 +99,7 @@ export default function CreateGroupForm () {
                 </div>
                 <div className='group-form-about-container group-form-sub-section'>
                     <div className='group-form-sub-one'>
-                        <h2>Now describe what your group will be about</h2>
+                        <h2>Describe the purpose of your group</h2>
                         <p>People will see this when we promote your group, but you&apos;ll be able to add to it later, too.</p>
                     </div>
                     <ol>
@@ -112,7 +112,7 @@ export default function CreateGroupForm () {
                         value={about} 
                         className='group-form-about-container-input'
                         onChange={(e) => {setAbout(e.target.value)}} 
-                        placeholder='Please write at least 30 characters'
+                        placeholder='Please write at least 50 characters'
                     />
                     <div style={{color:'red'}}>{submitted && validationErrors.about}</div>
                 </div>
@@ -137,12 +137,12 @@ export default function CreateGroupForm () {
                         <div style={{color:'red'}}>{submitted && validationErrors.isPrivate}</div>
                     </div>
                     <div>
-                        <p>Please add in image url for your group below:</p>
+                        <p>Please add an image URL for your group below:</p>
                         <input id='image' 
                         type='url' 
                         value={imageUrl} 
                         onChange={(e) => {setImageUrl(e.target.value)}} 
-                        placeholder='Image url'
+                        placeholder='Image Url'
                     />
                         <div style={{color:'red'}}>{submitted && validationErrors.imageUrl}</div>
                     </div>

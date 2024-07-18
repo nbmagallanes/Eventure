@@ -32,6 +32,18 @@ export default function GroupDetails() {
         pastEvents.sort((a, b) => new Date(b.startDate) - new Date(a.startDate))
     }
 
+    const dateConverter = (dateString) =>{
+        const newDate = new Date(dateString)
+        const date = dateString.split('T')[0]
+        const time = newDate.toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+            timeZoneName: 'short'
+        });
+        return [date, time]
+    }
+
     useEffect(() => {
         dispatch(getGroup(groupId));
         dispatch(getAllGroupEvents(groupId))
@@ -60,7 +72,7 @@ export default function GroupDetails() {
                                     <div className='group-details-small-section'>
                                         <p>{`${group.city}, ${group.state}`}</p>
                                         <div className='event-private-container'>
-                                            <p>{events.length} events</p>
+                                            <p>{events.length === 1 ? `${events.length} event` : `${events.length} events`}</p>
                                             <p>&#8226;</p>
                                             <p>{group.private === false ? "Public" : "Private"}</p>
                                         </div>
@@ -81,7 +93,7 @@ export default function GroupDetails() {
                                                 />
                                         </div>
                                     ) : (
-                                        <div> 
+                                        <div className='join-group'> 
                                             <button onClick={() => (alert("Feature coming soon."))}>Join this group</button>
                                         </div>
                                     )
@@ -149,7 +161,11 @@ export default function GroupDetails() {
                                                         <img className='event-group-image' src={event.previewImage} alt='Event Image'/>
                                                     </div>
                                                     <div className="group-events-info-section">
-                                                        <p className="group-details-event-date">{event.startDate}</p>
+                                                        <div className='group-details-event-date-container'>
+                                                            <p className="group-details-event-date">{dateConverter(event.startDate)[0]}</p>
+                                                            <p className="group-details-event-date">&#8226;</p>
+                                                            <p className="group-details-event-date">{dateConverter(event.startDate)[1]}</p>
+                                                        </div>
                                                         <h2>{event.name}</h2>
                                                         {/* <p className="group-details-event-type">{event.type === 'In person' ?  `${event.Venue.city}, ${event.Venue.state}` : 'Online'}</p> */}
                                                         <p className="group-details-event-type">{event.type === 'In person' ?  ( !event.Venue?.city && !event.Venue?.state ? 

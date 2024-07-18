@@ -434,6 +434,16 @@ router.get('/:groupId/events', async (req, res, next) => {
         await attendingTotal(events);
         await eventsImagePreview(events);
 
+        events.forEach(event => {
+            const newStartDate = new Date(event.dataValues.startDate)
+            const localeStartDate = newStartDate.toLocaleString()
+            event.dataValues.startDate = localeStartDate
+        
+            const newEndDate = new Date(event.dataValues.endDate)
+            const localeEndDate = newEndDate.toLocaleString()
+            event.dataValues.endDate = localeEndDate
+        })
+
         res.json({ "Events": events });
     }
 });

@@ -237,19 +237,13 @@ router.get("/", eventPagination, async (req, res, next) => {
   
   events.forEach(event => {
     const newStartDate = new Date(event.dataValues.startDate)
-    // const utcStartDate = newStartDate.toUTCString()
     const localeStartDate = newStartDate.toLocaleString()
     event.dataValues.startDate = localeStartDate
 
     const newEndDate = new Date(event.dataValues.endDate)
-    // const utcStartDate = newStartDate.toUTCString()
     const localeEndDate = newEndDate.toLocaleString()
     event.dataValues.endDate = localeEndDate
-
-    console.log(event.dataValues.startDate)
   })
-  
-  console.log('BACKEND get events to search for start date', events)
 
   res.json({ Events: events });
 });
@@ -297,6 +291,12 @@ router.get("/:eventId", async (req, res, next) => {
     endDate,
   } = event;
 
+  const newStartDate = new Date(startDate)
+  const localeStartDate = newStartDate.toLocaleString()
+
+  const newEndDate = new Date(endDate)
+  const localeEndDate = newEndDate.toLocaleString()
+
   const payload = {
     id,
     groupId,
@@ -306,8 +306,8 @@ router.get("/:eventId", async (req, res, next) => {
     type,
     capacity,
     price,
-    startDate,
-    endDate,
+    startDate : localeStartDate,
+    endDate: localeEndDate,
     numAttending: event.dataValues.numAttending,
     Group: {
       ...event.Group.dataValues,

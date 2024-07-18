@@ -21,10 +21,21 @@ export default function Event({ data }) {
     // }
 
     const dateConverter = (dateString) => {
-        const date = dateString.split(', ')[0]
-        const time = dateString.split(', ')[1]
-        console.log('newDateeeee', dateString)
-        console.log(dateString)
+        
+        let date;
+        let time;
+        
+        const tempDate = dateString.split(', ')[0].split('/')
+        const tempTime = dateString.split(', ')[1]
+
+        if (tempDate[0].length === 1 && tempDate[1].length === 1) date = `${tempDate[2]}-0${tempDate[0]}-0${tempDate[1]}`
+        else if (tempDate[0].length === 1) date = `${tempDate[2]}-0${tempDate[0]}-${tempDate[1]}`
+        else if (tempDate[1].length === 1) date = `${tempDate[2]}-${tempDate[0]}-0${tempDate[1]}`
+        else date = `${tempDate[2]}-${tempDate[0]}-${tempDate[1]}`
+
+        if (tempTime.length === 10) time = `0${tempTime.slice(0, 4)} ${tempTime.slice(-2)}`
+        else if (tempTime.length === 11) time = `${tempTime.slice(0, 5)} ${tempTime.slice(-2)}`
+
         return [date, time]
     }
 

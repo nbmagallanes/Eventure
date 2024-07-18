@@ -30,8 +30,8 @@ module.exports = {
           type: "In person",
           capacity: 15,
           price: 0,
-          startDate: "2024-04-05",
-          endDate: "2024-04-05",
+          startDate: "2024-04-05 01:00 PM",
+          endDate: "2024-04-05 02:00 PM",
         },
         {
           venueId: 2,
@@ -42,8 +42,8 @@ module.exports = {
           type: "In person",
           capacity: 15,
           price: 0,
-          startDate: "2024-04-12",
-          endDate: "2024-04-12",
+          startDate: "2024-04-12 10:00 AM",
+          endDate: "2024-04-12  11:30 AM",
         },
         {
           venueId: 2,
@@ -66,8 +66,8 @@ module.exports = {
           type: "In person",
           capacity: 20,
           price: 10,
-          startDate: "2024-07-10",
-          endDate: "2024-07-10",
+          startDate: "2024-07-10 04:00 PM",
+          endDate: "2024-07-10 05:00 PM",
         },
         {
           groupId: 3,
@@ -77,8 +77,8 @@ module.exports = {
           type: "Online",
           capacity: 30,
           price: 0,
-          startDate: "2024-06-14",
-          endDate: "2024-06-14",
+          startDate: "2024-06-14 12:30 PM",
+          endDate: "2024-06-14 02:00 PM",
         },
       ],
 

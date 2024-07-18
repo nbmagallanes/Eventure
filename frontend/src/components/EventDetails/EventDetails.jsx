@@ -26,7 +26,6 @@ export default function EventDetails() {
 
     useEffect(() => {
         if (event?.Group?.id && !group.length) {
-            console.log("dispatchinggggg")
             dispatch(getGroup(event?.Group?.id));
         }
     }, [dispatch, event])

@@ -148,7 +148,7 @@ const groupsReducer = (state=initialState, action) => {
             return newState
         case LOAD_GROUP: {
             const loadedGroup = action.group;
-            console.log('LOADED GROUPPPP', loadedGroup)
+            // console.log('LOADED GROUPPPP', loadedGroup)
             // const imagePreview = loadedGroup.GroupImages.find((image) =>  image.preview === true);
             newState = {...state, group: loadedGroup}
             return newState

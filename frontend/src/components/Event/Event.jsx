@@ -8,12 +8,15 @@ export default function Event({ data }) {
     const dateConverter = (dateString) =>{
         const newDate = new Date(dateString)
         const date = dateString.split('T')[0]
+        console.log('newDateeeee', newDate)
+        console.log('original dateeeee', dateString)
         const time = newDate.toLocaleTimeString('en-US', {
             hour: 'numeric',
             minute: 'numeric',
             hour12: true,
             timeZoneName: 'short'
         });
+        console.log('hereeeeee', date, time)
         return [date, time]
     }
 

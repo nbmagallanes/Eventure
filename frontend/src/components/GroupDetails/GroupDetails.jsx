@@ -35,12 +35,15 @@ export default function GroupDetails() {
     const dateConverter = (dateString) =>{
         const newDate = new Date(dateString)
         const date = dateString.split('T')[0]
+        console.log('newDateeeee', newDate)
+        console.log('original dateeeee', dateString)
         const time = newDate.toLocaleTimeString('en-US', {
             hour: 'numeric',
             minute: 'numeric',
             hour12: true,
             timeZoneName: 'short'
         });
+        console.log('hereeeeee', date, time)
         return [date, time]
     }
 
@@ -131,7 +134,13 @@ export default function GroupDetails() {
                                                         <img className='event-group-image' src={event.previewImage} alt='Event Image'/>
                                                     </div>
                                                     <div className="group-events-info-section">
-                                                        <p className="group-details-event-date">{event.startDate}</p>
+                                                        <div className='group-details-event-date-container'>
+                                                            <p className="group-details-event-date">{dateConverter(event.startDate)[0]}</p>
+                                                            <p className="group-details-event-date">&#8226;</p>
+                                                            <p className="group-details-event-date">{dateConverter(event.startDate)[1]}</p>
+                                                            {console.log(dateConverter(event.startDate))}
+                                                            {console.log(dateConverter(event.startDate))}
+                                                        </div>
                                                         <h2>{event.name}</h2>
                                                         {/* <p className="group-details-event-type">{event.type === 'In person' ?  `${event.Venue.city}, ${event.Venue.state}` : 'Online'}</p> */}
                                                         <p className="group-details-event-type">{event.type === 'In person' ?  ( !event.Venue?.city && !event.Venue?.state ? 
@@ -165,6 +174,8 @@ export default function GroupDetails() {
                                                             <p className="group-details-event-date">{dateConverter(event.startDate)[0]}</p>
                                                             <p className="group-details-event-date">&#8226;</p>
                                                             <p className="group-details-event-date">{dateConverter(event.startDate)[1]}</p>
+                                                            {console.log(dateConverter(event.startDate))}
+                                                            {console.log(dateConverter(event.startDate))}
                                                         </div>
                                                         <h2>{event.name}</h2>
                                                         {/* <p className="group-details-event-type">{event.type === 'In person' ?  `${event.Venue.city}, ${event.Venue.state}` : 'Online'}</p> */}

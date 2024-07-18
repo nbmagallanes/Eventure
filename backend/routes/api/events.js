@@ -234,6 +234,21 @@ router.get("/", eventPagination, async (req, res, next) => {
   await attendingTotal(events);
   await eventsImagePreview(events);
 
+  
+  events.forEach(event => {
+    const newStartDate = new Date(event.dataValues.startDate)
+    // const utcStartDate = newStartDate.toUTCString()
+    const localeStartDate = newStartDate.toLocaleString()
+    event.dataValues.startDate = localeStartDate
+
+    const newEndDate = new Date(event.dataValues.endDate)
+    // const utcStartDate = newStartDate.toUTCString()
+    const localeEndDate = newEndDate.toLocaleString()
+    event.dataValues.endDate = localeEndDate
+
+    console.log(event.dataValues.startDate)
+  })
+  
   console.log('BACKEND get events to search for start date', events)
 
   res.json({ Events: events });

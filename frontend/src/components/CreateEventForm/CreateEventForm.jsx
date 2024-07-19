@@ -133,7 +133,7 @@ export default function CreateEventForm() {
                     <div className='create-event-capacity-container'>
                         <p>What is the capacity for this event?</p>
                         <input id='capacity' 
-                            type='text' 
+                            type='number' 
                             value={capacity} 
                             onChange={(e) => {setCapacity(e.target.value)}} 
                             placeholder='0'
@@ -143,7 +143,7 @@ export default function CreateEventForm() {
                     <div className='create-event-price-container'>
                         <p>What is the price for your event?</p>
                         <input id='price' 
-                            type='text' 
+                            type='number' 
                             value={price} 
                             onChange={(e) => {setPrice(e.target.value)}} 
                             placeholder='0'

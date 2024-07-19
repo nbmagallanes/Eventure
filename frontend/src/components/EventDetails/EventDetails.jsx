@@ -126,7 +126,8 @@ export default function EventDetails() {
                                 </div>
                                 <div className='event-detail-price-container'>
                                     <span><AiOutlineDollar size={25}/></span>
-                                    <p>{event.price === 0 ? "FREE" : `$${event.price}`}</p>
+                                    {console.log('wooooooo', event.price)}
+                                    <p>{event.price === 0.00 ? "FREE" : `$${event.price}`}</p>
                                 </div>
                                 <div className='event-details-type-buttons-container'>
                                     <div className='event-details-type-container'>
@@ -135,7 +136,7 @@ export default function EventDetails() {
                                     </div>
                                     {user && user.id === group?.Organizer?.id ? (
                                         <div>
-                                            <button>Update</button>
+                                            <button onClick={() => (alert("Feature coming soon."))}>Update</button>
                                             <OpenModalButton
                                                 buttonText='Delete'
                                                 modalComponent={<DeleteEventModal  className='delete-modal-button' navigate={navigate}/>}

@@ -436,11 +436,25 @@ router.get('/:groupId/events', async (req, res, next) => {
 
         events.forEach(event => {
             const newStartDate = new Date(event.dataValues.startDate)
-            const localeStartDate = newStartDate.toLocaleString()
+            const localeStartDate = newStartDate.toLocaleString('en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            })
             event.dataValues.startDate = localeStartDate
         
             const newEndDate = new Date(event.dataValues.endDate)
-            const localeEndDate = newEndDate.toLocaleString()
+            const localeEndDate = newEndDate.toLocaleString('en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            })
             event.dataValues.endDate = localeEndDate
         })
 

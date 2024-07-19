@@ -126,8 +126,7 @@ export default function EventDetails() {
                                 </div>
                                 <div className='event-detail-price-container'>
                                     <span><AiOutlineDollar size={25}/></span>
-                                    {console.log('wooooooo', event.price)}
-                                    <p>{event.price === 0.00 ? "FREE" : `$${event.price}`}</p>
+                                    <p>{event.price === 0 ? "FREE" : `$${event.price}`}</p>
                                 </div>
                                 <div className='event-details-type-buttons-container'>
                                     <div className='event-details-type-container'>

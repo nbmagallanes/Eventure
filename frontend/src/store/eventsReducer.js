@@ -40,11 +40,12 @@ export const getAllEvents = () => async (dispatch) => {
 
     if (response.ok) {
         const { Events } = await response.json()
-        console.log('response', Events)
+        // console.log('response', Events)
         dispatch(getEvents(Events))
     } else {
         const error = await response.json()
-        console.log("Error", error)
+        return error
+        // console.log("Error", error)
     }
 };
 
@@ -57,7 +58,8 @@ export const getEvent = (eventId) => async (dispatch) => {
         dispatch(loadEvent(payload))
     } else {
         const error = await response.json()
-        console.log("Error", error)
+        return error
+        // console.log("Error", error)
     }
 };
 
@@ -105,7 +107,7 @@ export const deleteEvent = (eventId) => async (dispatch) => {
         dispatch(removeEvent(eventId))
     } else {
         const error = await response.json()
-        console.log("DE Error", error)
+        // console.log("DE Error", error)
         return error
     }
 };
@@ -118,7 +120,7 @@ export const getAllGroupEvents = (groupId) => async (dispatch) => {
         
     if (response.ok) {
         const {Events} = await response.json()
-        console.log('this is the response for get events by group id', Events)
+        // console.log('this is the response for get events by group id', Events)
         dispatch(getGroupEvents(Events))
         return Events
     } else {
@@ -137,14 +139,14 @@ const eventsReducer = (state=initialState, action) => {
             newState = {...state, events: {} }
             action.events.forEach( event => { newState.events[event.id] = event })
             // newState = {...state, events: action.events} // original that was working
-            console.log('New state', newState)
+            // console.log('New state', newState)
             return newState
         case LOAD_EVENT:
             return {...state, event: action.event}
         case CREATE_EVENT:{
             const newEvent = action.event;
             newState = {...state, events: {...state.events, [newEvent.id]: newEvent}}
-            console.log('CREAT EVENT', newState)
+            // console.log('CREAT EVENT', newState)
             return newState
         }
         case DELETE_EVENT: {
@@ -155,7 +157,7 @@ const eventsReducer = (state=initialState, action) => {
         case GET_GROUP_EVENT: {
             newState = {...state, events: {} }
             action.events.forEach( event => { newState.events[event.id] = event })
-            console.log("new new", newState)
+            // console.log("new new", newState)
             return newState
         }
         default:

@@ -103,7 +103,7 @@ export const editGroup = ({editedGroup, groupId}) => async (dispatch) => {
         })
     })
 
-    console.log("edit Group response", response)
+    // console.log("edit Group response", response)
 
     if (response.ok) {
         const resGroup = await response.json()
@@ -122,13 +122,13 @@ export const deleteGroup = (groupId) => async (dispatch) => {
         method: 'DELETE',
     })
 
-    console.log("delete Group response", response)
+    // console.log("delete Group response", response)
 
     if (response.ok) {
         dispatch(removeGroup(groupId))
     } else {
         const error = await response.json()
-        console.log("UG Error", error)
+        // console.log("UG Error", error)
         return error
     }
     

@@ -21,7 +21,7 @@ export const addEventImage = ({ imageUrl, resEvent }) => async (dispatch) => {
             preview: true
         })
     })
-    console.log('addimage response', response)
+    // console.log('addimage response', response)
 
     if (response.ok) {
         const image = await response.json()
@@ -34,7 +34,7 @@ export const addEventImage = ({ imageUrl, resEvent }) => async (dispatch) => {
 }
 
 export const addGroupImage = ({ imageUrl, resGroup }) => async (dispatch) => {
-    console.log("this is the thunk group received", resGroup, imageUrl)
+    // console.log("this is the thunk group received", resGroup, imageUrl)
     const response = await csrfFetch(`/api/groups/${resGroup.id}/images`, {
         method: 'POST',
         body: JSON.stringify({
@@ -42,7 +42,7 @@ export const addGroupImage = ({ imageUrl, resGroup }) => async (dispatch) => {
             preview: true
         })
     })
-    console.log('addimage response', response)
+    // console.log('addimage response', response)
 
     if (response.ok) {
         const image = await response.json()

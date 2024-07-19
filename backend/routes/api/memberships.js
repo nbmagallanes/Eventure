@@ -142,24 +142,24 @@ router.put('/', [requireAuth, checkGroup, membershipAuth], async (req, res, next
     updateStatus = await membership.update({
       status: status
     });
-    console.log("inside if statement")
+    // console.log("inside if statement")
   } else if ((group.organizerId === req.user.id || 
     (reqUserMembership && reqUserMembership.status === "co-host")) &&
     (status === "member")) {
-      console.log("inside else if statement1")
+      // console.log("inside else if statement1")
       updateStatus = await membership.update({
         status: status
       });
   } else {
-    console.log("inside else error")
+    // console.log("inside else error")
     const err = new Error("Authorization Error");
     err.title = "Authorization Error";
     err.message = "Forbidden";
     err.status = 403;
     return next(err);
   }
-  console.log("this is the updateStatus", updateStatus);
-  console.log("statusssss", updateStatus.status)
+  // console.log("this is the updateStatus", updateStatus);
+  // console.log("statusssss", updateStatus.status)
 
   const payload = {
     id: membership.id,

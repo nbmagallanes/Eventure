@@ -165,8 +165,8 @@ export default function GroupDetails() {
                                                             <p className="group-details-event-date">{dateConverter(event.startDate)[0]}</p>
                                                             <p className="group-details-event-date">&#8226;</p>
                                                             <p className="group-details-event-date">{dateConverter(event.startDate)[1]}</p>
-                                                            {console.log(dateConverter(event.startDate))}
-                                                            {console.log(dateConverter(event.startDate))}
+                                                            {/* {console.log(dateConverter(event.startDate))}
+                                                            {console.log(dateConverter(event.startDate))} */}
                                                         </div>
                                                         <h2>{event.name}</h2>
                                                         {/* <p className="group-details-event-type">{event.type === 'In person' ?  `${event.Venue.city}, ${event.Venue.state}` : 'Online'}</p> */}
@@ -201,8 +201,8 @@ export default function GroupDetails() {
                                                             <p className="group-details-event-date">{dateConverter(event.startDate)[0]}</p>
                                                             <p className="group-details-event-date">&#8226;</p>
                                                             <p className="group-details-event-date">{dateConverter(event.startDate)[1]}</p>
-                                                            {console.log(dateConverter(event.startDate))}
-                                                            {console.log(dateConverter(event.startDate))}
+                                                            {/* {console.log(dateConverter(event.startDate))}
+                                                            {console.log(dateConverter(event.startDate))} */}
                                                         </div>
                                                         <h2>{event.name}</h2>
                                                         {/* <p className="group-details-event-type">{event.type === 'In person' ?  `${event.Venue.city}, ${event.Venue.state}` : 'Online'}</p> */}

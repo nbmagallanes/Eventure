@@ -62,11 +62,11 @@ export default function CreateEventForm() {
             imageUrl
         }
 
-        console.log('CreateEventForm startdate before dispatch', startDate)
+        // console.log('CreateEventForm startdate before dispatch', startDate)
 
         const response = await dispatch(createNewEvent({newEvent, groupId}))
 
-        console.log('after dispatch response', response)
+        // console.log('after dispatch response', response)
 
         if (response) {
             setName("")

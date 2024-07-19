@@ -80,6 +80,10 @@
     font-size: medium;
 }
 
+.edit-group-container button:hover {
+    cursor: pointer;
+}
+
 .event-private-container {
     display: flex;
     justify-content: start;
@@ -212,5 +216,9 @@
     background: rgb(206,43,39);
     color: white;
     font-size: medium;
+}
+
+.join-group button:hover {
+    cursor: pointer;
 }
 

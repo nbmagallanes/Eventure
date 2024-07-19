@@ -6,7 +6,7 @@ import DeleteEventModal from '../DeleteEventModal';
 import { getEvent } from '../../store/eventsReducer';
 import { getGroup } from '../../store/groupsReducer';
 import { LuClock5 } from "react-icons/lu";
-import { PiCurrencyCircleDollarLight } from "react-icons/pi";
+import { AiOutlineDollar } from "react-icons/ai";
 import { FaMapPin } from "react-icons/fa";
 import "./EventDetails.css"
 
@@ -106,15 +106,17 @@ export default function EventDetails() {
                             </NavLink>
                             <div className='event-info-container'>
                                 <div className='event-details-date-display-container'>
-                                    <p><LuClock5 /></p>
+                                    <span>
+                                        <LuClock5 size={25}/>
+                                    </span>
                                     <div className='event-details-date-display-content-container'>
-                                        <div className='event-details-date-display-content'>
+                                        <div className='event-details-date-display-content start'>
                                             <p>START</p>
                                             <p className='specific-date'>{dateConverter(event.startDate)[0]}</p>
                                             <p className='specific-date'>&#8226;</p>
                                             <p className='specific-date'>{dateConverter(event.startDate)[1]}</p>
                                         </div>
-                                        <div className='event-details-date-display-content'>
+                                        <div className='event-details-date-display-content end'>
                                             <p>END</p>
                                             <p className='specific-date'>{dateConverter(event.endDate)[0]}</p>
                                             <p className='specific-date'>&#8226;</p>
@@ -123,12 +125,12 @@ export default function EventDetails() {
                                     </div>
                                 </div>
                                 <div className='event-detail-price-container'>
-                                    <p><PiCurrencyCircleDollarLight /></p>
+                                    <span><AiOutlineDollar size={25}/></span>
                                     <p>{event.price === 0 ? "FREE" : `$${event.price}`}</p>
                                 </div>
                                 <div className='event-details-type-buttons-container'>
                                     <div className='event-details-type-container'>
-                                        <p><FaMapPin /></p>
+                                        <span><FaMapPin size={25}/></span>
                                         <p>{event.type}</p>     
                                     </div>
                                     {user && user.id === group?.Organizer?.id ? (

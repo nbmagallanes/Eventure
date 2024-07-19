@@ -34,6 +34,10 @@ body {
   font-size: medium;
 }
 
+.button-li button:hover {
+  cursor: pointer;
+}
+
 .hidden {
   display: none;
 }

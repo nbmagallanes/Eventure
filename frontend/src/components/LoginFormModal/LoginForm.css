@@ -44,6 +44,10 @@
 
 }
 
+.login-form-button:enabled:hover {
+    cursor: pointer;
+}
+
 .login-demo-user {
     border: white;
     background-color: white;

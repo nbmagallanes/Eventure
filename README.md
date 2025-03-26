@@ -1,4 +1,4 @@
-# Eventure
+# Networksy
 ## Database Schema Design
 
 ![db-schema]
